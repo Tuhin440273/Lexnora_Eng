@@ -28,6 +28,9 @@ use Illuminate\Support\Carbon;
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use \Spatie\Permission\Traits\HasRoles;
+    use \App\Modules\Learning\Concerns\HasLearningProfile;
+
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
