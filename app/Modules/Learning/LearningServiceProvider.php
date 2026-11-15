@@ -19,6 +19,7 @@ use App\Modules\Review\Models\ReviewSchedule;
 use App\Modules\Vocabulary\Models\SavedVocabulary;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
@@ -28,6 +29,9 @@ class LearningServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        // An accidental N+1 query becomes an error while developing and testing.
+        Model::preventLazyLoading(! $this->app->isProduction());
+
         // Short, stable names for polymorphic columns (review_schedules.reviewable_type).
         // Non-enforcing on purpose: Spatie and Laravel keep using class names for users.
         Relation::morphMap([

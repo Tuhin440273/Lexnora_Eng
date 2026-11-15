@@ -1,13 +1,17 @@
 <?php
 
+use App\Modules\Admin\Http\Controllers\AnalyticsController;
 use App\Modules\Admin\Http\Controllers\AudioLibraryController;
 use App\Modules\Admin\Http\Controllers\CategoryController;
 use App\Modules\Admin\Http\Controllers\ChapterController;
 use App\Modules\Admin\Http\Controllers\CourseController;
 use App\Modules\Admin\Http\Controllers\DashboardController;
 use App\Modules\Admin\Http\Controllers\LessonController;
+use App\Modules\Admin\Http\Controllers\RoleController;
 use App\Modules\Admin\Http\Controllers\SentenceAudioController;
 use App\Modules\Admin\Http\Controllers\SentenceController;
+use App\Modules\Admin\Http\Controllers\SettingsController;
+use App\Modules\Admin\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'can:access-admin'])
@@ -40,7 +44,26 @@ Route::middleware(['auth', 'verified', 'can:access-admin'])
         Route::patch('sentences/{sentence}/move', [SentenceController::class, 'move'])->name('sentences.move');
 
         Route::get('audio', [AudioLibraryController::class, 'index'])->name('audio.index');
-        Route::post('sentences/{sentence}/audio', [SentenceAudioController::class, 'store'])->name('audio.store');
+        Route::post('sentences/{sentence}/audio', [SentenceAudioController::class, 'store'])->middleware('throttle:60,1')->name('audio.store');
         Route::patch('audio/{audio}/primary', [SentenceAudioController::class, 'makePrimary'])->name('audio.primary');
         Route::delete('audio/{audio}', [SentenceAudioController::class, 'destroy'])->name('audio.destroy');
+
+        Route::middleware('can:users.manage')->group(function () {
+            Route::get('users', [UserController::class, 'index'])->name('users.index');
+            Route::patch('users/{user}/active', [UserController::class, 'toggleActive'])->name('users.active');
+        });
+
+        Route::middleware('can:roles.manage')->group(function () {
+            Route::patch('users/{user}/role', [UserController::class, 'updateRole'])->name('users.role');
+            Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
+            Route::patch('roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+        });
+
+        Route::middleware('can:settings.manage')->group(function () {
+            Route::get('settings', [SettingsController::class, 'edit'])->name('settings.edit');
+            Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
+            Route::delete('settings', [SettingsController::class, 'reset'])->name('settings.reset');
+        });
+
+        Route::get('analytics', AnalyticsController::class)->middleware('can:analytics.view')->name('analytics');
     });

@@ -13,6 +13,7 @@ use App\Modules\Review\Models\ReviewHistory;
 use App\Modules\Review\Models\ReviewSchedule;
 use App\Modules\Review\Services\ReviewScheduleService;
 use App\Modules\Vocabulary\Models\SavedVocabulary;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -35,7 +36,9 @@ class ReviewController extends Controller
         $dueSentences = (clone $due)->where('reviewable_type', 'sentence')->count();
 
         $dueVocabulary = (clone $due)->where('reviewable_type', 'saved_vocabulary')
-            ->with('reviewable')->orderBy('due_at')->limit(10)->get()
+            ->with(['reviewable' => fn (MorphTo $morph) => $morph->morphWith([
+                SavedVocabulary::class => ['vocabulary:id,meaning_en,meaning_bn'],
+            ])])->orderBy('due_at')->limit(10)->get()
             ->filter(fn (ReviewSchedule $s) => $s->reviewable instanceof SavedVocabulary)
             ->map(fn (ReviewSchedule $s) => [
                 'schedule_id' => $s->id,

@@ -7,6 +7,7 @@ use App\Modules\Courses\Models\Sentence;
 use App\Modules\Learning\Enums\ContentType;
 use App\Modules\Learning\Enums\PracticeMode;
 use App\Modules\Learning\Support\TextStats;
+use Illuminate\Support\Collection;
 
 class PracticePlanner
 {
@@ -39,7 +40,7 @@ class PracticePlanner
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, Sentence>
+     * @return Collection<int, Sentence>
      */
     private function chunks(Sentence $sentence, PracticeMode $mode)
     {

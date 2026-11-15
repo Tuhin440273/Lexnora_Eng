@@ -6,12 +6,16 @@ import {
     ChartLine,
     CircleAlert,
     FolderGit2,
+    ChartColumn,
     GraduationCap,
+    KeyRound,
     LayoutGrid,
     NotebookPen,
     RotateCw,
     ShieldCheck,
+    SlidersHorizontal,
     Tags,
+    Users,
     Trophy,
 } from 'lucide-react';
 import CatalogController from '@/actions/App/Modules/Courses/Http/Controllers/CatalogController';
@@ -19,6 +23,10 @@ import MistakeController from '@/actions/App/Modules/Dictation/Http/Controllers/
 import NoteController from '@/actions/App/Modules/Learning/Http/Controllers/NoteController';
 import ReviewController from '@/actions/App/Modules/Review/Http/Controllers/ReviewController';
 import SavedVocabularyController from '@/actions/App/Modules/Vocabulary/Http/Controllers/SavedVocabularyController';
+import AnalyticsController from '@/actions/App/Modules/Admin/Http/Controllers/AnalyticsController';
+import RoleController from '@/actions/App/Modules/Admin/Http/Controllers/RoleController';
+import SettingsController from '@/actions/App/Modules/Admin/Http/Controllers/SettingsController';
+import UserController from '@/actions/App/Modules/Admin/Http/Controllers/UserController';
 import AudioLibraryController from '@/actions/App/Modules/Admin/Http/Controllers/AudioLibraryController';
 import CategoryController from '@/actions/App/Modules/Admin/Http/Controllers/CategoryController';
 import CourseController from '@/actions/App/Modules/Admin/Http/Controllers/CourseController';
@@ -59,7 +67,9 @@ const mainNavItems: NavItem[] = [
     { title: 'Leaderboard', href: leaderboard(), icon: Trophy },
 ];
 
-const adminNavItems: NavItem[] = [
+type AdminNavItem = NavItem & { permission?: string };
+
+const adminNavItems: AdminNavItem[] = [
     {
         title: 'Overview',
         href: DashboardController.index(),
@@ -80,6 +90,31 @@ const adminNavItems: NavItem[] = [
         title: 'Audio',
         href: AudioLibraryController.index(),
         icon: AudioLines,
+        permission: 'audio.manage',
+    },
+    {
+        title: 'Users',
+        href: UserController.index(),
+        icon: Users,
+        permission: 'users.manage',
+    },
+    {
+        title: 'Roles',
+        href: RoleController.index(),
+        icon: KeyRound,
+        permission: 'roles.manage',
+    },
+    {
+        title: 'Settings',
+        href: SettingsController.edit(),
+        icon: SlidersHorizontal,
+        permission: 'settings.manage',
+    },
+    {
+        title: 'Analytics',
+        href: AnalyticsController(),
+        icon: ChartColumn,
+        permission: 'analytics.view',
     },
 ];
 
@@ -116,7 +151,14 @@ export function AppSidebar() {
             <SidebarContent>
                 <NavMain items={mainNavItems} />
                 {auth.can_access_admin && (
-                    <NavMain items={adminNavItems} label="Content admin" />
+                    <NavMain
+                        items={adminNavItems.filter(
+                            (item) =>
+                                !item.permission ||
+                                auth.permissions.includes(item.permission),
+                        )}
+                        label="Content admin"
+                    />
                 )}
             </SidebarContent>
 

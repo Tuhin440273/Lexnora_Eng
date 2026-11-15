@@ -20,6 +20,17 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 trait HasLearningProfile
 {
+    /** Lets the users table's `deactivated_at` behave as a date. */
+    public function initializeHasLearningProfile(): void
+    {
+        $this->mergeCasts(['deactivated_at' => 'datetime']);
+    }
+
+    public function isDeactivated(): bool
+    {
+        return $this->getAttribute('deactivated_at') !== null;
+    }
+
     public function profile(): HasOne
     {
         return $this->hasOne(UserProfile::class);

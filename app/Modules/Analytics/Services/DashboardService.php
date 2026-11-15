@@ -14,6 +14,7 @@ use App\Modules\Learning\Models\UserLessonProgress;
 use App\Modules\Learning\Support\UserClock;
 use App\Modules\Review\Models\ReviewSchedule;
 use App\Modules\Vocabulary\Models\SavedVocabulary;
+use Carbon\CarbonImmutable;
 
 class DashboardService
 {
@@ -85,7 +86,7 @@ class DashboardService
      *
      * @return array<int, array{date: string, label: string, minutes: int, sentences: int, xp: int}>
      */
-    private function week(User $user, \Carbon\CarbonImmutable $today): array
+    private function week(User $user, CarbonImmutable $today): array
     {
         $from = $today->subDays(6);
         $rows = DailyLearningStatistic::where('user_id', $user->id)

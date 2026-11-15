@@ -52,10 +52,22 @@ class CatalogController extends Controller
             ->selectRaw('chapters.course_id as course_id, count(*) as lessons, sum(lessons.estimated_minutes) as minutes')
             ->get()->keyBy('course_id');
 
+        $completed = DB::table('user_lesson_progress')
+            ->join('lessons', 'lessons.id', '=', 'user_lesson_progress.lesson_id')
+            ->join('chapters', 'chapters.id', '=', 'lessons.chapter_id')
+            ->where('user_lesson_progress.user_id', $user->id)
+            ->where('user_lesson_progress.status', ProgressStatus::Completed->value)
+            ->whereIn('chapters.course_id', $ids)
+            ->where('lessons.is_published', true)->whereNull('lessons.deleted_at')
+            ->where('chapters.is_published', true)->whereNull('chapters.deleted_at')
+            ->groupBy('chapters.course_id')
+            ->selectRaw('chapters.course_id as course_id, count(*) as total')
+            ->pluck('total', 'course_id');
+
         return Inertia::render('courses/index', [
-            'courses' => $courses->through(function (Course $course) use ($totals, $user) {
+            'courses' => $courses->through(function (Course $course) use ($totals, $completed) {
                 $total = (int) ($totals[$course->id]->lessons ?? 0);
-                $completed = $this->completedInCourse($user->id, $course->id);
+                $done = (int) ($completed[$course->id] ?? 0);
 
                 return [
                     'id' => $course->id,
@@ -66,8 +78,8 @@ class CatalogController extends Controller
                     'thumbnail_url' => $course->thumbnail_path ? route('courses.thumbnail', ['course' => $course->id]) : null,
                     'lessons_count' => $total,
                     'minutes' => (int) ($totals[$course->id]->minutes ?? 0),
-                    'completed_lessons' => $completed,
-                    'progress' => $total > 0 ? (int) round($completed / $total * 100) : 0,
+                    'completed_lessons' => $done,
+                    'progress' => $total > 0 ? (int) round($done / $total * 100) : 0,
                 ];
             }),
             'filters' => [
@@ -182,18 +194,5 @@ class CatalogController extends Controller
                     'completed_at' => $s->completed_at?->toIso8601String(),
                 ]),
         ]);
-    }
-
-    private function completedInCourse(int $userId, string $courseId): int
-    {
-        return DB::table('user_lesson_progress')
-            ->join('lessons', 'lessons.id', '=', 'user_lesson_progress.lesson_id')
-            ->join('chapters', 'chapters.id', '=', 'lessons.chapter_id')
-            ->where('user_lesson_progress.user_id', $userId)
-            ->where('user_lesson_progress.status', ProgressStatus::Completed->value)
-            ->where('chapters.course_id', $courseId)
-            ->where('lessons.is_published', true)
-            ->whereNull('lessons.deleted_at')
-            ->count();
     }
 }
