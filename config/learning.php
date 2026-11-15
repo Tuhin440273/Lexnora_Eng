@@ -4,9 +4,9 @@
 |--------------------------------------------------------------------------
 | Lexnora learning configuration
 |--------------------------------------------------------------------------
-| These are the DEFAULT values. They are copied into the `app_settings`
-| table by SettingsSeeder, and the Admin Panel (Phase 7) edits the table.
-| Application code must read them through AppSetting::get(), not config().
+| The `defaults` below are copied into the `app_settings` table by
+| SettingsSeeder, and the Admin Panel edits the table. Application code reads
+| them through AppSetting::get(), not config().
 */
 
 return [
@@ -19,6 +19,31 @@ return [
     ],
 
     'default_role' => 'learner',
+
+    /*
+    | Uploaded audio. Files are stored on `disk` and streamed through the app
+    | (route audio.stream), so no public symlink or APP_URL tweak is needed.
+    | Both the file extension and the server-detected MIME type must match.
+    */
+    'audio' => [
+        'disk' => env('AUDIO_DISK', 'local'),
+        'max_kb' => (int) env('AUDIO_MAX_KB', 10240),
+        'extensions' => ['mp3', 'wav', 'ogg', 'oga', 'm4a', 'aac', 'webm'],
+        'mimetypes' => [
+            'audio/mpeg', 'audio/mp3', 'audio/x-mpeg',
+            'audio/wav', 'audio/x-wav', 'audio/wave', 'audio/vnd.wave',
+            'audio/ogg', 'application/ogg',
+            'audio/mp4', 'audio/x-m4a', 'audio/m4a', 'video/mp4',
+            'audio/aac', 'audio/x-aac',
+            'audio/webm', 'video/webm',
+        ],
+    ],
+
+    'thumbnail' => [
+        'disk' => env('THUMBNAIL_DISK', 'local'),
+        'max_kb' => 2048,
+        'extensions' => ['jpg', 'jpeg', 'png', 'webp'],
+    ],
 
     'defaults' => [
         // --- Dictation scoring ---

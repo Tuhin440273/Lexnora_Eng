@@ -29,17 +29,25 @@ class HandleInertiaRequests extends Middleware
     /**
      * Define the props that are shared by default.
      *
+     * Roles and permissions are shared only to show or hide menu items. Every
+     * action is still authorized again on the server.
+     *
      * @see https://inertiajs.com/shared-data
      *
      * @return array<string, mixed>
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
+                'roles' => $user ? $user->getRoleNames()->values()->all() : [],
+                'permissions' => $user ? $user->getAllPermissions()->pluck('name')->values()->all() : [],
+                'can_access_admin' => $user ? $user->canAccessAdmin() : false,
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];

@@ -11,4 +11,7 @@ export type User = {
 
 export type Auth = {
     user: User;
+    roles: string[];
+    permissions: string[];
+    can_access_admin: boolean;
 };

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
 
 class SentenceAudio extends Model
 {
@@ -39,8 +38,11 @@ class SentenceAudio extends Model
         return $this->belongsTo(User::class, 'uploaded_by');
     }
 
+    /**
+     * Audio is streamed through the app (permission checked), never linked directly.
+     */
     public function url(): string
     {
-        return Storage::disk($this->disk)->url($this->path);
+        return route('audio.stream', ['audio' => $this->id]);
     }
 }
