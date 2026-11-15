@@ -28,6 +28,7 @@ class LearningSettingsController extends Controller
                 'leaderboard_anonymous' => $profile->leaderboard_anonymous,
                 'default_mode' => $profile->preferences['default_mode'] ?? 'medium',
                 'default_speed' => (float) ($profile->preferences['default_speed'] ?? 1),
+                'autoplay' => (bool) ($profile->preferences['autoplay'] ?? true),
             ],
             'options' => [
                 'cefr_levels' => array_map(fn (CefrLevel $l) => ['value' => $l->value, 'label' => $l->label()], CefrLevel::cases()),
@@ -52,6 +53,7 @@ class LearningSettingsController extends Controller
             'preferences' => [
                 'default_mode' => $data['default_mode'] ?? 'medium',
                 'default_speed' => isset($data['default_speed']) ? (float) $data['default_speed'] : 1.0,
+                'autoplay' => $request->boolean('autoplay'),
             ],
         ]);
 

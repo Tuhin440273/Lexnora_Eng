@@ -53,6 +53,12 @@ php artisan db:seed --class=ContentPackSeeder
 
 They have no recordings yet. Upload audio from a lesson page in Content admin; until then the browser's own voice reads the text aloud.
 
+## While practising
+
+- The audio starts by itself when each item appears (a learner can turn this off under Settings, Learning). Play, Pause and Replay always work.
+- The Bengali meaning is shown with every sentence, word and phrase, so learners understand what they are about to type.
+- **Guide text:** the sentence appears faintly in the typing box, one word per second after the audio starts, and each word turns clear when the learner types it correctly. It shows the answer, so it is on in Easy and Medium and off in Hard. Admins can change this per mode under Content admin, Settings.
+
 ## Vocabulary list
 
 Content admin, Vocabulary: add, edit, hide and remove words and phrases with English and Bengali meanings. Each entry is linked to the sentences that use it (whole words and plurals only), and it is re-linked when you add or edit a sentence. When a learner saves the same word, they see your meaning.

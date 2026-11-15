@@ -39,6 +39,8 @@ export type PracticeItem = {
     id: string;
     content_type: ContentType;
     word_count: number;
+    bengali: string | null;
+    guide_text: string | null;
     audio_url: string | null;
     speak_text: string | null;
 };

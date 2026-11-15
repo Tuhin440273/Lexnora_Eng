@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import { guideWords, matchGuide } from '@/lib/guide';
 import { wordsOf } from '@/lib/learn';
 import type {
     PracticeItem,
@@ -35,6 +36,7 @@ type Props = {
     result: PracticeResult | null;
     speeds: number[];
     default_speed: number;
+    autoplay: boolean;
     history: boolean[];
 };
 
@@ -44,12 +46,14 @@ function TypingCard({
     hint,
     speeds,
     defaultSpeed,
+    autoplay,
 }: {
     session: PracticeSessionInfo;
     item: PracticeItem;
     hint: Props['hint'];
     speeds: number[];
     defaultSpeed: number;
+    autoplay: boolean;
 }) {
     const form = useForm({
         answer: '',
@@ -60,11 +64,31 @@ function TypingCard({
     const [plays, setPlays] = useState(0);
     const [speed, setSpeed] = useState(defaultSpeed);
     const [startedAt] = useState(() => Date.now());
+    const [guideOn, setGuideOn] = useState(true);
+    const [started, setStarted] = useState(false);
+    const [shown, setShown] = useState(0);
     const field = useRef<HTMLTextAreaElement>(null);
+
+    const words = guideWords(item.guide_text ?? '');
+    const matched = matchGuide(words, form.data.answer);
 
     useEffect(() => {
         field.current?.focus();
     }, []);
+
+    // One more guide word appears every second once the audio has started.
+    useEffect(() => {
+        if (!started || shown >= words.length) {
+            return;
+        }
+
+        const timer = window.setTimeout(
+            () => setShown((count) => count + 1),
+            1000,
+        );
+
+        return () => window.clearTimeout(timer);
+    }, [started, shown, words.length]);
 
     const submit = (event?: FormEvent) => {
         event?.preventDefault();
@@ -96,6 +120,7 @@ function TypingCard({
             : item.content_type === 'phrase'
               ? 'phrase'
               : 'word';
+    const showGuide = item.guide_text !== null && guideOn;
 
     return (
         <form onSubmit={submit} className="space-y-5">
@@ -104,43 +129,101 @@ function TypingCard({
                 speakText={item.speak_text}
                 speeds={speeds}
                 defaultSpeed={defaultSpeed}
-                onStart={() => setPlays((count) => count + 1)}
+                autoPlay={autoplay}
+                onStart={() => {
+                    setPlays((count) => count + 1);
+                    setStarted(true);
+                    setShown((count) => Math.max(count, 1));
+                }}
                 onSpeedChange={setSpeed}
             />
 
+            {item.bengali && (
+                <div className="rounded-lg bg-muted/40 p-3">
+                    <p className="text-xs text-muted-foreground">
+                        Meaning in Bengali
+                    </p>
+                    <p lang="bn" className="text-lg leading-relaxed">
+                        {item.bengali}
+                    </p>
+                </div>
+            )}
+
             <div className="grid gap-2">
-                <Label htmlFor="answer" className="text-base">
-                    Type the {label} you hear
-                </Label>
-                <Textarea
-                    id="answer"
-                    ref={field}
-                    rows={3}
-                    value={form.data.answer}
-                    onChange={(event) =>
-                        form.setData('answer', event.target.value)
-                    }
-                    onKeyDown={(event) => {
-                        if (
-                            event.key === 'Enter' &&
-                            (event.ctrlKey || event.metaKey)
-                        ) {
-                            submit();
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                    <Label htmlFor="answer" className="text-base">
+                        Type the {label} you hear
+                    </Label>
+                    {item.guide_text !== null && (
+                        <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                            <input
+                                type="checkbox"
+                                className="size-3.5 accent-primary"
+                                checked={guideOn}
+                                onChange={(event) =>
+                                    setGuideOn(event.target.checked)
+                                }
+                            />
+                            Guide text
+                        </label>
+                    )}
+                </div>
+
+                <div className="rounded-lg border bg-background focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50 dark:bg-input/30">
+                    {showGuide && (
+                        <p
+                            aria-hidden
+                            className="flex min-h-14 flex-wrap gap-x-2 gap-y-1 border-b px-3 py-3 text-xl leading-snug select-none"
+                        >
+                            {words.map((word, index) => (
+                                <span
+                                    key={index}
+                                    className={cn(
+                                        'transition-all duration-500 motion-reduce:transition-none',
+                                        matched[index]
+                                            ? 'font-medium text-success'
+                                            : index >= shown
+                                              ? 'opacity-0'
+                                              : 'text-muted-foreground opacity-40 blur-[1.5px]',
+                                    )}
+                                >
+                                    {word}
+                                </span>
+                            ))}
+                        </p>
+                    )}
+                    <Textarea
+                        id="answer"
+                        ref={field}
+                        rows={3}
+                        value={form.data.answer}
+                        onChange={(event) =>
+                            form.setData('answer', event.target.value)
                         }
-                    }}
-                    maxLength={1000}
-                    autoComplete="off"
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                    spellCheck={false}
-                    className="text-lg"
-                    aria-invalid={!!form.errors.answer}
-                    aria-describedby="answer-help"
-                />
+                        onKeyDown={(event) => {
+                            if (
+                                event.key === 'Enter' &&
+                                (event.ctrlKey || event.metaKey)
+                            ) {
+                                submit();
+                            }
+                        }}
+                        maxLength={1000}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        autoCapitalize="off"
+                        spellCheck={false}
+                        className="rounded-none rounded-b-lg border-0 bg-transparent text-lg shadow-none focus-visible:ring-0 dark:bg-transparent"
+                        aria-invalid={!!form.errors.answer}
+                        aria-describedby="answer-help"
+                    />
+                </div>
                 <InputError message={form.errors.answer} />
                 <p id="answer-help" className="text-xs text-muted-foreground">
                     {session.mode !== 'hard' &&
                         `${item.word_count} ${item.word_count === 1 ? 'word' : 'words'}. `}
+                    {showGuide &&
+                        'The faint words are a guide: each one turns clear when you type it correctly. '}
                     Press Ctrl+Enter to check. Alt+P plays or pauses, Alt+R
                     replays.
                 </p>
@@ -378,6 +461,7 @@ export default function PracticeShow({
     result,
     speeds,
     default_speed,
+    autoplay,
     history,
 }: Props) {
     const [dismissedId, setDismissedId] = useState<string | null>(null);
@@ -470,6 +554,7 @@ export default function PracticeShow({
                             hint={hint}
                             speeds={speeds}
                             defaultSpeed={default_speed}
+                            autoplay={autoplay}
                         />
                     ) : null}
                 </section>

@@ -41,3 +41,21 @@ function typeAnswer(User $user, PracticeSession $session, string $text, array $e
 {
     return test()->actingAs($user)->post(route('practice.answer', $session), array_merge(['answer' => $text], $extra));
 }
+
+/**
+ * A published lesson whose first sentence has a word and two phrases.
+ *
+ * @return array{0: Lesson, 1: array<string, Sentence>}
+ */
+function lessonWithChunks(): array
+{
+    $lesson = lessonTree(true);
+    $first = Sentence::factory()->for($lesson)->create(['english_text' => 'I would like a cup of tea.', 'sort_order' => 1]);
+    $second = Sentence::factory()->for($lesson)->create(['english_text' => 'Thank you very much.', 'sort_order' => 2]);
+
+    $word = Sentence::factory()->word()->for($lesson)->create(['english_text' => 'tea', 'parent_id' => $first->id, 'sort_order' => 3]);
+    $long = Sentence::factory()->phrase()->for($lesson)->create(['english_text' => 'a cup of tea', 'parent_id' => $first->id, 'sort_order' => 1]);
+    $short = Sentence::factory()->phrase()->for($lesson)->create(['english_text' => 'a cup', 'parent_id' => $first->id, 'sort_order' => 2]);
+
+    return [$lesson, compact('first', 'second', 'word', 'long', 'short')];
+}

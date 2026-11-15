@@ -26,11 +26,19 @@
 - **Automatic links:** an entry is linked to every sentence that uses it as a whole word or plural ("card" and "cards", "allergy" and "allergies", never "change" inside "exchange"). Adding or editing a sentence refreshes its links.
 - **Content pack:** `ContentPackSeeder` adds 5 courses (A1 to B2), 10 lessons, 60 sentences with Bengali translations, 17 words and phrases for Easy and Medium mode, and 27 vocabulary entries. Safe to run again.
 
+## Phase 9 - practice screen
+
+- **Autoplay:** the audio starts half a second after each item appears. If the browser refuses, nothing is shown and the learner presses Play. A setting under Learning turns it off.
+- **Bengali meaning** is shown with every item while the learner listens (it is not the answer).
+- **Guide text:** a faint copy of the sentence appears in the typing box, one word per second after the audio starts, and each word turns clear when it is typed correctly (words are matched in order, one mistake does not switch the rest off). Per mode, set by the admin: on for Easy and Medium, off for Hard. The text is sent to the browser only when the mode allows it, never for later items.
+
 ## Tests
 
-`php artisan test`: 413 passed, 3 skipped (Two-factor is not enabled). `vp test`: 6 passed. `npm run types:check` and `vp check` are clean.
+`php artisan test`: 424 passed, 3 skipped (Two-factor is not enabled). `vp test`: 15 passed. `npm run types:check` and `vp check` are clean.
 
 ## Not done or not verified
+
+- Autoplay, the one-word-per-second reveal and the blur are browser behaviour. They are written and their logic is tested, but they were not watched in a real browser, and Chrome may refuse autoplay until the learner has clicked anywhere on the site once.
 
 - The tests run on SQLite. Run them once on MySQL (see `docs/DEPLOYMENT.md`, step 1).
 - Layouts were written mobile-first (tables scroll sideways, forms stack) but were not checked on real phones and tablets.

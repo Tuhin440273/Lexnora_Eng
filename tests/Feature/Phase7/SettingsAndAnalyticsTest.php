@@ -28,7 +28,7 @@ it('opens the settings page to staff with the permission', function () {
     $this->actingAs(learner())->get(route('admin.settings.edit'))->assertForbidden();
 
     $this->actingAs(userWithRole('admin'))->get(route('admin.settings.edit'))
-        ->assertInertia(fn (Assert $page) => $page->component('admin/settings/index')->has('fields', 20)
+        ->assertInertia(fn (Assert $page) => $page->component('admin/settings/index')->has('fields', 23)
             ->where('fields.0.id', 'dictation__correct_threshold')->where('fields.0.value', 100));
 });
 
@@ -54,7 +54,7 @@ it('saves typed values and uses them straight away', function () {
         ->and(AppSetting::get('leaderboard.metric'))->toBe('study_time');
 
     $this->get(route('admin.settings.edit'))->assertInertia(fn (Assert $page) => $page
-        ->where('fields.7.value', '2, 5, 12'));
+        ->where('fields.10.value', '2, 5, 12'));
 });
 
 it('rejects invalid settings and keeps the old values', function (string $field, mixed $bad) {

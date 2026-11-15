@@ -17,6 +17,7 @@ type Props = {
         leaderboard_anonymous: boolean;
         default_mode: string;
         default_speed: number;
+        autoplay: boolean;
     };
     options: {
         cefr_levels: { value: string; label: string }[];
@@ -191,6 +192,23 @@ export default function LearningSettings({ profile, options }: Props) {
                                     />
                                 </div>
                             </div>
+
+                            <label className="flex items-start gap-2 text-sm">
+                                <input
+                                    type="checkbox"
+                                    name="autoplay"
+                                    value="1"
+                                    defaultChecked={profile.autoplay}
+                                    className="mt-0.5 size-4 accent-primary"
+                                />
+                                <span>
+                                    Play the audio by itself when a new item
+                                    appears
+                                    <span className="block text-xs text-muted-foreground">
+                                        You can always press Play or Replay.
+                                    </span>
+                                </span>
+                            </label>
 
                             <label className="flex items-start gap-2 text-sm">
                                 <input

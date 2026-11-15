@@ -25,6 +25,7 @@ type Props = {
         value: 'easy' | 'medium' | 'hard';
         label: string;
         hints: number;
+        guide: boolean;
         items: number;
         resume: { done: number; total: number } | null;
     }[];
@@ -113,6 +114,7 @@ export default function LessonShow({
                                         {mode.items} items
                                         {mode.hints > 0 &&
                                             ` · ${mode.hints} hint${mode.hints === 1 ? '' : 's'}`}
+                                        {mode.guide && ' · faint guide text'}
                                     </p>
                                 </div>
                                 <Button

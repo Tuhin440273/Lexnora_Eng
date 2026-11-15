@@ -30,6 +30,7 @@ class LearningSettingsRequest extends FormRequest
             'timezone' => ['required', Rule::in(timezone_identifiers_list())],
             'leaderboard_anonymous' => ['sometimes', 'boolean'],
             'default_mode' => ['nullable', Rule::enum(PracticeMode::class)],
+            'autoplay' => ['sometimes', 'boolean'],
             'default_speed' => ['nullable', 'numeric', Rule::in($speeds)],
         ];
     }

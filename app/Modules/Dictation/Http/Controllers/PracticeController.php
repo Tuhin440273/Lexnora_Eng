@@ -61,6 +61,7 @@ class PracticeController extends Controller
         $allowedHints = (int) AppSetting::get('practice.hints.'.$practiceSession->mode->value, 0);
         $level = $sentence ? (int) Cache::get($this->sessions->hintKey($practiceSession, $sentence), 0) : 0;
         $audio = $sentence?->primaryAudio;
+        $guide = (bool) AppSetting::get('practice.guide_text.'.$practiceSession->mode->value, false);
 
         return Inertia::render('practice/show', [
             'session' => [
@@ -80,6 +81,9 @@ class PracticeController extends Controller
                 'id' => $sentence->id,
                 'content_type' => $sentence->content_type->value,
                 'word_count' => TextStats::wordCount($sentence->english_text),
+                'bengali' => $sentence->bengali_text,
+                // The faint guide shows the answer, so it is only sent when the admin allows it for this mode.
+                'guide_text' => $guide ? $sentence->english_text : null,
                 'audio_url' => $audio?->url(),
                 // Only without a recording: the browser's own voice reads the text aloud.
                 'speak_text' => $audio ? null : $sentence->english_text,
@@ -92,6 +96,7 @@ class PracticeController extends Controller
             'result' => $result,
             'speeds' => array_map('floatval', (array) AppSetting::get('practice.playback_speeds', [1])),
             'default_speed' => (float) ($user->profile?->preferences['default_speed'] ?? 1),
+            'autoplay' => (bool) ($user->profile?->preferences['autoplay'] ?? true),
             'history' => $practiceSession->attempts()->orderBy('answered_at')->pluck('is_correct'),
         ]);
     }

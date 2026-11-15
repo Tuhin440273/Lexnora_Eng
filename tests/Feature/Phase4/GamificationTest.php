@@ -238,13 +238,19 @@ it('protects the privacy of learners', function () {
     });
 
     $names = collect($props['entries'])->pluck('name')->all();
-    $json = json_encode($props);
+    $ranking = json_encode(['entries' => $props['entries'], 'me' => $props['me']]);
+    $everything = json_encode($props);
 
+    // The page also carries the signed-in viewer's own email (shared auth data), so the
+    // ranking itself is checked for leaks, and no OTHER learner's email may appear anywhere.
     expect($names)->toBe(['Anonymous learner', 'Open', 'Nickname'])
-        ->and($json)->not->toContain('@example.com')
-        ->and($json)->not->toContain('Shy')
-        ->and($json)->not->toContain('Full Name')
-        ->and($json)->not->toContain('user_id');
+        ->and($ranking)->not->toContain('@')
+        ->and($ranking)->not->toContain('Shy')
+        ->and($ranking)->not->toContain('Full Name')
+        ->and($ranking)->not->toContain('user_id')
+        ->and($everything)->not->toContain('shy@example.com')
+        ->and($everything)->not->toContain('open@example.com')
+        ->and($everything)->not->toContain('named@example.com');
 });
 
 it('shows a learner as "You" even when anonymous', function () {
@@ -323,7 +329,7 @@ it('saves learning settings', function () {
 
     $this->patch(route('learning-settings.update'), [
         'display_name' => 'Tuhin', 'target_cefr_level' => 'B1', 'daily_goal_minutes' => 25, 'daily_goal_sentences' => 40,
-        'timezone' => 'Asia/Dhaka', 'leaderboard_anonymous' => '1', 'default_mode' => 'hard', 'default_speed' => '0.75',
+        'timezone' => 'Asia/Dhaka', 'leaderboard_anonymous' => '1', 'default_mode' => 'hard', 'default_speed' => '0.75', 'autoplay' => '1',
     ])->assertRedirect(route('learning-settings.edit'));
 
     $profile = $user->profile->fresh();
@@ -333,12 +339,13 @@ it('saves learning settings', function () {
         ->and($profile->daily_goal_minutes)->toBe(25)
         ->and($profile->timezone)->toBe('Asia/Dhaka')
         ->and($profile->leaderboard_anonymous)->toBeTrue()
-        ->and($profile->preferences)->toBe(['default_mode' => 'hard', 'default_speed' => 0.75]);
+        ->and($profile->preferences)->toBe(['default_mode' => 'hard', 'default_speed' => 0.75, 'autoplay' => true]);
 
     $this->patch(route('learning-settings.update'), [
         'daily_goal_minutes' => 25, 'daily_goal_sentences' => 40, 'timezone' => 'Asia/Dhaka',
     ]);
-    expect($user->profile->fresh()->leaderboard_anonymous)->toBeFalse();
+    expect($user->profile->fresh()->leaderboard_anonymous)->toBeFalse()
+        ->and($user->profile->fresh()->preferences['autoplay'])->toBeFalse();   // an unticked box is sent as nothing
 });
 
 it('validates learning settings', function (array $bad, string $field) {

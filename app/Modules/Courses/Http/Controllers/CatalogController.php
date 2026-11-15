@@ -159,6 +159,7 @@ class CatalogController extends Controller
             'value' => $mode->value,
             'label' => $mode->label(),
             'hints' => (int) AppSetting::get('practice.hints.'.$mode->value, 0),
+            'guide' => (bool) AppSetting::get('practice.guide_text.'.$mode->value, false),
             'items' => match ($mode) {
                 PracticeMode::Hard => $topLevel,
                 PracticeMode::Medium => $topLevel + (int) ($chunks[ContentType::Phrase->value] ?? 0),

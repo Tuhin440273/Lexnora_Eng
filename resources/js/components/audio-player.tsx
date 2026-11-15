@@ -13,6 +13,8 @@ type Props = {
     /** Called every time the learner starts the audio (play or replay). */
     onStart?: () => void;
     onSpeedChange?: (speed: number) => void;
+    /** Start playing a moment after the item appears (no click needed). */
+    autoPlay?: boolean;
 };
 
 const speechSupported = () =>
@@ -30,6 +32,7 @@ export function AudioPlayer({
     defaultSpeed = 1,
     onStart,
     onSpeedChange,
+    autoPlay = false,
 }: Props) {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [speed, setSpeed] = useState(
@@ -61,7 +64,7 @@ export function AudioPlayer({
     }, [speakText, speed]);
 
     const start = useCallback(
-        (fromTheTop: boolean) => {
+        (fromTheTop: boolean, silent = false) => {
             setError(null);
             onStart?.();
 
@@ -83,7 +86,11 @@ export function AudioPlayer({
 
             audio.playbackRate = speed;
             void audio.play().catch(() => {
-                setError('The audio could not be played. Try again.');
+                // A browser may refuse to start sound by itself; then the learner presses Play.
+                if (!silent) {
+                    setError('The audio could not be played. Try again.');
+                }
+
                 setPlaying(false);
             });
         },
@@ -104,6 +111,25 @@ export function AudioPlayer({
 
         start(false);
     }, [playing, start, usingVoice]);
+
+    const startRef = useRef(start);
+
+    useEffect(() => {
+        startRef.current = start;
+    });
+
+    useEffect(() => {
+        if (!autoPlay) {
+            return;
+        }
+
+        const timer = window.setTimeout(
+            () => startRef.current(true, true),
+            500,
+        );
+
+        return () => window.clearTimeout(timer);
+    }, [autoPlay]);
 
     useEffect(() => {
         const onKey = (event: KeyboardEvent) => {

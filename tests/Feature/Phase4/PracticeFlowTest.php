@@ -18,19 +18,6 @@ beforeEach(function () {
     $this->withoutVite();
 });
 
-function lessonWithChunks(): array
-{
-    $lesson = lessonTree(true);
-    $first = Sentence::factory()->for($lesson)->create(['english_text' => 'I would like a cup of tea.', 'sort_order' => 1]);
-    $second = Sentence::factory()->for($lesson)->create(['english_text' => 'Thank you very much.', 'sort_order' => 2]);
-
-    $word = Sentence::factory()->word()->for($lesson)->create(['english_text' => 'tea', 'parent_id' => $first->id, 'sort_order' => 3]);
-    $long = Sentence::factory()->phrase()->for($lesson)->create(['english_text' => 'a cup of tea', 'parent_id' => $first->id, 'sort_order' => 1]);
-    $short = Sentence::factory()->phrase()->for($lesson)->create(['english_text' => 'a cup', 'parent_id' => $first->id, 'sort_order' => 2]);
-
-    return [$lesson, compact('first', 'second', 'word', 'long', 'short')];
-}
-
 it('plans easy, medium and hard sessions differently', function () {
     [$lesson, $s] = lessonWithChunks();
     $user = learner();

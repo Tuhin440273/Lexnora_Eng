@@ -28,6 +28,10 @@ class SettingsSchema
             ['key' => 'practice.hints.hard', 'group' => 'Practice', 'label' => 'Hints per item, Hard mode', 'type' => 'int', 'min' => 0, 'max' => 10],
             ['key' => 'practice.playback_speeds', 'group' => 'Practice', 'label' => 'Audio speeds', 'help' => 'Numbers separated by commas, for example 0.5, 0.75, 1, 1.25.', 'type' => 'list_float', 'min' => 0.25, 'max' => 3],
 
+            ['key' => 'practice.guide_text.easy', 'group' => 'Practice', 'label' => 'Faint guide text, Easy mode', 'help' => 'The sentence appears faintly, one word per second, and turns clear as the learner types each word correctly.', 'type' => 'bool'],
+            ['key' => 'practice.guide_text.medium', 'group' => 'Practice', 'label' => 'Faint guide text, Medium mode', 'type' => 'bool'],
+            ['key' => 'practice.guide_text.hard', 'group' => 'Practice', 'label' => 'Faint guide text, Hard mode', 'help' => 'It shows the answer, so leave it off if Hard mode should be a real listening test.', 'type' => 'bool'],
+
             ['key' => 'review.intervals_days', 'group' => 'Review', 'label' => 'Days between reviews', 'help' => 'One number per step, for example 1, 3, 7, 14. A failed review goes back to the first step.', 'type' => 'list_int', 'min' => 1, 'max' => 365],
             ['key' => 'review.batch_size', 'group' => 'Review', 'label' => 'Sentences per review session', 'type' => 'int', 'min' => 1, 'max' => 50],
 

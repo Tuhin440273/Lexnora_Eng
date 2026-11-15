@@ -57,6 +57,12 @@ return [
         'practice.hints.hard' => 0,
         'practice.playback_speeds' => [0.5, 0.75, 1, 1.25, 1.5, 2],
 
+        // Faint "guide text" that appears word by word while the audio plays.
+        // It shows the answer, so it is off in Hard mode by default.
+        'practice.guide_text.easy' => true,
+        'practice.guide_text.medium' => true,
+        'practice.guide_text.hard' => false,
+
         // --- Review schedule (days between reviews, by step) ---
         'review.intervals_days' => [1, 3, 7, 14, 30, 60],
         'review.batch_size' => 10,
