@@ -15,8 +15,14 @@ class PracticeSession extends Model
 {
     use HasUlids;
 
+    public const KIND_LESSON = 'lesson';
+
+    public const KIND_REVIEW = 'review';
+
+    public const KIND_MISTAKES = 'mistakes';
+
     protected $fillable = [
-        'user_id', 'lesson_id', 'mode', 'status', 'total_items', 'completed_items',
+        'user_id', 'lesson_id', 'mode', 'kind', 'plan', 'status', 'total_items', 'completed_items',
         'correct_items', 'average_accuracy', 'duration_seconds', 'xp_awarded',
         'started_at', 'last_activity_at', 'completed_at',
     ];
@@ -26,6 +32,7 @@ class PracticeSession extends Model
         return [
             'mode' => PracticeMode::class,
             'status' => SessionStatus::class,
+            'plan' => 'array',
             'average_accuracy' => 'decimal:2',
             'started_at' => 'datetime',
             'last_activity_at' => 'datetime',
@@ -46,5 +53,10 @@ class PracticeSession extends Model
     public function attempts(): HasMany
     {
         return $this->hasMany(PracticeAttempt::class);
+    }
+
+    public function isFinished(): bool
+    {
+        return $this->status !== SessionStatus::InProgress;
     }
 }

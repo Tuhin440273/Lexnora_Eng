@@ -15,7 +15,7 @@ class LearningCheckin extends Model
 
     protected function casts(): array
     {
-        return ['checkin_date' => 'date', 'streak_after' => 'integer', 'xp_awarded' => 'integer'];
+        return ['checkin_date' => 'date:Y-m-d', 'streak_after' => 'integer', 'xp_awarded' => 'integer'];
     }
 
     public function user(): BelongsTo

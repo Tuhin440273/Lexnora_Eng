@@ -19,7 +19,7 @@ class DailyLearningStatistic extends Model
     protected function casts(): array
     {
         return [
-            'stat_date' => 'date',
+            'stat_date' => 'date:Y-m-d',
             'accuracy_total' => 'decimal:2',
         ];
     }

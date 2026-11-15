@@ -1,0 +1,176 @@
+import { Head, Link, router } from '@inertiajs/react';
+import { ArrowLeft, Play } from 'lucide-react';
+import CatalogController from '@/actions/App/Modules/Courses/Http/Controllers/CatalogController';
+import PracticeController from '@/actions/App/Modules/Dictation/Http/Controllers/PracticeController';
+import { PageHeader } from '@/components/admin/page-header';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { formatDate, formatPercent, MODE_INFO } from '@/lib/learn';
+import { formatMinutes } from '@/lib/format';
+import { dashboard } from '@/routes';
+
+type Props = {
+    lesson: {
+        id: string;
+        title: string;
+        description: string | null;
+        difficulty: number;
+        estimated_minutes: number;
+        sentences_count: number;
+        is_published: boolean;
+    };
+    chapter: { id: string; title: string };
+    course: { id: string; title: string };
+    modes: {
+        value: 'easy' | 'medium' | 'hard';
+        label: string;
+        hints: number;
+        items: number;
+        resume: { done: number; total: number } | null;
+    }[];
+    progress: {
+        status: string;
+        best_accuracy: number | null;
+        sessions_count: number;
+    } | null;
+    recent: {
+        id: string;
+        mode: string;
+        accuracy: number;
+        completed_at: string | null;
+    }[];
+};
+
+export default function LessonShow({
+    lesson,
+    chapter,
+    course,
+    modes,
+    progress,
+    recent,
+}: Props) {
+    const start = (mode: string) =>
+        router.post(PracticeController.start.url(lesson.id), { mode });
+
+    return (
+        <>
+            <Head title={lesson.title} />
+            <div className="flex max-w-4xl flex-col gap-6 p-4">
+                <Link
+                    href={CatalogController.showCourse(course.id)}
+                    className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+                >
+                    <ArrowLeft className="size-4" /> {course.title}
+                </Link>
+
+                <PageHeader
+                    title={lesson.title}
+                    description={lesson.description ?? chapter.title}
+                    actions={
+                        <>
+                            {!lesson.is_published && (
+                                <Badge variant="outline">Draft preview</Badge>
+                            )}
+                            <Badge variant="secondary">
+                                {lesson.sentences_count} sentences
+                            </Badge>
+                            <Badge variant="secondary">
+                                {formatMinutes(lesson.estimated_minutes)}
+                            </Badge>
+                        </>
+                    }
+                />
+
+                {progress && (
+                    <p className="text-sm text-muted-foreground">
+                        {progress.status === 'completed'
+                            ? 'Completed'
+                            : 'In progress'}
+                        {progress.best_accuracy !== null &&
+                            ` · best text match ${formatPercent(progress.best_accuracy)}`}
+                        {` · practised ${progress.sessions_count} time${progress.sessions_count === 1 ? '' : 's'}`}
+                    </p>
+                )}
+
+                <section aria-labelledby="modes" className="space-y-3">
+                    <h2 id="modes" className="text-lg font-semibold">
+                        Choose how to practise
+                    </h2>
+                    <ul className="grid gap-3 md:grid-cols-3">
+                        {modes.map((mode) => (
+                            <li
+                                key={mode.value}
+                                className="flex flex-col justify-between gap-4 rounded-xl border bg-card p-4"
+                            >
+                                <div className="space-y-1">
+                                    <h3 className="font-semibold">
+                                        {mode.label}
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground">
+                                        {MODE_INFO[mode.value]}
+                                    </p>
+                                    <p className="text-xs text-muted-foreground">
+                                        {mode.items} items
+                                        {mode.hints > 0 &&
+                                            ` · ${mode.hints} hint${mode.hints === 1 ? '' : 's'}`}
+                                    </p>
+                                </div>
+                                <Button
+                                    onClick={() => start(mode.value)}
+                                    disabled={mode.items === 0}
+                                >
+                                    <Play />
+                                    {mode.resume
+                                        ? `Resume (${mode.resume.done}/${mode.resume.total})`
+                                        : 'Start'}
+                                </Button>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+
+                {recent.length > 0 && (
+                    <section aria-labelledby="recent" className="space-y-3">
+                        <h2 id="recent" className="text-lg font-semibold">
+                            Recent sessions
+                        </h2>
+                        <ul className="divide-y rounded-xl border bg-card">
+                            {recent.map((session) => (
+                                <li
+                                    key={session.id}
+                                    className="flex items-center justify-between gap-2 p-3 text-sm"
+                                >
+                                    <span className="capitalize">
+                                        {session.mode}
+                                    </span>
+                                    <span>
+                                        {formatPercent(session.accuracy)}
+                                    </span>
+                                    <span className="text-muted-foreground">
+                                        {formatDate(session.completed_at)}
+                                    </span>
+                                    <Button variant="ghost" size="sm" asChild>
+                                        <Link
+                                            href={PracticeController.summary(
+                                                session.id,
+                                            )}
+                                        >
+                                            Open
+                                        </Link>
+                                    </Button>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                )}
+            </div>
+        </>
+    );
+}
+
+LessonShow.layout = {
+    breadcrumbs: [
+        { title: 'Dashboard', href: dashboard() },
+        { title: 'Courses', href: CatalogController.index() },
+    ],
+};

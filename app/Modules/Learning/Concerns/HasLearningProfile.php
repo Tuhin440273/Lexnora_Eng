@@ -63,7 +63,10 @@ trait HasLearningProfile
     /** Returns the profile, creating it with defaults when missing. */
     public function ensureProfile(): UserProfile
     {
-        return $this->profile()->firstOrCreate([], []);
+        $profile = $this->profile()->firstOrCreate([], []);
+
+        // A new row only holds what was inserted; reload it to get the database defaults.
+        return $profile->wasRecentlyCreated ? $profile->fresh() : $profile;
     }
 
     public function isAdmin(): bool

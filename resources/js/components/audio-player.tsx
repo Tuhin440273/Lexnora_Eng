@@ -1,0 +1,260 @@
+import { Loader2, Pause, Play, RotateCcw, TriangleAlert } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { NativeSelect } from '@/components/ui/native-select';
+import { formatDuration } from '@/lib/format';
+
+type Props = {
+    /** Recorded audio. When missing, `speakText` is read by the browser's own voice. */
+    src: string | null;
+    speakText?: string | null;
+    speeds: number[];
+    defaultSpeed?: number;
+    /** Called every time the learner starts the audio (play or replay). */
+    onStart?: () => void;
+    onSpeedChange?: (speed: number) => void;
+};
+
+const speechSupported = () =>
+    typeof window !== 'undefined' && 'speechSynthesis' in window;
+
+/**
+ * Play / pause, replay, speed, duration, loading and error states.
+ * Keyboard: every control is a real button; Alt+P plays or pauses and Alt+R
+ * replays from anywhere on the page (also while typing).
+ */
+export function AudioPlayer({
+    src,
+    speakText = null,
+    speeds,
+    defaultSpeed = 1,
+    onStart,
+    onSpeedChange,
+}: Props) {
+    const audioRef = useRef<HTMLAudioElement>(null);
+    const [speed, setSpeed] = useState(
+        speeds.includes(defaultSpeed) ? defaultSpeed : 1,
+    );
+    const [playing, setPlaying] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [duration, setDuration] = useState<number | null>(null);
+
+    const usingVoice = src === null;
+    const canSpeak = usingVoice && !!speakText && speechSupported();
+
+    const speak = useCallback(() => {
+        if (!speakText || !speechSupported()) {
+            return;
+        }
+
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(speakText);
+        utterance.lang = 'en-US';
+        utterance.rate = speed;
+        utterance.onstart = () => setPlaying(true);
+        utterance.onend = () => setPlaying(false);
+        utterance.onerror = () => setPlaying(false);
+
+        window.speechSynthesis.speak(utterance);
+    }, [speakText, speed]);
+
+    const start = useCallback(
+        (fromTheTop: boolean) => {
+            setError(null);
+            onStart?.();
+
+            if (usingVoice) {
+                speak();
+
+                return;
+            }
+
+            const audio = audioRef.current;
+
+            if (!audio) {
+                return;
+            }
+
+            if (fromTheTop) {
+                audio.currentTime = 0;
+            }
+
+            audio.playbackRate = speed;
+            void audio.play().catch(() => {
+                setError('The audio could not be played. Try again.');
+                setPlaying(false);
+            });
+        },
+        [onStart, speak, speed, usingVoice],
+    );
+
+    const togglePlay = useCallback(() => {
+        if (playing) {
+            if (usingVoice) {
+                window.speechSynthesis.cancel();
+                setPlaying(false);
+            } else {
+                audioRef.current?.pause();
+            }
+
+            return;
+        }
+
+        start(false);
+    }, [playing, start, usingVoice]);
+
+    useEffect(() => {
+        const onKey = (event: KeyboardEvent) => {
+            if (!event.altKey) {
+                return;
+            }
+
+            if (event.code === 'KeyP') {
+                event.preventDefault();
+                togglePlay();
+            } else if (event.code === 'KeyR') {
+                event.preventDefault();
+                start(true);
+            }
+        };
+
+        window.addEventListener('keydown', onKey);
+
+        return () => window.removeEventListener('keydown', onKey);
+    }, [start, togglePlay]);
+
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.playbackRate = speed;
+        }
+    }, [speed, src]);
+
+    useEffect(() => {
+        const audio = audioRef.current;
+
+        return () => {
+            audio?.pause();
+
+            if (speechSupported()) {
+                window.speechSynthesis.cancel();
+            }
+        };
+    }, []);
+
+    if (usingVoice && !canSpeak) {
+        return (
+            <p
+                role="alert"
+                className="flex items-center gap-2 rounded-lg border border-warning/40 bg-warning/15 p-3 text-sm"
+            >
+                <TriangleAlert className="size-4 shrink-0" />
+                There is no recording for this item and your browser cannot read
+                it aloud.
+            </p>
+        );
+    }
+
+    return (
+        <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+                <Button
+                    type="button"
+                    size="lg"
+                    onClick={togglePlay}
+                    disabled={loading && !playing}
+                    aria-keyshortcuts="Alt+P"
+                >
+                    {loading && !playing ? (
+                        <Loader2 className="animate-spin" />
+                    ) : playing ? (
+                        <Pause />
+                    ) : (
+                        <Play />
+                    )}
+                    {playing ? 'Pause' : 'Play'}
+                </Button>
+                <Button
+                    type="button"
+                    size="lg"
+                    variant="outline"
+                    onClick={() => start(true)}
+                    aria-keyshortcuts="Alt+R"
+                >
+                    <RotateCcw /> Replay
+                </Button>
+
+                <div className="flex items-center gap-2">
+                    <label
+                        htmlFor="playback-speed"
+                        className="text-sm text-muted-foreground"
+                    >
+                        Speed
+                    </label>
+                    <NativeSelect
+                        id="playback-speed"
+                        className="w-24"
+                        value={String(speed)}
+                        onChange={(event) => {
+                            const next = Number(event.target.value);
+                            setSpeed(next);
+                            onSpeedChange?.(next);
+                        }}
+                    >
+                        {speeds.map((value) => (
+                            <option key={value} value={value}>
+                                {value}x
+                            </option>
+                        ))}
+                    </NativeSelect>
+                </div>
+
+                <span
+                    className="text-sm text-muted-foreground tabular-nums"
+                    aria-label="Audio length"
+                >
+                    {usingVoice ? '' : formatDuration(duration)}
+                </span>
+            </div>
+
+            {usingVoice && (
+                <p className="text-xs text-muted-foreground">
+                    No recording yet. Your device&apos;s voice reads this aloud.
+                </p>
+            )}
+
+            {error && (
+                <p role="alert" className="text-sm text-destructive">
+                    {error}
+                </p>
+            )}
+
+            {!usingVoice && (
+                <audio
+                    ref={audioRef}
+                    src={src}
+                    preload="auto"
+                    onLoadStart={() => setLoading(true)}
+                    onCanPlay={() => setLoading(false)}
+                    onLoadedMetadata={(event) =>
+                        setDuration(
+                            Number.isFinite(event.currentTarget.duration)
+                                ? Math.round(
+                                      event.currentTarget.duration * 1000,
+                                  )
+                                : null,
+                        )
+                    }
+                    onPlay={() => setPlaying(true)}
+                    onPause={() => setPlaying(false)}
+                    onEnded={() => setPlaying(false)}
+                    onError={() => {
+                        setLoading(false);
+                        setError('The audio file could not be loaded.');
+                    }}
+                />
+            )}
+        </div>
+    );
+}

@@ -10,7 +10,12 @@ use App\Modules\Courses\Models\Lesson;
 use App\Modules\Courses\Models\Sentence;
 use App\Modules\Courses\Models\SentenceAudio;
 use App\Modules\Courses\Policies\ContentPolicy;
+use App\Modules\Dictation\Models\MistakeRecord;
+use App\Modules\Dictation\Models\PracticeSession;
 use App\Modules\Learning\Listeners\CreateUserDefaults;
+use App\Modules\Learning\Models\UserNote;
+use App\Modules\Learning\Policies\OwnedByUserPolicy;
+use App\Modules\Review\Models\ReviewSchedule;
 use App\Modules\Vocabulary\Models\SavedVocabulary;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -43,13 +48,28 @@ class LearningServiceProvider extends ServiceProvider
 
     private function registerAuthorization(): void
     {
-        // The super-admin passes every check.
-        Gate::before(fn (User $user): ?bool => $user->hasRole('super-admin') ? true : null);
+        // The super-admin passes every check, except those about a learner's private
+        // records (sessions, notes, saved words...): those stay with their owner.
+        $private = [PracticeSession::class, SavedVocabulary::class, UserNote::class, MistakeRecord::class, ReviewSchedule::class];
+
+        Gate::before(function (User $user, string $ability, array $arguments = []) use ($private): ?bool {
+            foreach ($private as $class) {
+                if (($arguments[0] ?? null) instanceof $class) {
+                    return null;
+                }
+            }
+
+            return $user->hasRole('super-admin') ? true : null;
+        });
 
         Gate::define('access-admin', fn (User $user): bool => $user->canAccessAdmin());
 
         foreach ([Category::class, Course::class, Chapter::class, Lesson::class, Sentence::class, SentenceAudio::class] as $model) {
             Gate::policy($model, ContentPolicy::class);
+        }
+
+        foreach ([PracticeSession::class, SavedVocabulary::class, UserNote::class, MistakeRecord::class, ReviewSchedule::class] as $model) {
+            Gate::policy($model, OwnedByUserPolicy::class);
         }
     }
 }

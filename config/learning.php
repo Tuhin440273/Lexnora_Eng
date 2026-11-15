@@ -59,6 +59,7 @@ return [
 
         // --- Review schedule (days between reviews, by step) ---
         'review.intervals_days' => [1, 3, 7, 14, 30, 60],
+        'review.batch_size' => 10,
 
         // --- XP rules (always applied server-side) ---
         'xp.per_correct_sentence' => 10,

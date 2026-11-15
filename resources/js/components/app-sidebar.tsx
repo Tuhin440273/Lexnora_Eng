@@ -1,13 +1,24 @@
 import { Link, usePage } from '@inertiajs/react';
 import {
     AudioLines,
+    BookMarked,
     BookOpen,
+    ChartLine,
+    CircleAlert,
     FolderGit2,
     GraduationCap,
     LayoutGrid,
+    NotebookPen,
+    RotateCw,
     ShieldCheck,
     Tags,
+    Trophy,
 } from 'lucide-react';
+import CatalogController from '@/actions/App/Modules/Courses/Http/Controllers/CatalogController';
+import MistakeController from '@/actions/App/Modules/Dictation/Http/Controllers/MistakeController';
+import NoteController from '@/actions/App/Modules/Learning/Http/Controllers/NoteController';
+import ReviewController from '@/actions/App/Modules/Review/Http/Controllers/ReviewController';
+import SavedVocabularyController from '@/actions/App/Modules/Vocabulary/Http/Controllers/SavedVocabularyController';
 import AudioLibraryController from '@/actions/App/Modules/Admin/Http/Controllers/AudioLibraryController';
 import CategoryController from '@/actions/App/Modules/Admin/Http/Controllers/CategoryController';
 import CourseController from '@/actions/App/Modules/Admin/Http/Controllers/CourseController';
@@ -25,15 +36,27 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { analytics, dashboard, leaderboard } from '@/routes';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
+    { title: 'Dashboard', href: dashboard(), icon: LayoutGrid },
     {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
+        title: 'Courses',
+        href: CatalogController.index(),
+        icon: BookOpen,
+        matchChildren: true,
     },
+    { title: 'Review', href: ReviewController.index(), icon: RotateCw },
+    {
+        title: 'Vocabulary',
+        href: SavedVocabularyController.index(),
+        icon: BookMarked,
+    },
+    { title: 'Mistakes', href: MistakeController.index(), icon: CircleAlert },
+    { title: 'Notes', href: NoteController.index(), icon: NotebookPen },
+    { title: 'Progress', href: analytics(), icon: ChartLine },
+    { title: 'Leaderboard', href: leaderboard(), icon: Trophy },
 ];
 
 const adminNavItems: NavItem[] = [
