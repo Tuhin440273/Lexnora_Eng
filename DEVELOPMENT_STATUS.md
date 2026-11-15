@@ -20,13 +20,19 @@
 - **QA:** lazy loading is forbidden outside production, two real N+1 queries found and fixed (course catalog, review center), and 16 tests check that pages keep the same query count as data grows.
 - **Docs:** `README.md`, `docs/DEPLOYMENT.md` (with a MySQL check), architecture notes.
 
+## Phase 8
+
+- **Vocabulary list (admin):** add, edit, hide, remove, search and filter (type, level, status). Needs the `vocabulary.manage` permission.
+- **Automatic links:** an entry is linked to every sentence that uses it as a whole word or plural ("card" and "cards", "allergy" and "allergies", never "change" inside "exchange"). Adding or editing a sentence refreshes its links.
+- **Content pack:** `ContentPackSeeder` adds 5 courses (A1 to B2), 10 lessons, 60 sentences with Bengali translations, 17 words and phrases for Easy and Medium mode, and 27 vocabulary entries. Safe to run again.
+
 ## Tests
 
-`php artisan test`: 378 passed, 3 skipped (Two-factor is not enabled). `vp test`: 6 passed. `npm run types:check` and `vp check` are clean.
+`php artisan test`: 413 passed, 3 skipped (Two-factor is not enabled). `vp test`: 6 passed. `npm run types:check` and `vp check` are clean.
 
 ## Not done or not verified
 
 - The tests run on SQLite. Run them once on MySQL (see `docs/DEPLOYMENT.md`, step 1).
 - Layouts were written mobile-first (tables scroll sideways, forms stack) but were not checked on real phones and tablets.
 - Not built, by design for version 1: AI tutor, voice conversation, pronunciation scoring, YouTube lessons, AI lesson or quiz generation, payments, adaptive learning, native apps.
-- The vocabulary master list (`vocabulary` table) has no admin screen yet; words appear through the seeders and are linked automatically when a learner saves the same word.
+- The content pack has no audio. The Bengali translations were written for this project and should be read once by a native speaker before real learners use them.

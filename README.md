@@ -43,6 +43,20 @@ composer run dev
 
 Open http://localhost:8000 and sign in with the admin account. In local development, email verification links are written to `storage/logs/laravel.log`.
 
+## Ready-made content
+
+Five courses (A1 to B2) with Bengali translations, words and phrases for Easy and Medium mode, and a vocabulary list are included. Add them to any database, as often as you like (nothing is duplicated):
+
+```bash
+php artisan db:seed --class=ContentPackSeeder
+```
+
+They have no recordings yet. Upload audio from a lesson page in Content admin; until then the browser's own voice reads the text aloud.
+
+## Vocabulary list
+
+Content admin, Vocabulary: add, edit, hide and remove words and phrases with English and Bengali meanings. Each entry is linked to the sentences that use it (whole words and plurals only), and it is re-linked when you add or edit a sentence. When a learner saves the same word, they see your meaning.
+
 ## Roles
 
 | Role            | Can do                                                                        |

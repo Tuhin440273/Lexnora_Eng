@@ -56,6 +56,8 @@ php artisan db:seed --force        # roles, settings, badges and the admin user;
 php artisan optimize
 ```
 
+Optional: `php artisan db:seed --class=ContentPackSeeder --force` adds the five ready-made courses.
+
 Make `storage` and `bootstrap/cache` writable by the web server user.
 
 ## 5. Every later deploy

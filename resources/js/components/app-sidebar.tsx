@@ -9,6 +9,7 @@ import {
     ChartColumn,
     GraduationCap,
     KeyRound,
+    Languages,
     LayoutGrid,
     NotebookPen,
     RotateCw,
@@ -26,6 +27,7 @@ import SavedVocabularyController from '@/actions/App/Modules/Vocabulary/Http/Con
 import AnalyticsController from '@/actions/App/Modules/Admin/Http/Controllers/AnalyticsController';
 import RoleController from '@/actions/App/Modules/Admin/Http/Controllers/RoleController';
 import SettingsController from '@/actions/App/Modules/Admin/Http/Controllers/SettingsController';
+import VocabularyController from '@/actions/App/Modules/Admin/Http/Controllers/VocabularyController';
 import UserController from '@/actions/App/Modules/Admin/Http/Controllers/UserController';
 import AudioLibraryController from '@/actions/App/Modules/Admin/Http/Controllers/AudioLibraryController';
 import CategoryController from '@/actions/App/Modules/Admin/Http/Controllers/CategoryController';
@@ -91,6 +93,12 @@ const adminNavItems: AdminNavItem[] = [
         href: AudioLibraryController.index(),
         icon: AudioLines,
         permission: 'audio.manage',
+    },
+    {
+        title: 'Vocabulary',
+        href: VocabularyController.index(),
+        icon: Languages,
+        permission: 'vocabulary.manage',
     },
     {
         title: 'Users',

@@ -7,6 +7,7 @@ use App\Modules\Admin\Http\Requests\MoveRequest;
 use App\Modules\Admin\Http\Requests\SentenceRequest;
 use App\Modules\Admin\Services\ContentDeletionService;
 use App\Modules\Admin\Services\SortOrderService;
+use App\Modules\Admin\Services\VocabularyLinker;
 use App\Modules\Courses\Models\Lesson;
 use App\Modules\Courses\Models\Sentence;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,6 +20,7 @@ class SentenceController extends Controller
     public function __construct(
         private readonly SortOrderService $order,
         private readonly ContentDeletionService $deletion,
+        private readonly VocabularyLinker $linker,
     ) {}
 
     public function store(SentenceRequest $request, Lesson $lesson): RedirectResponse
@@ -26,7 +28,7 @@ class SentenceController extends Controller
         $data = $request->validated();
         $parentId = $data['parent_id'] ?? null;
 
-        Sentence::create([
+        $created = Sentence::create([
             'lesson_id' => $lesson->id,
             'parent_id' => $parentId,
             'content_type' => $data['content_type'],
@@ -35,6 +37,8 @@ class SentenceController extends Controller
             'explanation' => $data['explanation'] ?? null,
             'sort_order' => $this->order->next($this->siblings($lesson->id, $parentId)),
         ]);
+
+        $this->linker->linkSentence($created);
 
         Inertia::flash('toast', [
             'type' => 'success',
@@ -54,6 +58,8 @@ class SentenceController extends Controller
             'bengali_text' => $data['bengali_text'] ?? null,
             'explanation' => $data['explanation'] ?? null,
         ]);
+
+        $this->linker->linkSentence($sentence);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Saved.')]);
 

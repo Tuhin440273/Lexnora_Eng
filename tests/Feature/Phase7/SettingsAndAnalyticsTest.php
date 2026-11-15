@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use App\Modules\Admin\Support\SettingsSchema;
+use App\Modules\Dictation\Models\PracticeAttempt;
 use App\Modules\Learning\Models\AppSetting;
 use Inertia\Testing\AssertableInertia as Assert;
 
@@ -111,7 +113,7 @@ it('changes how answers are scored', function () {
 
     typeAnswer($user, startPractice($user, $lesson), 'sentence number one');
 
-    expect(App\Modules\Dictation\Models\PracticeAttempt::firstOrFail()->is_correct)->toBeTrue();
+    expect(PracticeAttempt::firstOrFail()->is_correct)->toBeTrue();
 });
 
 it('describes every default setting in the schema', function () {
@@ -131,7 +133,7 @@ it('shows platform analytics only to those who may view them', function () {
 
 it('adds up learning across all learners without exposing anyone', function () {
     $lesson = publishedLesson(2);
-    $ann = App\Models\User::factory()->create(['name' => 'Ann Secret', 'email' => 'ann.secret@school.test']);
+    $ann = User::factory()->create(['name' => 'Ann Secret', 'email' => 'ann.secret@school.test']);
     $ann->assignRole('learner');
     $bob = learner();
 

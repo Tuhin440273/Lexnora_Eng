@@ -12,6 +12,7 @@ use App\Modules\Admin\Http\Controllers\SentenceAudioController;
 use App\Modules\Admin\Http\Controllers\SentenceController;
 use App\Modules\Admin\Http\Controllers\SettingsController;
 use App\Modules\Admin\Http\Controllers\UserController;
+use App\Modules\Admin\Http\Controllers\VocabularyController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'can:access-admin'])
@@ -47,6 +48,14 @@ Route::middleware(['auth', 'verified', 'can:access-admin'])
         Route::post('sentences/{sentence}/audio', [SentenceAudioController::class, 'store'])->middleware('throttle:60,1')->name('audio.store');
         Route::patch('audio/{audio}/primary', [SentenceAudioController::class, 'makePrimary'])->name('audio.primary');
         Route::delete('audio/{audio}', [SentenceAudioController::class, 'destroy'])->name('audio.destroy');
+
+        Route::middleware('can:vocabulary.manage')->group(function () {
+            Route::get('vocabulary', [VocabularyController::class, 'index'])->name('vocabulary.index');
+            Route::post('vocabulary', [VocabularyController::class, 'store'])->name('vocabulary.store');
+            Route::patch('vocabulary/{vocabulary}', [VocabularyController::class, 'update'])->name('vocabulary.update');
+            Route::delete('vocabulary/{vocabulary}', [VocabularyController::class, 'destroy'])->name('vocabulary.destroy');
+            Route::post('vocabulary/{vocabulary}/link', [VocabularyController::class, 'relink'])->name('vocabulary.link');
+        });
 
         Route::middleware('can:users.manage')->group(function () {
             Route::get('users', [UserController::class, 'index'])->name('users.index');

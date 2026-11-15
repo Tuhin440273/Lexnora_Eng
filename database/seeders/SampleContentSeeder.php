@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Modules\Admin\Services\VocabularyLinker;
 use App\Modules\Courses\Models\Category;
 use App\Modules\Courses\Models\Chapter;
 use App\Modules\Courses\Models\Course;
@@ -11,7 +12,6 @@ use App\Modules\Learning\Enums\ContentType;
 use App\Modules\Vocabulary\Models\Vocabulary;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 /**
  * Realistic demo content. No audio is attached: audio files are uploaded by
@@ -19,26 +19,24 @@ use Illuminate\Support\Str;
  */
 class SampleContentSeeder extends Seeder
 {
+    public function __construct(protected VocabularyLinker $linker) {}
+
     public function run(): void
     {
         DB::transaction(function (): void {
             $categories = $this->seedCategories();
             $this->seedCourses($categories);
             $this->seedVocabulary();
+            $this->relinkAll();
         });
     }
 
     /** @return array<string, Category> */
     private function seedCategories(): array
     {
-        $rows = [
-            'daily-life' => ['Daily Life', 'Everyday situations: greetings, shopping, eating out.', 1],
-            'travel' => ['Travel', 'Airports, hotels, directions and getting around.', 2],
-            'work-business' => ['Work & Business', 'Meetings, emails and professional conversations.', 3],
-        ];
-
         $categories = [];
-        foreach ($rows as $slug => [$name, $description, $order]) {
+
+        foreach ($this->categoryData() as $slug => [$name, $description, $order]) {
             $categories[$slug] = Category::updateOrCreate(
                 ['slug' => $slug],
                 ['name' => $name, 'description' => $description, 'sort_order' => $order, 'is_active' => true]
@@ -46,6 +44,16 @@ class SampleContentSeeder extends Seeder
         }
 
         return $categories;
+    }
+
+    /** @return array<string, array{0: string, 1: string, 2: int}> */
+    protected function categoryData(): array
+    {
+        return [
+            'daily-life' => ['Daily Life', 'Everyday situations: greetings, shopping, eating out.', 1],
+            'travel' => ['Travel', 'Airports, hotels, directions and getting around.', 2],
+            'work-business' => ['Work & Business', 'Meetings, emails and professional conversations.', 3],
+        ];
     }
 
     /** @param array<string, Category> $categories */
@@ -111,6 +119,12 @@ class SampleContentSeeder extends Seeder
         }
     }
 
+    /** New lessons may use words that were added earlier, so every active entry is matched again. */
+    private function relinkAll(): void
+    {
+        Vocabulary::where('is_active', true)->each(fn (Vocabulary $entry) => $this->linker->linkVocabulary($entry));
+    }
+
     private function seedVocabulary(): void
     {
         foreach ($this->vocabularyData() as [$term, $type, $pos, $meaningEn, $meaningBn, $pronunciation, $example, $cefr]) {
@@ -128,17 +142,12 @@ class SampleContentSeeder extends Seeder
                 ]
             );
 
-            // Link the entry to every top-level sentence that contains it.
-            $sentenceIds = Sentence::query()->whereNull('parent_id')->get(['id', 'english_text'])
-                ->filter(fn (Sentence $s) => Str::contains(Str::lower($s->english_text), $vocabulary->normalized_term))
-                ->pluck('id')->all();
-
-            $vocabulary->sentences()->syncWithoutDetaching($sentenceIds);
+            $this->linker->linkVocabulary($vocabulary);
         }
     }
 
     /** @return list<array<string, mixed>> */
-    private function courseData(): array
+    protected function courseData(): array
     {
         return [
             [
@@ -259,7 +268,7 @@ class SampleContentSeeder extends Seeder
     }
 
     /** @return list<array<int, string|null>> */
-    private function vocabularyData(): array
+    protected function vocabularyData(): array
     {
         return [
             ['coffee', 'word', 'noun', 'a hot drink made from roasted beans', 'কফি', '/ˈkɒfi/', 'I would like a cup of coffee.', 'A1'],
