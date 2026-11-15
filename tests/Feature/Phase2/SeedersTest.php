@@ -6,11 +6,15 @@ use App\Modules\Courses\Models\Lesson;
 use App\Modules\Courses\Models\Sentence;
 use App\Modules\Gamification\Models\Badge;
 use App\Modules\Learning\Models\AppSetting;
+use App\Modules\Learning\Models\UserProfile;
 use App\Modules\Vocabulary\Models\Vocabulary;
+use Database\Seeders\UserDefaultsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
+
+beforeEach(fn () => config()->set('learning.admin.password', null));   // never depend on the ADMIN_PASSWORD in .env
 
 it('seeds roles, settings, badges, an admin and sample content', function () {
     config()->set('learning.admin.password', 'Test-Admin-Pass-1');
@@ -77,4 +81,13 @@ it('keeps admin-edited settings when seeding again', function () {
 it('falls back to config defaults before anything is seeded', function () {
     expect(AppSetting::get('review.intervals_days'))->toBe([1, 3, 7, 14, 30, 60])
         ->and(AppSetting::get('does.not.exist', 'fallback'))->toBe('fallback');
+});
+
+it('gives many existing users a profile and a role without a query per user', function () {
+    User::factory()->count(4)->create();   // lazy loading is forbidden in tests, so a query per user would fail here
+
+    $this->seed(UserDefaultsSeeder::class);
+
+    expect(User::role('learner')->count())->toBe(4)
+        ->and(UserProfile::count())->toBe(4);
 });

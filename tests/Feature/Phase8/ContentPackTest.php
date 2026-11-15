@@ -11,6 +11,7 @@ use Database\Seeders\ContentPackSeeder;
 require_once __DIR__.'/../Phase4/Helpers.php';
 
 beforeEach(function () {
+    config()->set('learning.admin.password', null);   // never depend on the ADMIN_PASSWORD in .env
     seedRoles();
     $this->withoutVite();
 });
