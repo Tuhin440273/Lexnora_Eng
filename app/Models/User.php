@@ -31,10 +31,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
-    use HasLearningProfile;
-
-    use HasRoles;
+    use HasFactory, HasLearningProfile, HasRoles, Notifiable;
 
     /**
      * Get the attributes that should be cast.

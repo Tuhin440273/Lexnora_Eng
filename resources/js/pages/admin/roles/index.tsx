@@ -39,7 +39,7 @@ function RoleCard({
 
     const save = () =>
         router.patch(
-            RoleController.update.url(String(role.id)),
+            RoleController.update.url(role.id),
             { permissions: selected },
             {
                 preserveScroll: true,

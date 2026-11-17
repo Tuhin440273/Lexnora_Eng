@@ -16,6 +16,7 @@ export default defineConfig({
                 bunny('Hind Siliguri', {
                     weights: [400, 500, 600, 700],
                     subsets: ['latin', 'bengali'],
+                    optimizedFallbacks: false,
                     preload: [
                         { weight: 400, style: 'normal' },
                         { weight: 600, style: 'normal' },
@@ -24,11 +25,13 @@ export default defineConfig({
                 bunny('Baloo Da 2', {
                     weights: [600, 700],
                     subsets: ['latin', 'bengali'],
+                    optimizedFallbacks: false,
                     preload: [{ weight: 700, style: 'normal' }],
                 }),
                 bunny('Lexend', {
                     weights: [400, 600],
                     subsets: ['latin'],
+                    optimizedFallbacks: false,
                     preload: false,
                 }),
             ],
