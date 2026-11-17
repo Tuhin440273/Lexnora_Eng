@@ -54,9 +54,14 @@ export function DiffView({
     );
 }
 
-export function DiffLegend() {
+export function DiffLegend({ className }: { className?: string }) {
     return (
-        <ul className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+        <ul
+            className={cn(
+                'flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground',
+                className,
+            )}
+        >
             <li>
                 <span className="text-destructive line-through">typed</span>{' '}
                 wrong or extra

@@ -46,6 +46,7 @@
 
 ## Phase 13 - practice screen comfort
 
+- **Focused practice screen:** the practice page has no sidebar. A close button, a thin progress bar with the item count, and the letter-size buttons sit on top. In the middle there is one big play button (replay and speed under it), the Bengali meaning, and the typing line. A bar at the bottom holds the guide toggle, the hint button and "Check answer"; after an answer the same bar shows the result (green or red) and the "Next" button, so it is always in reach, also on phones. When every word matched, the word-by-word comparison is left out because it would only repeat the text. The page is laid out by `pages/practice/show.tsx` (no layout, see `app.tsx`) and `components/audio-player.tsx`.
 - **Letter size:** A- and A+ buttons above the typing box change the size of the guide text and of what the learner types (normal, large, larger). The choice is kept per device in the browser (`lib/letter-size.ts`, `hooks/use-letter-size.ts`).
 - **Shortcuts:** Alt+I asks for a hint and Alt+G shows or hides the guide text, next to the existing Ctrl+Enter (check), Alt+P (play or pause) and Alt+R (replay). Alt+H and Alt+S were avoided because browsers use them for menus. The help line under the box lists the ones that apply.
 - **Right without hints:** the session summary shows how many answers were right with no hint (`session.correct_without_hints`, counted on the server from the saved attempts). It is only a display figure. XP and scores are unchanged.
@@ -58,7 +59,7 @@
 
 ## Not done or not verified
 
-- The letter-size buttons, the two new shortcuts and the five-tile summary were checked by types, lint and tests, but not clicked in a real browser. Check them once.
+- The focused practice screen was opened and clicked in headless Chromium in the sandbox (desktop, phone size, light and dark: play controls, letter size, Alt+G, Alt+I, wrong and exact answers). It was not tried on a real phone or with real audio recordings.
 - Check types in the sandbox only after migrating a database and regenerating Wayfinder, and run Pint with a fresh cache, otherwise results can differ from a real machine.
 - Autoplay, the one-word-per-second reveal and the blur are browser behaviour. They are written and their logic is tested, but they were not watched in a real browser, and Chrome may refuse autoplay until the learner has clicked anywhere on the site once.
 

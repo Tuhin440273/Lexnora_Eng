@@ -183,44 +183,45 @@ export function AudioPlayer({
     }
 
     return (
-        <div className="space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col items-center gap-3">
+            <Button
+                type="button"
+                onClick={togglePlay}
+                disabled={loading && !playing}
+                aria-keyshortcuts="Alt+P"
+                aria-label={playing ? 'Pause' : 'Play'}
+                className="size-20 rounded-full shadow-md"
+            >
+                {loading && !playing ? (
+                    <Loader2 className="size-8 animate-spin" />
+                ) : playing ? (
+                    <Pause className="size-8 fill-current" />
+                ) : (
+                    <Play className="size-8 fill-current" />
+                )}
+            </Button>
+
+            <div className="flex flex-wrap items-center justify-center gap-2">
                 <Button
                     type="button"
-                    size="lg"
-                    onClick={togglePlay}
-                    disabled={loading && !playing}
-                    aria-keyshortcuts="Alt+P"
-                >
-                    {loading && !playing ? (
-                        <Loader2 className="animate-spin" />
-                    ) : playing ? (
-                        <Pause />
-                    ) : (
-                        <Play />
-                    )}
-                    {playing ? 'Pause' : 'Play'}
-                </Button>
-                <Button
-                    type="button"
-                    size="lg"
-                    variant="outline"
+                    variant="ghost"
+                    size="sm"
                     onClick={() => start(true)}
                     aria-keyshortcuts="Alt+R"
                 >
                     <RotateCcw /> Replay
                 </Button>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                     <label
                         htmlFor="playback-speed"
-                        className="text-sm text-muted-foreground"
+                        className="text-xs text-muted-foreground"
                     >
                         Speed
                     </label>
                     <NativeSelect
                         id="playback-speed"
-                        className="w-24"
+                        className="h-8 w-20"
                         value={String(speed)}
                         onChange={(event) => {
                             const next = Number(event.target.value);
@@ -237,7 +238,7 @@ export function AudioPlayer({
                 </div>
 
                 <span
-                    className="text-sm text-muted-foreground tabular-nums"
+                    className="text-xs text-muted-foreground tabular-nums"
                     aria-label="Audio length"
                 >
                     {usingVoice ? '' : formatDuration(duration)}
