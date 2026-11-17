@@ -49,6 +49,7 @@
 - **Letter size:** A- and A+ buttons above the typing box change the size of the guide text and of what the learner types (normal, large, larger). The choice is kept per device in the browser (`lib/letter-size.ts`, `hooks/use-letter-size.ts`).
 - **Shortcuts:** Alt+I asks for a hint and Alt+G shows or hides the guide text, next to the existing Ctrl+Enter (check), Alt+P (play or pause) and Alt+R (replay). Alt+H and Alt+S were avoided because browsers use them for menus. The help line under the box lists the ones that apply.
 - **Right without hints:** the session summary shows how many answers were right with no hint (`session.correct_without_hints`, counted on the server from the saved attempts). It is only a display figure. XP and scores are unchanged.
+- **Own branding:** the Laravel starter-kit mark is replaced by the Lexnora mark (headphones with a text cursor: listen, then type) in the app, the sign-in pages, the browser tab (`favicon.svg`, `favicon.ico`) and `apple-touch-icon.png`. The "Documentation" link to the Laravel docs is removed; the "Repository" link points to this project.
 - **Fixes found while checking on a real machine:** `User.php` trait list written on one line (Pint on PHP 8.5), a number instead of a string for the role id in `admin/roles/index.tsx` (Wayfinder types come from the real database columns), and font fallbacks switched off in `vite.config.ts` (the optional "fontaine" package is not installed).
 
 ## Tests

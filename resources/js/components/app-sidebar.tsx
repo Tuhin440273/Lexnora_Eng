@@ -132,11 +132,6 @@ const footerNavItems: NavItem[] = [
         href: 'https://github.com/Tuhin440273/Lexnora_Eng',
         icon: FolderGit2,
     },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
 ];
 
 export function AppSidebar() {
