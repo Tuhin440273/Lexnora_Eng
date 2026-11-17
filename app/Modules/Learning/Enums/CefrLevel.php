@@ -23,6 +23,12 @@ enum CefrLevel: string
         };
     }
 
+    /** Lower-case code used by the front end for the level accent (a1, b2...). */
+    public function key(): string
+    {
+        return strtolower($this->value);
+    }
+
     /** 1 (A1) ... 6 (C2) — handy for sorting and comparisons. */
     public function rank(): int
     {

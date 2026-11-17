@@ -13,8 +13,23 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
             refresh: true,
             fonts: [
-                bunny('Inter', {
+                bunny('Hind Siliguri', {
                     weights: [400, 500, 600, 700],
+                    subsets: ['latin', 'bengali'],
+                    preload: [
+                        { weight: 400, style: 'normal' },
+                        { weight: 600, style: 'normal' },
+                    ],
+                }),
+                bunny('Baloo Da 2', {
+                    weights: [600, 700],
+                    subsets: ['latin', 'bengali'],
+                    preload: [{ weight: 700, style: 'normal' }],
+                }),
+                bunny('Lexend', {
+                    weights: [400, 600],
+                    subsets: ['latin'],
+                    preload: false,
                 }),
             ],
         }),

@@ -499,6 +499,12 @@ parameters:
 			path: app/Modules/Courses/Http/Controllers/CatalogController.php
 
 		-
+			message: '#^Cannot call method key\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
 			message: '#^Cannot call method label\(\) on string\.$#'
 			identifier: method.nonObject
 			count: 1

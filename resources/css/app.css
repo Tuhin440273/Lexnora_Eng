@@ -9,9 +9,15 @@
 
 @theme {
     --font-sans:
-        'Inter', 'Noto Sans Bengali', 'Hind Siliguri', 'Nirmala UI',
-        ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        'Hind Siliguri', 'Noto Sans Bengali', 'Nirmala UI', ui-sans-serif,
+        system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-heading:
+        'Baloo Da 2', 'Hind Siliguri', 'Noto Sans Bengali', 'Nirmala UI',
+        ui-sans-serif, system-ui, sans-serif;
+    --font-practice:
+        'Lexend', 'Hind Siliguri', 'Noto Sans Bengali', 'Nirmala UI',
+        ui-sans-serif, system-ui, sans-serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -56,6 +62,12 @@
     --color-warning: var(--warning);
     --color-warning-foreground: var(--warning-foreground);
 
+    --color-err: var(--err);
+    --color-star: var(--star);
+    --color-hint: var(--hint);
+    --color-level: var(--level-accent);
+    --color-level-foreground: var(--level-accent-foreground);
+
     --color-sidebar: var(--sidebar);
     --color-sidebar-foreground: var(--sidebar-foreground);
     --color-sidebar-primary: var(--sidebar-primary);
@@ -67,82 +79,129 @@
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.208 0.042 265.755);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.208 0.042 265.755);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.208 0.042 265.755);
-    --primary: oklch(0.511 0.262 276.966);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.968 0.007 247.896);
-    --secondary-foreground: oklch(0.208 0.042 265.755);
-    --muted: oklch(0.968 0.007 247.896);
-    --muted-foreground: oklch(0.554 0.046 257.417);
+    --background: #f6f7fb;
+    --foreground: #1b1d26;
+    --card: #ffffff;
+    --card-foreground: #1b1d26;
+    --popover: #ffffff;
+    --popover-foreground: #1b1d26;
+    --primary: #3b47d6;
+    --primary-foreground: #ffffff;
+    --secondary: #eef0f7;
+    --secondary-foreground: #1b1d26;
+    --muted: #eef0f7;
+    --muted-foreground: #5a6072;
     --accent: oklch(0.962 0.018 272.314);
     --accent-foreground: oklch(0.359 0.144 278.697);
     --destructive: oklch(0.577 0.245 27.325);
     --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.929 0.013 255.508);
-    --input: oklch(0.929 0.013 255.508);
+    --border: #dde1ec;
+    --input: #dde1ec;
     --ring: oklch(0.673 0.182 276.935);
     --chart-1: oklch(0.646 0.222 41.116);
     --chart-2: oklch(0.6 0.118 184.704);
     --chart-3: oklch(0.398 0.07 227.392);
     --chart-4: oklch(0.828 0.189 84.429);
     --chart-5: oklch(0.769 0.188 70.08);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.984 0.003 247.858);
-    --sidebar-foreground: oklch(0.208 0.042 265.755);
-    --sidebar-primary: oklch(0.511 0.262 276.966);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --radius: 0.875rem;
+    --sidebar: #ffffff;
+    --sidebar-foreground: #1b1d26;
+    --sidebar-primary: #3b47d6;
+    --sidebar-primary-foreground: #ffffff;
     --sidebar-accent: oklch(0.962 0.018 272.314);
     --sidebar-accent-foreground: oklch(0.359 0.144 278.697);
-    --sidebar-border: oklch(0.929 0.013 255.508);
+    --sidebar-border: #dde1ec;
     --sidebar-ring: oklch(0.673 0.182 276.935);
-    --success: oklch(0.527 0.154 150.069);
+    --success: #16a34a;
     --success-foreground: oklch(0.985 0 0);
-    --warning: oklch(0.769 0.188 70.08);
+    --warning: #f59e0b;
     --warning-foreground: oklch(0.279 0.077 45.635);
+    --err: #e11d48;
+    --star: #f59e0b;
+    --hint: color-mix(in oklab, var(--foreground) 30%, transparent);
+
+    --level-starter: #ff7a59;
+    --level-a1: #e8a317;
+    --level-a2: #12a27c;
+    --level-b1: #2f80ed;
+    --level-b2: #b0408f;
+    --level-accent: var(--primary);
+    --level-accent-foreground: var(--primary-foreground);
 }
 
 .dark {
-    --background: oklch(0.129 0.042 264.695);
-    --foreground: oklch(0.984 0.003 247.858);
-    --card: oklch(0.208 0.042 265.755);
-    --card-foreground: oklch(0.984 0.003 247.858);
-    --popover: oklch(0.208 0.042 265.755);
-    --popover-foreground: oklch(0.984 0.003 247.858);
-    --primary: oklch(0.585 0.233 277.117);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.279 0.041 260.031);
-    --secondary-foreground: oklch(0.984 0.003 247.858);
-    --muted: oklch(0.279 0.041 260.031);
-    --muted-foreground: oklch(0.704 0.04 256.788);
+    --background: #0f1117;
+    --foreground: #edeff5;
+    --card: #181b24;
+    --card-foreground: #edeff5;
+    --popover: #181b24;
+    --popover-foreground: #edeff5;
+    --primary: #8c95ff;
+    --primary-foreground: #0f1117;
+    --secondary: #20242f;
+    --secondary-foreground: #edeff5;
+    --muted: #20242f;
+    --muted-foreground: #a3a9ba;
     --accent: oklch(0.311 0.09 276.5);
     --accent-foreground: oklch(0.93 0.034 272.788);
     --destructive: oklch(0.396 0.141 25.723);
     --destructive-foreground: oklch(0.637 0.237 25.331);
-    --border: oklch(0.279 0.041 260.031);
-    --input: oklch(0.279 0.041 260.031);
+    --border: #2c3140;
+    --input: #2c3140;
     --ring: oklch(0.511 0.262 276.966);
     --chart-1: oklch(0.488 0.243 264.376);
     --chart-2: oklch(0.696 0.17 162.48);
     --chart-3: oklch(0.769 0.188 70.08);
     --chart-4: oklch(0.627 0.265 303.9);
     --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.178 0.042 265);
-    --sidebar-foreground: oklch(0.984 0.003 247.858);
-    --sidebar-primary: oklch(0.585 0.233 277.117);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar: #181b24;
+    --sidebar-foreground: #edeff5;
+    --sidebar-primary: #8c95ff;
+    --sidebar-primary-foreground: #0f1117;
     --sidebar-accent: oklch(0.311 0.09 276.5);
     --sidebar-accent-foreground: oklch(0.93 0.034 272.788);
-    --sidebar-border: oklch(0.279 0.041 260.031);
+    --sidebar-border: #2c3140;
     --sidebar-ring: oklch(0.511 0.262 276.966);
-    --success: oklch(0.627 0.194 149.214);
+    --success: #4ade80;
     --success-foreground: oklch(0.145 0.05 150);
-    --warning: oklch(0.795 0.184 86.047);
+    --warning: #fbbf24;
     --warning-foreground: oklch(0.279 0.077 45.635);
+    --err: #fb7185;
+    --star: #fbbf24;
+    --hint: color-mix(in oklab, var(--foreground) 35%, transparent);
+
+    --level-starter: #ff9a80;
+    --level-a1: #f5c04a;
+    --level-a2: #3fd1a8;
+    --level-b1: #6aa8ff;
+    --level-b2: #e07ac0;
+}
+
+/* One accent per level. It colours the map path, progress bar, cursor and
+   badge of that level, never the primary button. */
+[data-level='starter'] {
+    --level-accent: var(--level-starter);
+    --level-accent-foreground: #1b1d26;
+}
+
+[data-level='a1'] {
+    --level-accent: var(--level-a1);
+    --level-accent-foreground: #1b1d26;
+}
+
+[data-level='a2'] {
+    --level-accent: var(--level-a2);
+    --level-accent-foreground: #ffffff;
+}
+
+[data-level='b1'] {
+    --level-accent: var(--level-b1);
+    --level-accent-foreground: #ffffff;
+}
+
+[data-level='b2'] {
+    --level-accent: var(--level-b2);
+    --level-accent-foreground: #ffffff;
 }
 
 @layer base {
@@ -152,5 +211,36 @@
 
     body {
         @apply bg-background text-foreground;
+        line-height: 1.5;
+    }
+
+    h1,
+    h2,
+    h3 {
+        font-family: var(--font-heading);
+    }
+}
+
+/* Bangla is never set in italic (unlayered, so it also beats `italic`). */
+[lang='bn'],
+[lang='bn'] * {
+    font-style: normal;
+}
+
+/* Counters and statistics: Lexend with fixed-width figures, so numbers do
+   not jump. Practice letters use the `font-practice` class from the theme. */
+@utility stat-figure {
+    font-family: var(--font-practice);
+    font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }

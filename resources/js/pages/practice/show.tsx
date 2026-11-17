@@ -213,7 +213,7 @@ function TypingCard({
                         autoCorrect="off"
                         autoCapitalize="off"
                         spellCheck={false}
-                        className="rounded-none rounded-b-lg border-0 bg-transparent text-lg shadow-none focus-visible:ring-0 dark:bg-transparent"
+                        className="rounded-none rounded-b-lg border-0 bg-transparent font-practice text-lg shadow-none focus-visible:ring-0 dark:bg-transparent"
                         aria-invalid={!!form.errors.answer}
                         aria-describedby="answer-help"
                     />

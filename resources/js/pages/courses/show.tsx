@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/admin/page-header';
 import { Badge } from '@/components/ui/badge';
 import { formatMinutes } from '@/lib/format';
 import { formatPercent } from '@/lib/learn';
+import { levelAccent } from '@/lib/levels';
 
 type LessonRow = {
     id: string;
@@ -22,6 +23,7 @@ type Props = {
         id: string;
         title: string;
         description: string | null;
+        cefr: string;
         cefr_label: string;
         category: string | null;
         is_published: boolean;
@@ -45,7 +47,10 @@ export default function CourseShow({ course }: Props) {
     return (
         <>
             <Head title={course.title} />
-            <div className="flex max-w-4xl flex-col gap-6 p-4">
+            <div
+                data-level={levelAccent(course.cefr)}
+                className="flex max-w-4xl flex-col gap-6 p-4"
+            >
                 <PageHeader
                     title={course.title}
                     description={course.description ?? undefined}
@@ -54,7 +59,7 @@ export default function CourseShow({ course }: Props) {
                             {!course.is_published && (
                                 <Badge variant="outline">Draft preview</Badge>
                             )}
-                            <Badge variant="secondary">
+                            <Badge className="border-transparent bg-level text-level-foreground">
                                 {course.cefr_label}
                             </Badge>
                             {course.category && (

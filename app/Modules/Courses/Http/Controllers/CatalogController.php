@@ -115,6 +115,7 @@ class CatalogController extends Controller
                 'id' => $course->id,
                 'title' => $course->title,
                 'description' => $course->description,
+                'cefr' => $course->cefr_level->key(),
                 'cefr_label' => $course->cefr_level->label(),
                 'category' => $course->category?->name,
                 'is_published' => $course->is_published,
