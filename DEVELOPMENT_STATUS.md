@@ -1,14 +1,16 @@
 # Development status
 
-| Phase | Scope                                                   | Status                           |
-| ----- | ------------------------------------------------------- | -------------------------------- |
-| 1     | Project foundation                                      | Done                             |
-| 2     | Database, models, roles/permissions, seeders            | Done                             |
-| 3     | Course management (admin CRUD, audio upload)            | Done                             |
-| 4     | Core study engine                                       | Done                             |
-| 5     | Notebooks (vocabulary, mistakes, review, notes)         | Done                             |
-| 6     | Dashboard, gamification, leaderboard, learning settings | Done                             |
-| 7     | Admin completion, QA, documentation                     | Delivered, run `phase7-setup.sh` |
+| Phase | Scope                                                   | Status |
+| ----- | ------------------------------------------------------- | ------ |
+| 1     | Project foundation                                      | Done   |
+| 2     | Database, models, roles/permissions, seeders            | Done   |
+| 3     | Course management (admin CRUD, audio upload)            | Done   |
+| 4     | Core study engine                                       | Done   |
+| 5     | Notebooks (vocabulary, mistakes, review, notes)         | Done   |
+| 6     | Dashboard, gamification, leaderboard, learning settings | Done   |
+| 7     | Admin completion, QA, documentation                     | Done   |
+| 8     | Vocabulary list (admin), automatic links, content pack  | Done   |
+| 9     | Practice screen: autoplay, Bengali meaning, guide text  | Done   |
 
 ## Phase 7
 
@@ -34,7 +36,7 @@
 
 ## Tests
 
-`php artisan test`: 424 passed, 3 skipped (Two-factor is not enabled). `vp test`: 15 passed. `npm run types:check` and `vp check` are clean.
+`php artisan test`: 425 passed, 3 skipped (Two-factor is not enabled). `vp test`: 15 passed. `npm run types:check` and `vp check` are clean.
 
 ## Not done or not verified
 

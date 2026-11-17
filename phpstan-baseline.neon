@@ -1,0 +1,1573 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to function method_exists\(\) with App\\Models\\User and ''isDeactivated'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: app/Http/Middleware/EnsureUserIsActive.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:badges\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany does not specify its types\: TRelatedModel, TDeclaringModel, TPivotModel, TAccessor \(2\-4 required\)$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:ensureProfile\(\) should return App\\Modules\\Learning\\Models\\UserProfile but returns Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:mistakeRecords\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:notes\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:practiceSessions\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:profile\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasOne does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:reviewSchedules\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:savedVocabulary\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:xpTransactions\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Dictation\\Models\\MistakeRecord\:\:\$learners\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Dictation\\Models\\MistakeRecord\:\:\$missed\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Modules\\Dictation\\Models\\MistakeRecord\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Modules\\Dictation\\Models\\MistakeRecord\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:values\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$chapter\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AudioLibraryController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$english_text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AudioLibraryController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AudioLibraryController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AudioLibraryController.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AudioLibraryController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Courses\\Models\\Sentence\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AudioLibraryController.php
+
+		-
+			message: '#^Parameter \#1 \$sentence of method App\\Modules\\Admin\\Http\\Controllers\\AudioLibraryController\:\:lessonSummary\(\) expects App\\Modules\\Courses\\Models\\Sentence, Illuminate\\Database\\Eloquent\\Model\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AudioLibraryController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Courses\\Models\\Sentence\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/AudioLibraryController.php
+
+		-
+			message: '#^Parameter \#1 \$siblings of method App\\Modules\\Admin\\Services\\SortOrderService\:\:next\(\) expects Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>, Illuminate\\Database\\Eloquent\\Builder\<App\\Modules\\Courses\\Models\\Category\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/CategoryController.php
+
+		-
+			message: '#^Parameter \#1 \$siblings of method App\\Modules\\Admin\\Services\\SortOrderService\:\:next\(\) expects Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>, Illuminate\\Database\\Eloquent\\Builder\<App\\Modules\\Courses\\Models\\Chapter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/ChapterController.php
+
+		-
+			message: '#^Parameter \#2 \$siblings of method App\\Modules\\Admin\\Services\\SortOrderService\:\:move\(\) expects Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>, Illuminate\\Database\\Eloquent\\Builder\<App\\Modules\\Courses\\Models\\Chapter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/ChapterController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$course\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Admin/Http/Controllers/LessonController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$course_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/LessonController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/LessonController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/LessonController.php
+
+		-
+			message: '#^Parameter \#1 \$siblings of method App\\Modules\\Admin\\Services\\SortOrderService\:\:next\(\) expects Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>, Illuminate\\Database\\Eloquent\\Builder\<App\\Modules\\Courses\\Models\\Lesson\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/LessonController.php
+
+		-
+			message: '#^Parameter \#2 \$siblings of method App\\Modules\\Admin\\Services\\SortOrderService\:\:move\(\) expects Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>, Illuminate\\Database\\Eloquent\\Builder\<App\\Modules\\Courses\\Models\\Lesson\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/LessonController.php
+
+		-
+			message: '#^Parameter \#1 \$siblings of method App\\Modules\\Admin\\Services\\SortOrderService\:\:next\(\) expects Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>, Illuminate\\Database\\Eloquent\\Builder\<App\\Modules\\Courses\\Models\\Sentence\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/SentenceController.php
+
+		-
+			message: '#^Parameter \#2 \$siblings of method App\\Modules\\Admin\\Services\\SortOrderService\:\:move\(\) expects Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>, Illuminate\\Database\\Eloquent\\Builder\<App\\Modules\\Courses\\Models\\Sentence\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/SentenceController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/UserController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Models\\User\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/UserController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Models\\User\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/UserController.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/VocabularyController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Vocabulary\\Models\\Vocabulary\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/VocabularyController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Vocabulary\\Models\\Vocabulary\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Admin/Http/Controllers/VocabularyController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Resources/CourseResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Admin/Http/Resources/CourseResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Admin/Http/Resources/CourseResource.php
+
+		-
+			message: '#^Cannot call method label\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Admin/Http/Resources/CourseResource.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Admin/Http/Resources/CourseResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Admin/Http/Resources/SentenceResource.php
+
+		-
+			message: '#^Parameter \#1 \$siblings of method App\\Modules\\Admin\\Services\\SortOrderService\:\:next\(\) expects Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>, Illuminate\\Database\\Eloquent\\Builder\<App\\Modules\\Courses\\Models\\Course\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Admin/Services/CourseService.php
+
+		-
+			message: '#^Property App\\Modules\\Courses\\Models\\Course\:\:\$created_by \(int\<0, max\>\|null\) does not accept int\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Modules/Admin/Services/CourseService.php
+
+		-
+			message: '#^Property App\\Modules\\Courses\\Models\\Course\:\:\$sort_order \(int\<0, max\>\) does not accept int\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Modules/Admin/Services/CourseService.php
+
+		-
+			message: '#^Call to an undefined static method Illuminate\\Database\\Eloquent\\Model\:\:withTrashed\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Modules/Admin/Services/SlugService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$english_text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Analytics/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Cannot call method toDateString\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Analytics/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Modules\\Dictation\\Models\\MistakeRecord\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Analytics/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Modules\\Dictation\\Models\\MistakeRecord\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Analytics/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Unable to resolve the template type TNewKey in call to method Illuminate\\Support\\Collection\<int,App\\Modules\\Analytics\\Models\\DailyLearningStatistic\>\:\:keyBy\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: app/Modules/Analytics/Http/Controllers/AnalyticsController.php
+
+		-
+			message: '#^Method App\\Modules\\Analytics\\Models\\DailyLearningStatistic\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Analytics/Models/DailyLearningStatistic.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Analytics\\Models\\DailyLearningStatistic\:\:\$accuracy\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Analytics\\Models\\DailyLearningStatistic\:\:\$attempts\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Analytics\\Models\\DailyLearningStatistic\:\:\$seconds\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$icon\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Cannot call method toDateString\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Modules\\Dictation\\Models\\PracticeSession\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Modules\\Dictation\\Models\\PracticeSession\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Unable to resolve the template type TNewKey in call to method Illuminate\\Support\\Collection\<int,App\\Modules\\Analytics\\Models\\DailyLearningStatistic\>\:\:keyBy\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>title" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 2
+			path: app/Modules/Analytics/Services/DashboardService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$lesson_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/AudioStreamController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$course\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$lessons\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Support\\HigherOrderCollectionProxy\<string, Illuminate\\Database\\Eloquent\\Model, Illuminate\\Database\\Eloquent\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\>\>\:\:\$lessons\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Cannot access property \$value on App\\Modules\\Learning\\Enums\\ProgressStatus\:\:NotStarted\|string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Cannot call method label\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Modules\\Dictation\\Models\\PracticeSession\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Courses\\Models\\Course\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Modules\\Dictation\\Models\\PracticeSession\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Courses\\Models\\Course\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:values\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Unable to resolve the template type TNewKey in call to method Illuminate\\Support\\Collection\<int,App\\Modules\\Dictation\\Models\\PracticeSession\>\:\:keyBy\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: app/Modules/Courses/Http/Controllers/CatalogController.php
+
+		-
+			message: '#^Class App\\Modules\\Courses\\Models\\Category uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Category.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Category\:\:courses\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Category.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Category\:\:scopeActive\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Category.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Category\:\:scopeActive\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Category.php
+
+		-
+			message: '#^Class App\\Modules\\Courses\\Models\\Chapter uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Chapter.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Chapter\:\:course\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Chapter.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Chapter\:\:lessons\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Chapter.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Chapter\:\:scopePublished\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Chapter.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Chapter\:\:scopePublished\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Chapter.php
+
+		-
+			message: '#^Class App\\Modules\\Courses\\Models\\Course uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Course.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Course\:\:category\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Course.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Course\:\:chapters\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Course.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Course\:\:creator\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Course.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Course\:\:estimatedDurationMinutes\(\) return type with generic class Illuminate\\Database\\Eloquent\\Casts\\Attribute does not specify its types\: TGet, TSet$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Course.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Course\:\:lessons\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasManyThrough does not specify its types\: TRelatedModel, TIntermediateModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Course.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Course\:\:scopePublished\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Course.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Course\:\:scopePublished\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Course.php
+
+		-
+			message: '#^Class App\\Modules\\Courses\\Models\\Lesson uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Lesson.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Lesson\:\:allSentences\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Lesson.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Lesson\:\:chapter\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Lesson.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Lesson\:\:scopeLearnerVisible\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Lesson.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Lesson\:\:scopeLearnerVisible\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Lesson.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Lesson\:\:scopePublished\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Lesson.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Lesson\:\:scopePublished\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Lesson.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Lesson\:\:sentences\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Lesson.php
+
+		-
+			message: '#^Class App\\Modules\\Courses\\Models\\Sentence uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Sentence\:\:audio\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Sentence\:\:children\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Sentence\:\:lesson\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Sentence\:\:parent\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Sentence\:\:primaryAudio\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasOne does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Sentence\:\:scopeOfType\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Sentence\:\:scopeOfType\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Sentence\:\:scopeTopLevel\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Sentence\:\:scopeTopLevel\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\Sentence\:\:vocabulary\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany does not specify its types\: TRelatedModel, TDeclaringModel, TPivotModel, TAccessor \(2\-4 required\)$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/Sentence.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\SentenceAudio\:\:sentence\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/SentenceAudio.php
+
+		-
+			message: '#^Method App\\Modules\\Courses\\Models\\SentenceAudio\:\:uploader\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Courses/Models/SentenceAudio.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$accuracy\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/MistakeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$bengali_text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/MistakeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$english_text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/MistakeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$error_details\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/MistakeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$submitted_text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/MistakeController.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/MistakeController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Dictation\\Models\\MistakeRecord\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/MistakeController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Dictation\\Models\\MistakeRecord\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/MistakeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$accuracy\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$expected_text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$hints_used\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$is_correct\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$preferences\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$sentence\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$sentence_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$submitted_text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:url\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 7
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Parameter \#3 \$input of method App\\Modules\\Dictation\\Services\\PracticeSessionService\:\:submit\(\) expects array\{answer\: string, replay_count\?\: int\|null, playback_speed\?\: float\|null, time_spent_ms\?\: int\|null\}, array\<string, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>title" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 2
+			path: app/Modules/Dictation/Http/Controllers/PracticeController.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\MistakeRecord\:\:latestAttempt\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/MistakeRecord.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\MistakeRecord\:\:scopeUnresolved\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/MistakeRecord.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\MistakeRecord\:\:scopeUnresolved\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/MistakeRecord.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\MistakeRecord\:\:sentence\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/MistakeRecord.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\MistakeRecord\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/MistakeRecord.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\PracticeAttempt\:\:sentence\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/PracticeAttempt.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\PracticeAttempt\:\:session\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/PracticeAttempt.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\PracticeAttempt\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/PracticeAttempt.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\PracticeSession\:\:attempts\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/PracticeSession.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\PracticeSession\:\:lesson\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/PracticeSession.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Models\\PracticeSession\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Dictation/Models/PracticeSession.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between string and App\\Modules\\Learning\\Enums\\SessionStatus\:\:InProgress will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: app/Modules/Dictation/Models/PracticeSession.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Dictation/Services/PracticePlanner.php
+
+		-
+			message: '#^Call to function in_array\(\) with arguments string, array\{App\\Modules\\Learning\\Enums\\ContentType\:\:Phrase\}\|array\{App\\Modules\\Learning\\Enums\\ContentType\:\:Word, App\\Modules\\Learning\\Enums\\ContentType\:\:Phrase\} and true will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: app/Modules/Dictation/Services/PracticePlanner.php
+
+		-
+			message: '#^Cannot call method stage\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Modules/Dictation/Services/PracticePlanner.php
+
+		-
+			message: '#^Method App\\Modules\\Dictation\\Services\\PracticePlanner\:\:chunks\(\) should return Illuminate\\Support\\Collection\<int, App\\Modules\\Courses\\Models\\Sentence\> but returns Illuminate\\Database\\Eloquent\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Modules/Dictation/Services/PracticePlanner.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:filter\(\) expects \(callable\(Illuminate\\Database\\Eloquent\\Model, int\)\: bool\)\|null, Closure\(App\\Modules\\Courses\\Models\\Sentence\)\: false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Dictation/Services/PracticePlanner.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:sortBy\(\) expects array\<array\{string, ''asc''\|''desc''\|SortDirection\}\|\(callable\(Illuminate\\Database\\Eloquent\\Model, Illuminate\\Database\\Eloquent\\Model\)\: mixed\)\|\(callable\(Illuminate\\Database\\Eloquent\\Model, int\)\: mixed\)\|string\>\|\(callable\(Illuminate\\Database\\Eloquent\\Model, int\)\: mixed\)\|int\|string, array\{Closure\(App\\Modules\\Courses\\Models\\Sentence, App\\Modules\\Courses\\Models\\Sentence\)\: int\<\-1, 1\>, Closure\(App\\Modules\\Courses\\Models\\Sentence, App\\Modules\\Courses\\Models\\Sentence\)\: int\<\-1, 1\>, Closure\(App\\Modules\\Courses\\Models\\Sentence, App\\Modules\\Courses\\Models\\Sentence\)\: int\<\-1, 1\>\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Dictation/Services/PracticePlanner.php
+
+		-
+			message: '#^Parameter \#1 \$sentence of method App\\Modules\\Dictation\\Services\\PracticePlanner\:\:chunks\(\) expects App\\Modules\\Courses\\Models\\Sentence, Illuminate\\Database\\Eloquent\\Model given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Dictation/Services/PracticePlanner.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Dictation/Services/PracticeSessionService.php
+
+		-
+			message: '#^Cannot call method diffInSeconds\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Dictation/Services/PracticeSessionService.php
+
+		-
+			message: '#^Parameter \#1 \$callback of static method Illuminate\\Database\\Connection\:\:transaction\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Dictation/Services/PracticeSessionService.php
+
+		-
+			message: '#^Parameter \#2 \$lesson of method App\\Modules\\Learning\\Services\\LessonProgressService\:\:finished\(\) expects App\\Modules\\Courses\\Models\\Lesson, Illuminate\\Database\\Eloquent\\Model given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Dictation/Services/PracticeSessionService.php
+
+		-
+			message: '#^Parameter \#3 \$mode of method App\\Modules\\Learning\\Services\\LessonProgressService\:\:finished\(\) expects App\\Modules\\Learning\\Enums\\PracticeMode, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Dictation/Services/PracticeSessionService.php
+
+		-
+			message: '#^Return type of call to static method Illuminate\\Database\\Connection\:\:transaction\(\) contains unresolvable type\.$#'
+			identifier: staticMethod.unresolvableReturnType
+			count: 1
+			path: app/Modules/Dictation/Services/PracticeSessionService.php
+
+		-
+			message: '#^Method App\\Modules\\Gamification\\Models\\Badge\:\:users\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany does not specify its types\: TRelatedModel, TDeclaringModel, TPivotModel, TAccessor \(2\-4 required\)$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Gamification/Models/Badge.php
+
+		-
+			message: '#^Method App\\Modules\\Gamification\\Models\\LearningCheckin\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Gamification/Models/LearningCheckin.php
+
+		-
+			message: '#^Method App\\Modules\\Gamification\\Models\\UserXpTransaction\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Gamification/Models/UserXpTransaction.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$display_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Gamification/Services/LeaderboardService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$leaderboard_anonymous\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Gamification/Services/LeaderboardService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\|stdClass\:\:\$user_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Gamification/Services/LeaderboardService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\|stdClass\:\:\$value\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Gamification/Services/LeaderboardService.php
+
+		-
+			message: '#^Method App\\Modules\\Gamification\\Services\\LeaderboardService\:\:totals\(\) never returns Illuminate\\Database\\Eloquent\\Builder so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: app/Modules/Gamification/Services/LeaderboardService.php
+
+		-
+			message: '#^Method App\\Modules\\Gamification\\Services\\LeaderboardService\:\:totals\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Gamification/Services/LeaderboardService.php
+
+		-
+			message: '#^Parameter \#1 \$sql of method Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>\:\:havingRaw\(\) expects literal\-string, non\-falsy\-string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Gamification/Services/LeaderboardService.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Gamification/Services/XpService.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Learning/Http/Controllers/LearningSettingsController.php
+
+		-
+			message: '#^Offset ''autoplay'' on string\|null on left side of \?\? does not exist\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: app/Modules/Learning/Http/Controllers/LearningSettingsController.php
+
+		-
+			message: '#^Offset ''default_mode'' on string\|null on left side of \?\? does not exist\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: app/Modules/Learning/Http/Controllers/LearningSettingsController.php
+
+		-
+			message: '#^Offset ''default_speed'' on string\|null on left side of \?\? does not exist\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: app/Modules/Learning/Http/Controllers/LearningSettingsController.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Courses\\Models\\Sentence\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Courses\\Models\\Sentence\>\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Learning/Http/Controllers/NoteController.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Courses\\Models\\Sentence\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Courses\\Models\\Sentence\>\:\:\$lesson\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Learning/Http/Controllers/NoteController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$english_text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Learning/Http/Controllers/NoteController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Learning\\Models\\UserNote\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Learning/Http/Controllers/NoteController.php
+
+		-
+			message: '#^Parameter \#2 \$lesson of static method App\\Modules\\Courses\\Support\\LessonAccess\:\:canViewLesson\(\) expects App\\Modules\\Courses\\Models\\Lesson, Illuminate\\Database\\Eloquent\\Model given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Learning/Http/Controllers/NoteController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Learning\\Models\\UserNote\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Learning/Http/Controllers/NoteController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of static method Illuminate\\Database\\Eloquent\\Factories\\Factory\<Illuminate\\Database\\Eloquent\\Model\>\:\:guessFactoryNamesUsing\(\) expects callable\(class\-string\<Illuminate\\Database\\Eloquent\\Model\>\)\: class\-string\<Illuminate\\Database\\Eloquent\\Factories\\Factory\>, Closure\(string\)\: non\-falsy\-string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Learning/LearningServiceProvider.php
+
+		-
+			message: '#^Method App\\Modules\\Learning\\Models\\UserCourseProgress\:\:course\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Learning/Models/UserCourseProgress.php
+
+		-
+			message: '#^Method App\\Modules\\Learning\\Models\\UserCourseProgress\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Learning/Models/UserCourseProgress.php
+
+		-
+			message: '#^Method App\\Modules\\Learning\\Models\\UserLessonProgress\:\:lesson\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Learning/Models/UserLessonProgress.php
+
+		-
+			message: '#^Method App\\Modules\\Learning\\Models\\UserLessonProgress\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Learning/Models/UserLessonProgress.php
+
+		-
+			message: '#^Method App\\Modules\\Learning\\Models\\UserNote\:\:sentence\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Learning/Models/UserNote.php
+
+		-
+			message: '#^Method App\\Modules\\Learning\\Models\\UserNote\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Learning/Models/UserNote.php
+
+		-
+			message: '#^Class App\\Modules\\Learning\\Models\\UserProfile uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Learning/Models/UserProfile.php
+
+		-
+			message: '#^Method App\\Modules\\Learning\\Models\\UserProfile\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Learning/Models/UserProfile.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$course_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Learning/Services/LessonProgressService.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between string and App\\Modules\\Learning\\Enums\\ProgressStatus\:\:Completed will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: app/Modules/Learning/Services/LessonProgressService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$timezone\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Learning/Support/UserClock.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>timezone" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Modules/Learning/Support/UserClock.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$context_text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$reviewable\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$reviewable_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$term\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$vocabulary\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Modules\\Review\\Models\\ReviewSchedule\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Review\\Models\\ReviewHistory\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Modules\\Review\\Models\\ReviewSchedule\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Review\\Models\\ReviewHistory\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:values\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Review/Http/Controllers/ReviewController.php
+
+		-
+			message: '#^Method App\\Modules\\Review\\Models\\ReviewHistory\:\:attempt\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Review/Models/ReviewHistory.php
+
+		-
+			message: '#^Method App\\Modules\\Review\\Models\\ReviewHistory\:\:schedule\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Review/Models/ReviewHistory.php
+
+		-
+			message: '#^Method App\\Modules\\Review\\Models\\ReviewHistory\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Review/Models/ReviewHistory.php
+
+		-
+			message: '#^Method App\\Modules\\Review\\Models\\ReviewSchedule\:\:history\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Review/Models/ReviewSchedule.php
+
+		-
+			message: '#^Method App\\Modules\\Review\\Models\\ReviewSchedule\:\:reviewable\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\MorphTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Review/Models/ReviewSchedule.php
+
+		-
+			message: '#^Method App\\Modules\\Review\\Models\\ReviewSchedule\:\:scopeDue\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Review/Models/ReviewSchedule.php
+
+		-
+			message: '#^Method App\\Modules\\Review\\Models\\ReviewSchedule\:\:scopeDue\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Review/Models/ReviewSchedule.php
+
+		-
+			message: '#^Method App\\Modules\\Review\\Models\\ReviewSchedule\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Review/Models/ReviewSchedule.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Courses\\Models\\Sentence\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Courses\\Models\\Sentence\>\:\:\$english_text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Vocabulary/Http/Controllers/SavedVocabularyController.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Courses\\Models\\Sentence\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Courses\\Models\\Sentence\>\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Vocabulary/Http/Controllers/SavedVocabularyController.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Courses\\Models\\Sentence\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Courses\\Models\\Sentence\>\:\:\$lesson\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Vocabulary/Http/Controllers/SavedVocabularyController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$meaning_bn\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Vocabulary/Http/Controllers/SavedVocabularyController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$meaning_en\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Vocabulary/Http/Controllers/SavedVocabularyController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$pronunciation\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Vocabulary/Http/Controllers/SavedVocabularyController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Vocabulary\\Models\\SavedVocabulary\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Modules/Vocabulary/Http/Controllers/SavedVocabularyController.php
+
+		-
+			message: '#^Parameter \#2 \$lesson of static method App\\Modules\\Courses\\Support\\LessonAccess\:\:canViewLesson\(\) expects App\\Modules\\Courses\\Models\\Lesson, Illuminate\\Database\\Eloquent\\Model given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Vocabulary/Http/Controllers/SavedVocabularyController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Pagination\\AbstractPaginator\<int,App\\Modules\\Vocabulary\\Models\\SavedVocabulary\>\:\:through\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Modules/Vocabulary/Http/Controllers/SavedVocabularyController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$normalized_term\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Vocabulary/Models/SavedVocabulary.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$term\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Vocabulary/Models/SavedVocabulary.php
+
+		-
+			message: '#^Method App\\Modules\\Vocabulary\\Models\\SavedVocabulary\:\:contextSentence\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Vocabulary/Models/SavedVocabulary.php
+
+		-
+			message: '#^Method App\\Modules\\Vocabulary\\Models\\SavedVocabulary\:\:scopeLearned\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Vocabulary/Models/SavedVocabulary.php
+
+		-
+			message: '#^Method App\\Modules\\Vocabulary\\Models\\SavedVocabulary\:\:scopeLearned\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Vocabulary/Models/SavedVocabulary.php
+
+		-
+			message: '#^Method App\\Modules\\Vocabulary\\Models\\SavedVocabulary\:\:scopeSearch\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Vocabulary/Models/SavedVocabulary.php
+
+		-
+			message: '#^Method App\\Modules\\Vocabulary\\Models\\SavedVocabulary\:\:scopeSearch\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Vocabulary/Models/SavedVocabulary.php
+
+		-
+			message: '#^Method App\\Modules\\Vocabulary\\Models\\SavedVocabulary\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Vocabulary/Models/SavedVocabulary.php
+
+		-
+			message: '#^Method App\\Modules\\Vocabulary\\Models\\SavedVocabulary\:\:vocabulary\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Vocabulary/Models/SavedVocabulary.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$normalized_term\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Vocabulary/Models/Vocabulary.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$term\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Vocabulary/Models/Vocabulary.php
+
+		-
+			message: '#^Class App\\Modules\\Vocabulary\\Models\\Vocabulary uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Vocabulary/Models/Vocabulary.php
+
+		-
+			message: '#^Method App\\Modules\\Vocabulary\\Models\\Vocabulary\:\:creator\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Vocabulary/Models/Vocabulary.php
+
+		-
+			message: '#^Method App\\Modules\\Vocabulary\\Models\\Vocabulary\:\:sentences\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany does not specify its types\: TRelatedModel, TDeclaringModel, TPivotModel, TAccessor \(2\-4 required\)$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Modules/Vocabulary/Models/Vocabulary.php
+
+		-
+			message: '#^Parameter \#1 \$title of static method Illuminate\\Support\\Str\:\:slug\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: database/factories/CategoryFactory.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method Illuminate\\Support\\Str\:\:title\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: database/factories/CategoryFactory.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method Illuminate\\Support\\Str\:\:title\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: database/factories/ChapterFactory.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method Illuminate\\Support\\Str\:\:title\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: database/factories/CourseFactory.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method Illuminate\\Support\\Str\:\:title\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: database/factories/LessonFactory.php

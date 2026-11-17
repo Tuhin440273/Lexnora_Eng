@@ -89,5 +89,5 @@ npx vp check               # lint and formatting
 app/Modules/   Learning, Courses, Dictation, Vocabulary, Review, Analytics, Gamification, Admin
 resources/js/  pages, components, hooks, lib, types
 routes/        web.php, learn.php (learners), admin.php (staff), settings.php
-tests/Feature/ Phase2 .. Phase7 test folders
+tests/Feature/ Phase2 .. Phase9 test folders
 ```

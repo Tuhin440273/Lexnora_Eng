@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\User;
+use App\Modules\Courses\Models\Sentence;
 use Inertia\Testing\AssertableInertia as Assert;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 require_once __DIR__.'/Helpers.php';
 
@@ -44,7 +47,7 @@ it('does not offer admin links to learners', function () {
 
 it('counts content on the dashboard', function () {
     $lesson = lessonTree(true);
-    App\Modules\Courses\Models\Sentence::factory()->for($lesson)->count(2)->create();
+    Sentence::factory()->for($lesson)->count(2)->create();
 
     $this->actingAs(userWithRole('admin'))
         ->get(route('admin.dashboard'))
@@ -58,8 +61,8 @@ it('counts content on the dashboard', function () {
 
 it('does not let a user without the permission create content', function () {
     $user = userWithRole('content-manager');
-    Spatie\Permission\Models\Role::findByName('content-manager')->revokePermissionTo('content.manage');
-    app(Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+    Role::findByName('content-manager')->revokePermissionTo('content.manage');
+    app(PermissionRegistrar::class)->forgetCachedPermissions();
 
     $this->actingAs($user)->post(route('admin.categories.store'), ['name' => 'Nope'])->assertForbidden();
 });
