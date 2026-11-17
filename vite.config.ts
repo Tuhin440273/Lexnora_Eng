@@ -22,11 +22,17 @@ export default defineConfig({
                         { weight: 600, style: 'normal' },
                     ],
                 }),
-                bunny('Baloo Da 2', {
+                bunny('Playfair Display', {
                     weights: [600, 700],
-                    subsets: ['latin', 'bengali'],
+                    subsets: ['latin'],
                     optimizedFallbacks: false,
                     preload: [{ weight: 700, style: 'normal' }],
+                }),
+                bunny('Noto Serif Bengali', {
+                    weights: [600, 700],
+                    subsets: ['bengali'],
+                    optimizedFallbacks: false,
+                    preload: false,
                 }),
                 bunny('Lexend', {
                     weights: [400, 600],

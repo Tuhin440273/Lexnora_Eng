@@ -2,6 +2,7 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { BookMarked, CircleAlert, Flame, RotateCw } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { DiffLegend, DiffView } from '@/components/diff-view';
+import { FloatingWords } from '@/components/floating-words';
 import { Button } from '@/components/ui/button';
 import { dashboard, login, register } from '@/routes';
 import type { DiffToken } from '@/types';
@@ -86,8 +87,9 @@ export default function Welcome() {
                 Skip to the content
             </a>
 
-            <div className="min-h-screen bg-background text-foreground">
-                <header className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
+            <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
+                <FloatingWords className="inset-x-0 top-0 bottom-auto h-[40rem]" />
+                <header className="relative mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
                     <span className="text-lg font-bold tracking-tight">
                         {name}
                     </span>
@@ -114,13 +116,16 @@ export default function Welcome() {
                     </nav>
                 </header>
 
-                <main id="main">
+                <main id="main" className="relative">
                     <section className="mx-auto grid max-w-6xl items-center gap-10 px-5 pt-10 pb-16 lg:grid-cols-2 lg:pt-16">
                         <div className="space-y-6">
-                            <h1 className="max-w-xl text-4xl font-bold tracking-tight text-balance sm:text-5xl">
+                            <h1 className="max-w-xl animate-rise text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
                                 Learn English by typing what you hear.
                             </h1>
-                            <p className="max-w-lg text-lg text-muted-foreground">
+                            <p
+                                className="max-w-lg animate-rise text-lg text-muted-foreground"
+                                style={{ animationDelay: '120ms' }}
+                            >
                                 Short recordings, one sentence at a time. You
                                 type, and {name} shows you exactly which words
                                 you caught and which ones slipped past.
@@ -152,7 +157,8 @@ export default function Welcome() {
                         </div>
 
                         <figure
-                            className="space-y-4 rounded-2xl border bg-card p-6 shadow-sm"
+                            className="animate-pop space-y-4 rounded-3xl border bg-card p-6 shadow-xl"
+                            style={{ animationDelay: '200ms' }}
                             aria-labelledby="example-caption"
                         >
                             <figcaption

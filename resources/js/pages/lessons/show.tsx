@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatDate, formatPercent, MODE_INFO } from '@/lib/learn';
 import { formatMinutes } from '@/lib/format';
+import { cn } from '@/lib/utils';
 import { dashboard } from '@/routes';
 
 type Props = {
@@ -56,7 +57,7 @@ export default function LessonShow({
     return (
         <>
             <Head title={lesson.title} />
-            <div className="flex max-w-4xl flex-col gap-6 p-4">
+            <div className="mx-auto flex w-full max-w-4xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <Link
                     href={CatalogController.showCourse(course.id)}
                     className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
@@ -98,13 +99,21 @@ export default function LessonShow({
                         Choose how to practise
                     </h2>
                     <ul className="grid gap-3 md:grid-cols-3">
-                        {modes.map((mode) => (
+                        {modes.map((mode, index) => (
                             <li
                                 key={mode.value}
-                                className="flex flex-col justify-between gap-4 rounded-xl border bg-card p-4"
+                                className={cn(
+                                    'flex animate-rise flex-col justify-between gap-4 rounded-2xl border border-t-4 bg-card p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg',
+                                    mode.value === 'easy' && 'border-t-success',
+                                    mode.value === 'medium' && 'border-t-star',
+                                    mode.value === 'hard' && 'border-t-err',
+                                )}
+                                style={{
+                                    animationDelay: `${(index + 1) * 90}ms`,
+                                }}
                             >
                                 <div className="space-y-1">
-                                    <h3 className="font-semibold">
+                                    <h3 className="text-xl font-semibold">
                                         {mode.label}
                                     </h3>
                                     <p className="text-sm text-muted-foreground">

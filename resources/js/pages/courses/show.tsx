@@ -1,22 +1,10 @@
-import { Head, Link } from '@inertiajs/react';
-import { CircleCheck, Circle, CircleDot } from 'lucide-react';
+import { Head } from '@inertiajs/react';
 import CatalogController from '@/actions/App/Modules/Courses/Http/Controllers/CatalogController';
-import { PageHeader } from '@/components/admin/page-header';
+import { LessonRoad } from '@/components/lesson-road';
+import type { RoadLesson } from '@/components/lesson-road';
 import { Badge } from '@/components/ui/badge';
-import { formatMinutes } from '@/lib/format';
-import { formatPercent } from '@/lib/learn';
 import { levelAccent } from '@/lib/levels';
-
-type LessonRow = {
-    id: string;
-    title: string;
-    description: string | null;
-    difficulty: number;
-    estimated_minutes: number;
-    sentences_count: number;
-    status: 'not_started' | 'in_progress' | 'completed';
-    best_accuracy: number | null;
-};
+import { STAR_RULE } from '@/lib/stars';
 
 type Props = {
     course: {
@@ -32,123 +20,113 @@ type Props = {
             id: string;
             title: string;
             description: string | null;
-            lessons: LessonRow[];
+            lessons: (RoadLesson & {
+                description: string | null;
+                difficulty: number;
+            })[];
         }[];
     };
 };
 
-const STATUS = {
-    not_started: { icon: Circle, label: 'Not started' },
-    in_progress: { icon: CircleDot, label: 'In progress' },
-    completed: { icon: CircleCheck, label: 'Completed' },
-} as const;
-
 export default function CourseShow({ course }: Props) {
+    const lessons = course.chapters.flatMap((chapter) => chapter.lessons);
+    const finished = lessons.filter(
+        (lesson) => lesson.status === 'completed',
+    ).length;
+    const nextId = lessons.find((lesson) => lesson.status !== 'completed')?.id;
+    const percent = Math.round((finished / Math.max(1, lessons.length)) * 100);
+
     return (
         <>
             <Head title={course.title} />
             <div
                 data-level={levelAccent(course.cefr)}
-                className="flex max-w-4xl flex-col gap-6 p-4"
+                className="mx-auto flex w-full max-w-4xl flex-col gap-10 p-4 md:p-6"
             >
-                <PageHeader
-                    title={course.title}
-                    description={course.description ?? undefined}
-                    actions={
-                        <>
-                            {!course.is_published && (
-                                <Badge variant="outline">Draft preview</Badge>
-                            )}
-                            <Badge className="border-transparent bg-level text-level-foreground">
-                                {course.cefr_label}
-                            </Badge>
-                            {course.category && (
-                                <Badge variant="outline">
-                                    {course.category}
-                                </Badge>
-                            )}
-                        </>
-                    }
-                />
+                <header className="animate-rise space-y-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                        <Badge className="border-transparent bg-level text-level-foreground">
+                            {course.cefr_label}
+                        </Badge>
+                        {course.category && (
+                            <Badge variant="outline">{course.category}</Badge>
+                        )}
+                        {!course.is_published && (
+                            <Badge variant="outline">Draft preview</Badge>
+                        )}
+                    </div>
+                    <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+                        {course.title}
+                    </h1>
+                    {course.description && (
+                        <p className="max-w-prose text-lg text-muted-foreground">
+                            {course.description}
+                        </p>
+                    )}
+                    <div className="flex max-w-sm items-center gap-3">
+                        <div
+                            role="progressbar"
+                            aria-label="Course progress"
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                            aria-valuenow={percent}
+                            className="h-2.5 flex-1 overflow-hidden rounded-full bg-muted"
+                        >
+                            <div
+                                className="h-full rounded-full bg-level transition-[width] duration-700 motion-reduce:transition-none"
+                                style={{ width: `${percent}%` }}
+                            />
+                        </div>
+                        <span className="text-sm text-muted-foreground tabular-nums">
+                            {finished} of {lessons.length} lessons
+                        </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{STAR_RULE}</p>
+                </header>
 
                 {course.chapters.length === 0 && (
-                    <p className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
+                    <p className="rounded-2xl border border-dashed p-8 text-center text-sm text-muted-foreground">
                         This course has no lessons yet.
                     </p>
                 )}
 
-                {course.chapters.map((chapter) => (
-                    <section
-                        key={chapter.id}
-                        aria-labelledby={`chapter-${chapter.id}`}
-                        className="rounded-xl border bg-card"
-                    >
-                        <header className="border-b p-4">
+                {course.chapters.map((chapter, index) => {
+                    const before = course.chapters
+                        .slice(0, index)
+                        .reduce((sum, item) => sum + item.lessons.length, 0);
+
+                    return (
+                        <section
+                            key={chapter.id}
+                            aria-labelledby={`chapter-${chapter.id}`}
+                            className="animate-rise"
+                            style={{ animationDelay: `${(index + 1) * 120}ms` }}
+                        >
                             <h2
                                 id={`chapter-${chapter.id}`}
-                                className="font-semibold"
+                                className="text-2xl font-semibold"
                             >
                                 {chapter.title}
                             </h2>
                             {chapter.description && (
-                                <p className="text-sm text-muted-foreground">
+                                <p className="text-muted-foreground">
                                     {chapter.description}
                                 </p>
                             )}
-                        </header>
-                        <ul className="divide-y">
-                            {chapter.lessons.map((lesson) => {
-                                const status = STATUS[lesson.status];
-
-                                return (
-                                    <li key={lesson.id}>
-                                        <Link
-                                            href={CatalogController.showLesson(
-                                                lesson.id,
-                                            )}
-                                            className="flex flex-wrap items-center justify-between gap-3 p-4 hover:bg-accent/50"
-                                        >
-                                            <span className="flex items-center gap-3">
-                                                <status.icon
-                                                    className={
-                                                        lesson.status ===
-                                                        'completed'
-                                                            ? 'size-5 text-success'
-                                                            : 'size-5 text-muted-foreground'
-                                                    }
-                                                    aria-hidden
-                                                />
-                                                <span>
-                                                    <span className="block font-medium">
-                                                        {lesson.title}
-                                                    </span>
-                                                    <span className="block text-xs text-muted-foreground">
-                                                        {lesson.sentences_count}{' '}
-                                                        sentences ·{' '}
-                                                        {formatMinutes(
-                                                            lesson.estimated_minutes,
-                                                        )}
-                                                    </span>
-                                                </span>
-                                            </span>
-                                            <span className="text-xs text-muted-foreground">
-                                                {status.label}
-                                                {lesson.best_accuracy !==
-                                                    null &&
-                                                    ` · best ${formatPercent(lesson.best_accuracy)}`}
-                                            </span>
-                                        </Link>
-                                    </li>
-                                );
-                            })}
-                            {chapter.lessons.length === 0 && (
-                                <li className="p-4 text-sm text-muted-foreground">
+                            {chapter.lessons.length === 0 ? (
+                                <p className="mt-4 text-sm text-muted-foreground">
                                     No lessons in this chapter yet.
-                                </li>
+                                </p>
+                            ) : (
+                                <LessonRoad
+                                    lessons={chapter.lessons}
+                                    nextId={nextId}
+                                    firstNumber={before + 1}
+                                />
                             )}
-                        </ul>
-                    </section>
-                ))}
+                        </section>
+                    );
+                })}
             </div>
         </>
     );

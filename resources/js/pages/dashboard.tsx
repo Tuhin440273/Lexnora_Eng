@@ -134,7 +134,7 @@ function Highlight({
     tone: string;
 }) {
     return (
-        <div className="flex items-center gap-3 rounded-2xl border bg-card p-3 sm:gap-4 sm:p-4">
+        <div className="flex items-center gap-3 rounded-2xl border bg-card p-3 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-md sm:gap-4 sm:p-4">
             <span
                 className={cn(
                     'flex size-10 shrink-0 items-center justify-center rounded-xl sm:size-12',
@@ -201,7 +201,7 @@ export default function Dashboard({
         <>
             <Head title="Dashboard" />
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 md:p-6">
-                <header className="flex flex-wrap items-center justify-between gap-3">
+                <header className="flex animate-rise flex-wrap items-center justify-between gap-3">
                     <div className="min-w-0 space-y-1">
                         <h1 className="text-3xl font-semibold tracking-tight">
                             Welcome back, {firstName}
@@ -241,7 +241,8 @@ export default function Dashboard({
 
                 <section
                     aria-label="Continue learning"
-                    className="rounded-3xl border border-primary/20 bg-linear-to-br from-primary/15 via-primary/5 to-transparent p-6 md:p-8"
+                    className="animate-rise rounded-3xl border border-primary/20 bg-linear-to-br from-primary/15 via-primary/5 to-transparent p-6 shadow-sm md:p-8"
+                    style={{ animationDelay: '80ms' }}
                 >
                     <div className="flex flex-wrap items-center justify-between gap-6">
                         {resume ? (
@@ -321,7 +322,10 @@ export default function Dashboard({
                     </div>
                 </section>
 
-                <dl className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+                <dl
+                    className="grid animate-rise grid-cols-2 gap-3 lg:grid-cols-4"
+                    style={{ animationDelay: '160ms' }}
+                >
                     <Highlight
                         icon={Flame}
                         label="Day streak"
@@ -348,7 +352,10 @@ export default function Dashboard({
                     />
                 </dl>
 
-                <div className="grid gap-6 lg:grid-cols-3">
+                <div
+                    className="grid animate-rise gap-6 lg:grid-cols-3"
+                    style={{ animationDelay: '240ms' }}
+                >
                     <section
                         className="space-y-3 rounded-2xl border bg-card p-5 lg:col-span-2"
                         aria-labelledby="week"
@@ -386,7 +393,10 @@ export default function Dashboard({
                     </section>
                 </div>
 
-                <div className="grid gap-6 lg:grid-cols-3">
+                <div
+                    className="grid animate-rise gap-6 lg:grid-cols-3"
+                    style={{ animationDelay: '320ms' }}
+                >
                     <div className="space-y-6 lg:col-span-2">
                         <section className="space-y-3" aria-labelledby="recent">
                             <h2 id="recent" className="text-lg font-semibold">

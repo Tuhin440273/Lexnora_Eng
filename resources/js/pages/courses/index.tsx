@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { NativeSelect } from '@/components/ui/native-select';
 import { Button } from '@/components/ui/button';
 import { formatMinutes } from '@/lib/format';
+import { levelAccent } from '@/lib/levels';
 import type { Paginated, SelectOption } from '@/types';
 
 type CourseCard = {
@@ -131,10 +132,14 @@ export default function CoursesIndex({
                     </p>
                 ) : (
                     <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                        {courses.data.map((course) => (
+                        {courses.data.map((course, index) => (
                             <li
                                 key={course.id}
-                                className="flex flex-col overflow-hidden rounded-xl border bg-card"
+                                data-level={levelAccent(
+                                    course.cefr_level.toLowerCase(),
+                                )}
+                                className="group relative flex animate-rise flex-col overflow-hidden rounded-2xl border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+                                style={{ animationDelay: `${index * 70}ms` }}
                             >
                                 {course.thumbnail_url ? (
                                     <img
@@ -145,9 +150,13 @@ export default function CoursesIndex({
                                 ) : (
                                     <div
                                         aria-hidden
-                                        className="flex h-32 items-center justify-center bg-accent text-3xl font-semibold text-accent-foreground"
+                                        className="relative flex h-32 items-center justify-center overflow-hidden bg-linear-to-br from-level to-level/60 font-heading text-5xl font-semibold text-level-foreground"
                                     >
-                                        {course.cefr_level}
+                                        <span className="absolute -top-10 -right-8 size-32 rounded-full bg-white/15" />
+                                        <span className="absolute -bottom-12 -left-6 size-28 rounded-full bg-white/10" />
+                                        <span className="relative">
+                                            {course.cefr_level}
+                                        </span>
                                     </div>
                                 )}
                                 <div className="flex flex-1 flex-col gap-3 p-4">
@@ -165,7 +174,7 @@ export default function CoursesIndex({
                                         href={CatalogController.showCourse(
                                             course.id,
                                         )}
-                                        className="text-lg font-semibold hover:underline"
+                                        className="font-heading text-xl font-semibold after:absolute after:inset-0 hover:underline"
                                     >
                                         {course.title}
                                     </Link>
@@ -184,7 +193,7 @@ export default function CoursesIndex({
                                             className="h-1.5 overflow-hidden rounded-full bg-muted"
                                         >
                                             <div
-                                                className="h-full bg-primary"
+                                                className="h-full rounded-full bg-level transition-[width] duration-700 motion-reduce:transition-none"
                                                 style={{
                                                     width: `${course.progress}%`,
                                                 }}

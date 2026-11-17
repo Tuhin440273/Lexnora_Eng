@@ -13,6 +13,7 @@
 | 9     | Practice screen: autoplay, Bengali meaning, guide text    | Done   |
 | 12    | Design system: colours, Bangla-ready fonts, level accents | Done   |
 | 13    | Practice comfort: letter size, shortcuts, hint-free score | Done   |
+| 14    | Classical look: colours, serif headings, lesson road      | Done   |
 
 ## Phase 7
 
@@ -40,9 +41,18 @@
 
 - **Colours:** one neutral palette for light and dark (indigo primary), mapped onto the existing shadcn tokens in `resources/css/app.css`. New tokens: `--err`, `--star`, `--hint`.
 - **Level accents:** each level owns one accent colour (`[data-level='starter|a1|a2|b1|b2']`). It is used with `bg-level`, `text-level` and `text-level-foreground`, never on the primary button. The server sends the lower-case level key (`CefrLevel::key()`), and `lib/levels.ts` accepts only levels that have an accent. It is applied on the course page. C1 and C2 have no accent and use the primary colour.
-- **Fonts:** Hind Siliguri for body text (Latin and Bangla), Baloo Da 2 for headings, Lexend for practice letters (`font-practice`) and numbers (`stat-figure`). Loaded with `bunny()` in `vite.config.ts`, with the `bengali` subset.
+- **Fonts:** Hind Siliguri for body text (Latin and Bangla), a serif font for headings (see Phase 14), Lexend for practice letters (`font-practice`) and numbers (`stat-figure`). Loaded with `bunny()` in `vite.config.ts`, with the `bengali` subset.
 - **Bangla and motion:** Bangla text (`lang="bn"`) is never italic, and `prefers-reduced-motion` is respected.
 - **Not done yet:** the `Starter` level (needs a new level value and a migration), per-level hint and checking rules, the placement test and level test, the Today screen, the level map with stars, and the other items of the levels spec.
+
+## Phase 14 - classical look
+
+- **Colours:** warm ivory with deep royal blue and antique gold (light), ink navy with gold (dark), in `resources/css/app.css`. The level accents (A1 amber, A2 green, B1 blue, B2 plum, Starter coral) are softened to match.
+- **Fonts:** Playfair Display for English headings and Noto Serif Bengali for Bangla headings (both loaded with `bunny()` in `vite.config.ts`; Georgia is the fallback), Hind Siliguri for body text, Lexend for practice letters. This replaces Baloo Da 2.
+- **Animation:** pages and cards rise in one after the other, tiles pop in, the START bubble bobs, cards lift on hover, and words drift slowly behind the landing and sign-in pages (`components/floating-words.tsx`). Everything stands still when the device asks for less motion.
+- **Course page as a road:** the lessons of each chapter sit on a winding road (left to right, then back right to left), four tiles per row, two on a phone (`components/lesson-road.tsx`). Each tile shows stars, the next lesson is marked START, and numbers count on across chapters. The star rule is printed under the course title: 3 stars from 90%, 2 from 70%, 1 for a completed lesson (`lib/stars.ts`, a display figure worked out from the data the server already sends).
+- **Restyled:** course cards (cover in the level colour), lesson page (three mode cards with a green, gold and red top line), landing page, sign-in pages and the dashboard (animation).
+- **Bug fixed:** the level colour (`bg-level`, `text-level-foreground`) always showed the primary colour, because Tailwind worked it out once at the root. It is now an `inline` theme value, so `data-level` on a page or card changes it.
 
 ## Phase 13 - practice screen comfort
 
@@ -56,7 +66,7 @@
 
 ## Tests
 
-`php artisan test`: 429 passed, 3 skipped (Two-factor is not enabled). `vp test`: 21 passed. PHPStan has a baseline (`phpstan-baseline.neon`): old findings are listed there, new code must be clean. `npm run types:check` and `vp check` are clean.
+`php artisan test`: 429 passed, 3 skipped (Two-factor is not enabled). `vp test`: 24 passed. PHPStan has a baseline (`phpstan-baseline.neon`): old findings are listed there, new code must be clean. `npm run types:check` and `vp check` are clean.
 
 ## Not done or not verified
 
