@@ -167,6 +167,7 @@ class PracticeController extends Controller
                 'lesson_id' => $practiceSession->lesson_id,
                 'total' => $practiceSession->total_items,
                 'correct' => $practiceSession->correct_items,
+                'correct_without_hints' => $attempts->where('is_correct', true)->where('hints_used', 0)->count(),
                 'average_accuracy' => (float) $practiceSession->average_accuracy,
                 'duration_seconds' => $practiceSession->duration_seconds,
                 'xp' => $practiceSession->xp_awarded,

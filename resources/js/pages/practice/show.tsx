@@ -21,7 +21,9 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import { useLetterSize } from '@/hooks/use-letter-size';
 import { guideWords, matchGuide } from '@/lib/guide';
+import { LETTER_SIZE_CLASSES } from '@/lib/letter-size';
 import { wordsOf } from '@/lib/learn';
 import type {
     PracticeItem,
@@ -68,6 +70,7 @@ function TypingCard({
     const [started, setStarted] = useState(false);
     const [shown, setShown] = useState(0);
     const field = useRef<HTMLTextAreaElement>(null);
+    const { size, bigger, smaller } = useLetterSize();
 
     const words = guideWords(item.guide_text ?? '');
     const matched = matchGuide(words, form.data.answer);
@@ -114,13 +117,36 @@ function TypingCard({
         );
 
     const hintsLeft = hint.allowed - hint.used;
+    const hasGuide = item.guide_text !== null;
+
+    // Alt+I asks for a hint, Alt+G shows or hides the guide text. (Alt+H and
+    // Alt+S are taken by browser menus.)
+    useEffect(() => {
+        const onKey = (event: KeyboardEvent) => {
+            if (!event.altKey) {
+                return;
+            }
+
+            if (event.code === 'KeyI' && hint.allowed > 0 && hintsLeft > 0) {
+                event.preventDefault();
+                askHint();
+            } else if (event.code === 'KeyG' && hasGuide) {
+                event.preventDefault();
+                setGuideOn((on) => !on);
+            }
+        };
+
+        window.addEventListener('keydown', onKey);
+
+        return () => window.removeEventListener('keydown', onKey);
+    });
     const label =
         item.content_type === 'sentence'
             ? 'sentence'
             : item.content_type === 'phrase'
               ? 'phrase'
               : 'word';
-    const showGuide = item.guide_text !== null && guideOn;
+    const showGuide = hasGuide && guideOn;
 
     return (
         <form onSubmit={submit} className="space-y-5">
@@ -154,26 +180,58 @@ function TypingCard({
                     <Label htmlFor="answer" className="text-base">
                         Type the {label} you hear
                     </Label>
-                    {item.guide_text !== null && (
-                        <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                            <input
-                                type="checkbox"
-                                className="size-3.5 accent-primary"
-                                checked={guideOn}
-                                onChange={(event) =>
-                                    setGuideOn(event.target.checked)
-                                }
-                            />
-                            Guide text
-                        </label>
-                    )}
+                    <div className="flex items-center gap-3">
+                        <div
+                            role="group"
+                            aria-label="Letter size"
+                            className="flex items-center gap-1"
+                        >
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={smaller}
+                                disabled={size === 'normal'}
+                                aria-label="Smaller letters"
+                            >
+                                A−
+                            </Button>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={bigger}
+                                disabled={size === 'larger'}
+                                aria-label="Bigger letters"
+                            >
+                                A+
+                            </Button>
+                        </div>
+                        {hasGuide && (
+                            <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                                <input
+                                    type="checkbox"
+                                    className="size-3.5 accent-primary"
+                                    checked={guideOn}
+                                    onChange={(event) =>
+                                        setGuideOn(event.target.checked)
+                                    }
+                                    aria-keyshortcuts="Alt+G"
+                                />
+                                Guide text
+                            </label>
+                        )}
+                    </div>
                 </div>
 
                 <div className="rounded-lg border bg-background focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50 dark:bg-input/30">
                     {showGuide && (
                         <p
                             aria-hidden
-                            className="flex min-h-14 flex-wrap gap-x-2 gap-y-1 border-b px-3 py-3 text-xl leading-snug select-none"
+                            className={cn(
+                                'flex min-h-14 flex-wrap gap-x-2 gap-y-1 border-b px-3 py-3 leading-snug select-none',
+                                LETTER_SIZE_CLASSES[size].guide,
+                            )}
                         >
                             {words.map((word, index) => (
                                 <span
@@ -213,7 +271,10 @@ function TypingCard({
                         autoCorrect="off"
                         autoCapitalize="off"
                         spellCheck={false}
-                        className="rounded-none rounded-b-lg border-0 bg-transparent font-practice text-lg shadow-none focus-visible:ring-0 dark:bg-transparent"
+                        className={cn(
+                            'rounded-none rounded-b-lg border-0 bg-transparent font-practice shadow-none focus-visible:ring-0 dark:bg-transparent',
+                            LETTER_SIZE_CLASSES[size].input,
+                        )}
                         aria-invalid={!!form.errors.answer}
                         aria-describedby="answer-help"
                     />
@@ -225,7 +286,8 @@ function TypingCard({
                     {showGuide &&
                         'The faint words are a guide: each one turns clear when you type it correctly. '}
                     Press Ctrl+Enter to check. Alt+P plays or pauses, Alt+R
-                    replays.
+                    replays{hint.allowed > 0 && ', Alt+I gives a hint'}
+                    {hasGuide && ', Alt+G shows or hides the guide'}.
                 </p>
             </div>
 
@@ -254,6 +316,7 @@ function TypingCard({
                         size="lg"
                         onClick={askHint}
                         disabled={hintsLeft <= 0}
+                        aria-keyshortcuts="Alt+I"
                     >
                         <Lightbulb />
                         Hint ({Math.max(0, hintsLeft)} left)

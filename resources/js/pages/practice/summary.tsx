@@ -1,5 +1,5 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { Clock, RotateCcw, Sparkles, Target } from 'lucide-react';
+import { Clock, Lightbulb, RotateCcw, Sparkles, Target } from 'lucide-react';
 import CatalogController from '@/actions/App/Modules/Courses/Http/Controllers/CatalogController';
 import MistakeController from '@/actions/App/Modules/Dictation/Http/Controllers/MistakeController';
 import PracticeController from '@/actions/App/Modules/Dictation/Http/Controllers/PracticeController';
@@ -20,6 +20,7 @@ type Props = {
         lesson_id: string | null;
         total: number;
         correct: number;
+        correct_without_hints: number;
         average_accuracy: number;
         duration_seconds: number;
         xp: number;
@@ -44,6 +45,11 @@ export default function PracticeSummary({ session, attempts }: Props) {
             icon: Target,
             label: 'Correct',
             value: `${session.correct} / ${session.total}`,
+        },
+        {
+            icon: Lightbulb,
+            label: 'Right without hints',
+            value: `${session.correct_without_hints} / ${session.total}`,
         },
         {
             icon: Sparkles,
@@ -83,7 +89,7 @@ export default function PracticeSummary({ session, attempts }: Props) {
                     }
                 />
 
-                <dl className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                <dl className="grid grid-cols-2 gap-3 md:grid-cols-5">
                     {stats.map((stat) => (
                         <div
                             key={stat.label}
