@@ -13,6 +13,7 @@ import { formatStudyTime } from '@/lib/learn';
 import { cn } from '@/lib/utils';
 import { dashboard, leaderboard } from '@/routes';
 
+import { useT } from '@/lib/i18n';
 type Props = {
     metric: 'xp' | 'study_time';
     period: 'daily' | 'weekly' | 'monthly' | 'all';
@@ -28,20 +29,25 @@ const PERIODS = [
 ] as const;
 
 export default function Leaderboard({ metric, period, entries, me }: Props) {
+    const t = useT();
     const show = (value: number) =>
         metric === 'xp' ? `${value} XP` : formatStudyTime(value);
 
     return (
         <>
-            <Head title="Leaderboard" />
+            <Head title={t('Leaderboard')} />
             <div className="mx-auto flex w-full max-w-3xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
-                    title="Leaderboard"
-                    description={`Ranked by ${metric === 'xp' ? 'XP earned' : 'time studied'}. Only first names or chosen display names are shown; you can hide yours in Settings > Learning.`}
+                    title={t('Leaderboard')}
+                    description={t(
+                        metric === 'xp'
+                            ? 'Ranked by XP earned. Only first names or chosen display names are shown; you can hide yours in Settings > Learning.'
+                            : 'Ranked by time studied. Only first names or chosen display names are shown; you can hide yours in Settings > Learning.',
+                    )}
                 />
 
                 <nav
-                    aria-label="Period"
+                    aria-label={t('Period')}
                     className="flex flex-wrap gap-1 border-b"
                 >
                     {PERIODS.map((item) => (
@@ -58,28 +64,35 @@ export default function Leaderboard({ metric, period, entries, me }: Props) {
                                     : 'border-transparent text-muted-foreground hover:text-foreground',
                             )}
                         >
-                            {item.label}
+                            {t(item.label)}
                         </Link>
                     ))}
                 </nav>
 
                 <p className="rounded-xl border bg-card p-4 text-sm">
                     {me.rank !== null
-                        ? `You are number ${me.rank} with ${show(me.value)}.`
-                        : 'You have no points in this period yet. Practise to join the ranking.'}
+                        ? t('You are number {rank} with {value}.', {
+                              rank: me.rank,
+                              value: show(me.value),
+                          })
+                        : t(
+                              'You have no points in this period yet. Practise to join the ranking.',
+                          )}
                 </p>
 
                 {entries.length === 0 ? (
                     <p className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-                        Nobody has earned points in this period yet.
+                        {t('Nobody has earned points in this period yet.')}
                     </p>
                 ) : (
                     <div className="rounded-xl border bg-card">
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead className="w-16">Rank</TableHead>
-                                    <TableHead>Learner</TableHead>
+                                    <TableHead className="w-16">
+                                        {t('Rank')}
+                                    </TableHead>
+                                    <TableHead>{t('Learner')}</TableHead>
                                     <TableHead className="text-right">
                                         {metric === 'xp' ? 'XP' : 'Time'}
                                     </TableHead>

@@ -1,8 +1,11 @@
 import { Head, Link, router } from '@inertiajs/react';
+import { SearchX } from 'lucide-react';
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import CatalogController from '@/actions/App/Modules/Courses/Http/Controllers/CatalogController';
 import { PageHeader } from '@/components/admin/page-header';
+import { CoverArt } from '@/components/cover-art';
+import { EmptyState } from '@/components/empty-state';
 import { Pagination } from '@/components/admin/pagination';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -12,6 +15,7 @@ import { formatMinutes } from '@/lib/format';
 import { levelAccent } from '@/lib/levels';
 import type { Paginated, SelectOption } from '@/types';
 
+import { useT } from '@/lib/i18n';
 type CourseCard = {
     id: string;
     title: string;
@@ -39,6 +43,7 @@ export default function CoursesIndex({
         cefr_levels: SelectOption[];
     };
 }) {
+    const t = useT();
     const [values, setValues] = useState<Filters>(filters);
 
     const apply = (next: Filters) => {
@@ -54,11 +59,13 @@ export default function CoursesIndex({
 
     return (
         <>
-            <Head title="Courses" />
-            <div className="flex flex-col gap-6 p-4">
+            <Head title={t('Courses')} />
+            <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 md:p-6">
                 <PageHeader
-                    title="Courses"
-                    description="Pick a course and practise by listening and typing."
+                    title={t('Courses')}
+                    description={t(
+                        'Pick a course and practise by listening and typing.',
+                    )}
                 />
 
                 <form
@@ -70,12 +77,12 @@ export default function CoursesIndex({
                     }}
                 >
                     <label htmlFor="search" className="sr-only">
-                        Search courses
+                        {t('Search courses')}
                     </label>
                     <Input
                         id="search"
                         type="search"
-                        placeholder="Search by title"
+                        placeholder={t('Search by title')}
                         className="min-w-48 flex-1"
                         value={values.search}
                         onChange={(event) =>
@@ -83,7 +90,7 @@ export default function CoursesIndex({
                         }
                     />
                     <label htmlFor="level" className="sr-only">
-                        Level
+                        {t('Level')}
                     </label>
                     <NativeSelect
                         id="level"
@@ -93,15 +100,15 @@ export default function CoursesIndex({
                             apply({ ...values, cefr_level: event.target.value })
                         }
                     >
-                        <option value="">All levels</option>
+                        <option value="">{t('All levels')}</option>
                         {options.cefr_levels.map((level) => (
                             <option key={level.value} value={level.value}>
-                                {level.label}
+                                {t(level.label)}
                             </option>
                         ))}
                     </NativeSelect>
                     <label htmlFor="category" className="sr-only">
-                        Category
+                        {t('Category')}
                     </label>
                     <NativeSelect
                         id="category"
@@ -114,7 +121,7 @@ export default function CoursesIndex({
                             })
                         }
                     >
-                        <option value="">All categories</option>
+                        <option value="">{t('All categories')}</option>
                         {options.categories.map((category) => (
                             <option key={category.id} value={category.id}>
                                 {category.name}
@@ -122,14 +129,14 @@ export default function CoursesIndex({
                         ))}
                     </NativeSelect>
                     <Button type="submit" variant="secondary">
-                        Search
+                        {t('Search')}
                     </Button>
                 </form>
 
                 {courses.data.length === 0 ? (
-                    <p className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-                        No courses match. Try another level or clear the search.
-                    </p>
+                    <EmptyState icon={SearchX} title={t('No courses match')}>
+                        {t('Try another level or clear the search.')}
+                    </EmptyState>
                 ) : (
                     <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                         {courses.data.map((course, index) => (
@@ -150,13 +157,17 @@ export default function CoursesIndex({
                                 ) : (
                                     <div
                                         aria-hidden
-                                        className="relative flex h-32 items-center justify-center overflow-hidden bg-linear-to-br from-level to-level/60 font-heading text-5xl font-semibold text-level-foreground"
+                                        className="relative flex h-32 items-center overflow-hidden bg-linear-to-br from-level to-level/60 px-6 font-heading text-5xl font-semibold text-level-foreground"
                                     >
                                         <span className="absolute -top-10 -right-8 size-32 rounded-full bg-white/15" />
                                         <span className="absolute -bottom-12 -left-6 size-28 rounded-full bg-white/10" />
                                         <span className="relative">
                                             {course.cefr_level}
                                         </span>
+                                        <CoverArt
+                                            category={course.category}
+                                            className="absolute right-2 bottom-0"
+                                        />
                                     </div>
                                 )}
                                 <div className="flex flex-1 flex-col gap-3 p-4">
@@ -189,7 +200,9 @@ export default function CoursesIndex({
                                             aria-valuemin={0}
                                             aria-valuemax={100}
                                             aria-valuenow={course.progress}
-                                            aria-label={`${course.title} progress`}
+                                            aria-label={t('{title} progress', {
+                                                title: course.title,
+                                            })}
                                             className="h-1.5 overflow-hidden rounded-full bg-muted"
                                         >
                                             <div
@@ -200,9 +213,14 @@ export default function CoursesIndex({
                                             />
                                         </div>
                                         <p className="text-xs text-muted-foreground">
-                                            {course.completed_lessons} of{' '}
-                                            {course.lessons_count} lessons ·{' '}
-                                            {formatMinutes(course.minutes)}
+                                            {t('{done} of {lessons}', {
+                                                done: course.completed_lessons,
+                                                lessons: t.n(
+                                                    course.lessons_count,
+                                                    'lesson',
+                                                ),
+                                            })}{' '}
+                                            · {formatMinutes(course.minutes)}
                                         </p>
                                     </div>
                                 </div>

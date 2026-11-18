@@ -43,18 +43,21 @@ class LearningSettingsController extends Controller
     {
         $data = $request->validated();
 
-        $request->user()->ensureProfile()->update([
+        $profile = $request->user()->ensureProfile();
+
+        $profile->update([
             'display_name' => $data['display_name'] ?? null,
             'target_cefr_level' => $data['target_cefr_level'] ?? null,
             'daily_goal_minutes' => $data['daily_goal_minutes'],
             'daily_goal_sentences' => $data['daily_goal_sentences'],
             'timezone' => $data['timezone'],
             'leaderboard_anonymous' => $request->boolean('leaderboard_anonymous'),
-            'preferences' => [
+            // merged, so other preferences (such as the language) are kept
+            'preferences' => array_merge($profile->preferenceList(), [
                 'default_mode' => $data['default_mode'] ?? 'medium',
                 'default_speed' => isset($data['default_speed']) ? (float) $data['default_speed'] : 1.0,
                 'autoplay' => $request->boolean('autoplay'),
-            ],
+            ]),
         ]);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Learning settings saved.')]);

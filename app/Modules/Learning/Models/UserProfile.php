@@ -43,4 +43,16 @@ class UserProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * The saved preferences (default mode, speed, language...), always as an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function preferenceList(): array
+    {
+        $value = $this->getAttribute('preferences');
+
+        return is_array($value) ? $value : [];
+    }
 }

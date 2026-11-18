@@ -6,10 +6,11 @@ import { PageHeader } from '@/components/admin/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatDate, formatPercent, MODE_INFO } from '@/lib/learn';
-import { formatMinutes } from '@/lib/format';
+import { formatMinutes, plural } from '@/lib/format';
 import { cn } from '@/lib/utils';
 import { dashboard } from '@/routes';
 
+import { useT } from '@/lib/i18n';
 type Props = {
     lesson: {
         id: string;
@@ -51,6 +52,7 @@ export default function LessonShow({
     progress,
     recent,
 }: Props) {
+    const t = useT();
     const start = (mode: string) =>
         router.post(PracticeController.start.url(lesson.id), { mode });
 
@@ -71,10 +73,12 @@ export default function LessonShow({
                     actions={
                         <>
                             {!lesson.is_published && (
-                                <Badge variant="outline">Draft preview</Badge>
+                                <Badge variant="outline">
+                                    {t('Draft preview')}
+                                </Badge>
                             )}
                             <Badge variant="secondary">
-                                {lesson.sentences_count} sentences
+                                {plural(lesson.sentences_count, 'sentence')}
                             </Badge>
                             <Badge variant="secondary">
                                 {formatMinutes(lesson.estimated_minutes)}
@@ -86,17 +90,17 @@ export default function LessonShow({
                 {progress && (
                     <p className="text-sm text-muted-foreground">
                         {progress.status === 'completed'
-                            ? 'Completed'
-                            : 'In progress'}
+                            ? t('Completed')
+                            : t('In progress')}
                         {progress.best_accuracy !== null &&
-                            ` · best text match ${formatPercent(progress.best_accuracy)}`}
-                        {` · practised ${progress.sessions_count} time${progress.sessions_count === 1 ? '' : 's'}`}
+                            ` · ${t('best text match {percent}', { percent: formatPercent(progress.best_accuracy) })}`}
+                        {` · ${t('practised {times}', { times: t.n(progress.sessions_count, 'time') })}`}
                     </p>
                 )}
 
                 <section aria-labelledby="modes" className="space-y-3">
                     <h2 id="modes" className="text-lg font-semibold">
-                        Choose how to practise
+                        {t('Choose how to practise')}
                     </h2>
                     <ul className="grid gap-3 md:grid-cols-3">
                         {modes.map((mode, index) => (
@@ -114,16 +118,17 @@ export default function LessonShow({
                             >
                                 <div className="space-y-1">
                                     <h3 className="text-xl font-semibold">
-                                        {mode.label}
+                                        {t(mode.label)}
                                     </h3>
                                     <p className="text-sm text-muted-foreground">
-                                        {MODE_INFO[mode.value]}
+                                        {t(MODE_INFO[mode.value])}
                                     </p>
                                     <p className="text-xs text-muted-foreground">
-                                        {mode.items} items
+                                        {t.n(mode.items, 'item')}
                                         {mode.hints > 0 &&
-                                            ` · ${mode.hints} hint${mode.hints === 1 ? '' : 's'}`}
-                                        {mode.guide && ' · faint guide text'}
+                                            ` · ${t.n(mode.hints, 'hint')}`}
+                                        {mode.guide &&
+                                            ` · ${t('faint guide text')}`}
                                     </p>
                                 </div>
                                 <Button
@@ -132,8 +137,8 @@ export default function LessonShow({
                                 >
                                     <Play />
                                     {mode.resume
-                                        ? `Resume (${mode.resume.done}/${mode.resume.total})`
-                                        : 'Start'}
+                                        ? `${t('Resume')} (${mode.resume.done}/${mode.resume.total})`
+                                        : t('Start')}
                                 </Button>
                             </li>
                         ))}
@@ -143,7 +148,7 @@ export default function LessonShow({
                 {recent.length > 0 && (
                     <section aria-labelledby="recent" className="space-y-3">
                         <h2 id="recent" className="text-lg font-semibold">
-                            Recent sessions
+                            {t('Recent sessions')}
                         </h2>
                         <ul className="divide-y rounded-xl border bg-card">
                             {recent.map((session) => (
@@ -152,7 +157,7 @@ export default function LessonShow({
                                     className="flex items-center justify-between gap-2 p-3 text-sm"
                                 >
                                     <span className="capitalize">
-                                        {session.mode}
+                                        {t(session.mode)}
                                     </span>
                                     <span>
                                         {formatPercent(session.accuracy)}
@@ -166,7 +171,7 @@ export default function LessonShow({
                                                 session.id,
                                             )}
                                         >
-                                            Open
+                                            {t('Open')}
                                         </Link>
                                     </Button>
                                 </li>

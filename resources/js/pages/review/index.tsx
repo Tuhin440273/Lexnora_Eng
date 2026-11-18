@@ -20,6 +20,7 @@ import { formatDate } from '@/lib/learn';
 import { dashboard } from '@/routes';
 import type { Paginated } from '@/types';
 
+import { useT } from '@/lib/i18n';
 type VocabCard = {
     schedule_id: string;
     term: string;
@@ -49,6 +50,7 @@ type Props = {
 };
 
 function VocabularyCard({ card }: { card: VocabCard }) {
+    const t = useT();
     const [revealed, setRevealed] = useState(false);
 
     const rate = (result: 'remembered' | 'forgot') =>
@@ -76,7 +78,7 @@ function VocabularyCard({ card }: { card: VocabCard }) {
                     )}
                     {!card.meaning && !card.meaning_bn && !card.context && (
                         <p className="text-muted-foreground">
-                            You have not added a meaning for this word.
+                            {t('You have not added a meaning for this word.')}
                         </p>
                     )}
                 </div>
@@ -86,20 +88,20 @@ function VocabularyCard({ card }: { card: VocabCard }) {
                     size="sm"
                     onClick={() => setRevealed(true)}
                 >
-                    Show meaning
+                    {t('Show meaning')}
                 </Button>
             )}
 
             <div className="flex gap-2">
                 <Button size="sm" onClick={() => rate('remembered')}>
-                    I remembered
+                    {t('I remembered')}
                 </Button>
                 <Button
                     size="sm"
                     variant="outline"
                     onClick={() => rate('forgot')}
                 >
-                    I forgot
+                    {t('I forgot')}
                 </Button>
             </div>
         </li>
@@ -113,6 +115,7 @@ export default function ReviewIndex({
     progress,
     history,
 }: Props) {
+    const t = useT();
     const tabs = [
         { key: 'due', label: 'Due now', href: ReviewController.index() },
         {
@@ -124,14 +127,19 @@ export default function ReviewIndex({
 
     return (
         <>
-            <Head title="Review center" />
+            <Head title={t('Review center')} />
             <div className="mx-auto flex w-full max-w-4xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
-                    title="Review center"
-                    description="Come back to what you studied. Items return after longer and longer breaks, and start again if you get one wrong."
+                    title={t('Review center')}
+                    description={t(
+                        'Come back to what you studied. Items return after longer and longer breaks, and start again if you get one wrong.',
+                    )}
                 />
 
-                <nav aria-label="Review views" className="flex gap-1 border-b">
+                <nav
+                    aria-label={t('Review views')}
+                    className="flex gap-1 border-b"
+                >
                     {tabs.map((item) => (
                         <Link
                             key={item.key}
@@ -144,7 +152,7 @@ export default function ReviewIndex({
                                     : 'border-transparent text-muted-foreground hover:text-foreground',
                             )}
                         >
-                            {item.label}
+                            {t(item.label)}
                         </Link>
                     ))}
                 </nav>
@@ -163,7 +171,7 @@ export default function ReviewIndex({
                                     className="rounded-xl border bg-card p-4"
                                 >
                                     <dt className="text-sm text-muted-foreground">
-                                        {label}
+                                        {t(String(label))}
                                     </dt>
                                     <dd className="mt-1 text-2xl font-semibold tabular-nums">
                                         {value}
@@ -175,11 +183,14 @@ export default function ReviewIndex({
                         <section className="flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-card p-4">
                             <p className="text-sm">
                                 {due.sentences > 0
-                                    ? `Type up to ${due.batch} due sentences from memory of the audio.`
-                                    : 'No sentences are due.'}
+                                    ? t(
+                                          'Type up to {count} due sentences from memory of the audio.',
+                                          { count: due.batch },
+                                      )
+                                    : t('No sentences are due.')}
                                 {due.sentences === 0 &&
                                     progress.next_due_at &&
-                                    ` The next one is due on ${formatDate(progress.next_due_at)}.`}
+                                    ` ${t('The next one is due on {date}.', { date: formatDate(progress.next_due_at) })}`}
                             </p>
                             <Button
                                 disabled={due.sentences === 0}
@@ -189,7 +200,7 @@ export default function ReviewIndex({
                                     )
                                 }
                             >
-                                <Play /> Review sentences
+                                <Play /> {t('Review sentences')}
                             </Button>
                         </section>
 
@@ -202,7 +213,7 @@ export default function ReviewIndex({
                                     id="words"
                                     className="text-lg font-semibold"
                                 >
-                                    Words to review
+                                    {t('Words to review')}
                                 </h2>
                                 <ul className="grid gap-3 md:grid-cols-2">
                                     {vocabulary.map((card) => (
@@ -220,18 +231,21 @@ export default function ReviewIndex({
                 {tab === 'history' && history && (
                     <>
                         {history.data.length === 0 ? (
-                            <EmptyState icon={History} title="No reviews yet">
-                                They appear here after your first review.
+                            <EmptyState
+                                icon={History}
+                                title={t('No reviews yet')}
+                            >
+                                {t('They appear here after your first review.')}
                             </EmptyState>
                         ) : (
                             <div className="rounded-xl border bg-card">
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead>Item</TableHead>
-                                            <TableHead>Result</TableHead>
-                                            <TableHead>Step</TableHead>
-                                            <TableHead>Date</TableHead>
+                                            <TableHead>{t('Item')}</TableHead>
+                                            <TableHead>{t('Result')}</TableHead>
+                                            <TableHead>{t('Step')}</TableHead>
+                                            <TableHead>{t('Date')}</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
@@ -243,8 +257,8 @@ export default function ReviewIndex({
                                                     </span>
                                                     <span className="text-xs text-muted-foreground">
                                                         {row.kind === 'sentence'
-                                                            ? 'Sentence'
-                                                            : 'Word'}
+                                                            ? t('Sentence')
+                                                            : t('Word')}
                                                     </span>
                                                 </TableCell>
                                                 <TableCell>
@@ -257,8 +271,8 @@ export default function ReviewIndex({
                                                         }
                                                     >
                                                         {row.is_successful
-                                                            ? 'Remembered'
-                                                            : 'Forgot'}
+                                                            ? t('Remembered')
+                                                            : t('Forgot')}
                                                         {row.accuracy !==
                                                             null &&
                                                             ` · ${row.accuracy}%`}

@@ -8,6 +8,7 @@ import {
     XAxis,
 } from 'recharts';
 
+import { useT } from '@/lib/i18n';
 export type WeekDay = {
     date: string;
     label: string;
@@ -21,6 +22,7 @@ export type WeekDay = {
  * for screen readers.
  */
 export function WeeklyChart({ week }: { week: WeekDay[] }) {
+    const t = useT();
     const empty = week.every((day) => day.minutes === 0);
     const today = week.length - 1;
 
@@ -29,6 +31,7 @@ export function WeeklyChart({ week }: { week: WeekDay[] }) {
             <div className="relative h-56 w-full" aria-hidden>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
+                        accessibilityLayer={false}
                         data={week}
                         margin={{ top: 8, right: 8, bottom: 0, left: 8 }}
                     >
@@ -51,8 +54,8 @@ export function WeeklyChart({ week }: { week: WeekDay[] }) {
                                 color: 'var(--popover-foreground)',
                             }}
                             formatter={(value) => [
-                                `${String(value)} min`,
-                                'Studied',
+                                t('{minutes} min', { minutes: String(value) }),
+                                t('Studied'),
                             ]}
                         />
                         <Bar
@@ -75,8 +78,9 @@ export function WeeklyChart({ week }: { week: WeekDay[] }) {
                 </ResponsiveContainer>
                 {empty && (
                     <p className="absolute inset-x-0 top-1/3 text-center text-sm text-muted-foreground">
-                        No study time yet this week. One short session fills the
-                        first bar.
+                        {t(
+                            'No study time yet this week. One short session fills the first bar.',
+                        )}
                     </p>
                 )}
             </div>

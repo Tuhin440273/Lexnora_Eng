@@ -60,25 +60,29 @@ describe('admin formatters', () => {
     });
 });
 
+// an English-only stand-in for the translator
+const say = (text: string, vars: Record<string, string | number> = {}) =>
+    text.replace(/\{(\w+)\}/g, (_, name: string) => String(vars[name]));
+
 describe('describeNextReview', () => {
     it('says nothing for words and phrases, which are not scheduled', () => {
-        expect(describeNextReview(null)).toBeNull();
+        expect(describeNextReview(null, say)).toBeNull();
     });
 
     it('speaks of today, tomorrow and later days', () => {
-        expect(describeNextReview({ days: 0, mastered: false })).toBe(
+        expect(describeNextReview({ days: 0, mastered: false }, say)).toBe(
             'Comes back for review today',
         );
-        expect(describeNextReview({ days: 1, mastered: false })).toBe(
+        expect(describeNextReview({ days: 1, mastered: false }, say)).toBe(
             'Comes back for review tomorrow',
         );
-        expect(describeNextReview({ days: 7, mastered: false })).toBe(
+        expect(describeNextReview({ days: 7, mastered: false }, say)).toBe(
             'Comes back for review in 7 days',
         );
     });
 
     it('says a mastered sentence is done with review', () => {
-        expect(describeNextReview({ days: 7, mastered: true })).toBe(
+        expect(describeNextReview({ days: 7, mastered: true }, say)).toBe(
             'Mastered. This sentence is done with review.',
         );
     });

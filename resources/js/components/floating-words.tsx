@@ -28,7 +28,8 @@ export function FloatingWords({ className }: { className?: string }) {
             {WORDS.map(([word, left, top, size, delay, duration]) => (
                 <span
                     key={word}
-                    className="absolute animate-drift font-heading text-primary/[0.07]"
+                    data-word={word}
+                    className="absolute animate-drift font-heading text-primary/[0.07] after:content-[attr(data-word)]"
                     style={{
                         left,
                         top,
@@ -36,9 +37,7 @@ export function FloatingWords({ className }: { className?: string }) {
                         animationDelay: `-${delay}s`,
                         animationDuration: `${duration}s`,
                     }}
-                >
-                    {word}
-                </span>
+                ></span>
             ))}
         </div>
     );

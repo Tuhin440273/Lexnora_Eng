@@ -13,8 +13,8 @@ import {
 import MistakeController from '@/actions/App/Modules/Dictation/Http/Controllers/MistakeController';
 import { PageHeader } from '@/components/admin/page-header';
 import { analytics, dashboard } from '@/routes';
-import { plural } from '@/lib/format';
 
+import { useT } from '@/lib/i18n';
 type Day = {
     date: string;
     label: string;
@@ -39,20 +39,21 @@ export default function Analytics({
     by_mode: { mode: string; sessions: number; accuracy: number }[];
     hardest: { text: string; times_missed: number }[];
 }) {
+    const t = useT();
     const hasData = days.some((day) => day.sentences > 0);
 
     return (
         <>
-            <Head title="Analytics" />
+            <Head title={t('Analytics')} />
             <div className="mx-auto flex w-full max-w-6xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
-                    title="Your progress"
-                    description="The last 30 days of practice."
+                    title={t('Your progress')}
+                    description={t('The last 30 days of practice.')}
                 />
 
                 {!hasData && (
                     <p className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-                        Charts appear after your first practice session.
+                        {t('Charts appear after your first practice session.')}
                     </p>
                 )}
 
@@ -62,11 +63,12 @@ export default function Analytics({
                         aria-labelledby="accuracy"
                     >
                         <h2 id="accuracy" className="font-semibold">
-                            Text match per day (%)
+                            {t('Text match per day (%)')}
                         </h2>
                         <div className="h-60" aria-hidden>
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart
+                                    accessibilityLayer={false}
                                     data={days}
                                     margin={{
                                         top: 8,
@@ -94,7 +96,7 @@ export default function Analytics({
                                         contentStyle={tooltipStyle}
                                         formatter={(value) => [
                                             `${String(value)}%`,
-                                            'Text match',
+                                            t('Text match'),
                                         ]}
                                     />
                                     <Line
@@ -115,11 +117,12 @@ export default function Analytics({
                         aria-labelledby="minutes"
                     >
                         <h2 id="minutes" className="font-semibold">
-                            Minutes studied per day
+                            {t('Minutes studied per day')}
                         </h2>
                         <div className="h-60" aria-hidden>
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
+                                    accessibilityLayer={false}
                                     data={days}
                                     margin={{
                                         top: 8,
@@ -147,8 +150,10 @@ export default function Analytics({
                                         cursor={{ fill: 'var(--accent)' }}
                                         contentStyle={tooltipStyle}
                                         formatter={(value) => [
-                                            `${String(value)} min`,
-                                            'Studied',
+                                            t('{minutes} min', {
+                                                minutes: String(value),
+                                            }),
+                                            t('Studied'),
                                         ]}
                                     />
                                     <Bar
@@ -165,7 +170,7 @@ export default function Analytics({
                 <div className="grid gap-6 lg:grid-cols-2">
                     <section className="space-y-3" aria-labelledby="modes">
                         <h2 id="modes" className="font-semibold">
-                            By practice mode
+                            {t('By practice mode')}
                         </h2>
                         <ul className="divide-y rounded-xl border bg-card">
                             {by_mode.map((mode) => (
@@ -177,11 +182,13 @@ export default function Analytics({
                                         {mode.mode}
                                     </span>
                                     <span className="text-muted-foreground">
-                                        {plural(mode.sessions, 'session')}
+                                        {t.n(mode.sessions, 'session')}
                                     </span>
                                     <span>
                                         {mode.sessions > 0
-                                            ? `${mode.accuracy}% average`
+                                            ? t('{percent}% average', {
+                                                  percent: mode.accuracy,
+                                              })
                                             : '-'}
                                     </span>
                                 </li>
@@ -191,11 +198,11 @@ export default function Analytics({
 
                     <section className="space-y-3" aria-labelledby="hardest">
                         <h2 id="hardest" className="font-semibold">
-                            Sentences you miss most
+                            {t('Sentences you miss most')}
                         </h2>
                         {hardest.length === 0 ? (
                             <p className="rounded-xl border border-dashed p-6 text-sm text-muted-foreground">
-                                No mistakes recorded yet.
+                                {t('No mistakes recorded yet.')}
                             </p>
                         ) : (
                             <ul className="divide-y rounded-xl border bg-card">
@@ -219,7 +226,7 @@ export default function Analytics({
                                 href={MistakeController.index()}
                                 className="text-sm underline"
                             >
-                                Open the mistakes notebook
+                                {t('Open the mistakes notebook')}
                             </Link>
                         )}
                     </section>

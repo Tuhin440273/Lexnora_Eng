@@ -105,6 +105,7 @@ export default function AdminAnalytics({
                         <div className="h-60" aria-hidden>
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart
+                                    accessibilityLayer={false}
                                     data={days}
                                     margin={{
                                         top: 8,
@@ -156,6 +157,7 @@ export default function AdminAnalytics({
                         <div className="h-60" aria-hidden>
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
+                                    accessibilityLayer={false}
                                     data={days}
                                     margin={{
                                         top: 8,

@@ -11,6 +11,7 @@ import { formatPercent, formatStudyTime } from '@/lib/learn';
 import { dashboard } from '@/routes';
 import type { DiffToken } from '@/types';
 
+import { useT } from '@/lib/i18n';
 type Props = {
     session: {
         id: string;
@@ -38,6 +39,7 @@ type Props = {
 };
 
 export default function PracticeSummary({ session, attempts }: Props) {
+    const t = useT();
     const wrong = attempts.filter((attempt) => !attempt.is_correct).length;
 
     const stats = [
@@ -66,11 +68,11 @@ export default function PracticeSummary({ session, attempts }: Props) {
 
     return (
         <>
-            <Head title="Session summary" />
+            <Head title={t('Session summary')} />
             <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4">
                 <PageHeader
-                    title="Session finished"
-                    description={`${session.title} · ${session.kind === 'lesson' ? `${session.mode} mode` : session.kind}`}
+                    title={t('Session finished')}
+                    description={`${session.title} · ${session.kind === 'lesson' ? t('{mode} mode', { mode: t(session.mode) }) : t(session.kind)}`}
                     actions={
                         session.lesson_id ? (
                             <Button
@@ -83,7 +85,7 @@ export default function PracticeSummary({ session, attempts }: Props) {
                                     )
                                 }
                             >
-                                <RotateCcw /> Practise again
+                                <RotateCcw /> {t('Practise again')}
                             </Button>
                         ) : undefined
                     }
@@ -96,7 +98,7 @@ export default function PracticeSummary({ session, attempts }: Props) {
                             className="rounded-xl border bg-card p-4"
                         >
                             <dt className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                                <stat.icon className="size-4" /> {stat.label}
+                                <stat.icon className="size-4" /> {t(stat.label)}
                             </dt>
                             <dd className="mt-1 text-2xl font-semibold tabular-nums">
                                 {stat.value}
@@ -108,12 +110,14 @@ export default function PracticeSummary({ session, attempts }: Props) {
                 <section className="space-y-3" aria-labelledby="answers">
                     <div className="flex items-center justify-between">
                         <h2 id="answers" className="text-lg font-semibold">
-                            Your answers
+                            {t('Your answers')}
                         </h2>
                         {wrong > 0 && (
                             <Button variant="outline" size="sm" asChild>
                                 <Link href={MistakeController.index()}>
-                                    {wrong} to review in your mistakes
+                                    {t('{count} to review in your mistakes', {
+                                        count: wrong,
+                                    })}
                                 </Link>
                             </Button>
                         )}
@@ -135,17 +139,18 @@ export default function PracticeSummary({ session, attempts }: Props) {
                                         }
                                     >
                                         {attempt.is_correct
-                                            ? 'Correct'
-                                            : 'Not quite'}{' '}
+                                            ? t('Correct')
+                                            : t('Not quite')}{' '}
                                         · {attempt.accuracy}%
                                     </Badge>
                                     {attempt.hints_used > 0 && (
                                         <span className="text-xs text-muted-foreground">
-                                            {attempt.hints_used} hint
-                                            {attempt.hints_used === 1
-                                                ? ''
-                                                : 's'}{' '}
-                                            used
+                                            {t('{hints} used', {
+                                                hints: t.n(
+                                                    attempt.hints_used,
+                                                    'hint',
+                                                ),
+                                            })}
                                         </span>
                                     )}
                                 </div>
@@ -171,12 +176,12 @@ export default function PracticeSummary({ session, attempts }: Props) {
                                     session.lesson_id,
                                 )}
                             >
-                                Back to the lesson
+                                {t('Back to the lesson')}
                             </Link>
                         </Button>
                     )}
                     <Button variant="outline" asChild>
-                        <Link href={dashboard()}>Dashboard</Link>
+                        <Link href={dashboard()}>{t('Dashboard')}</Link>
                     </Button>
                 </div>
             </div>

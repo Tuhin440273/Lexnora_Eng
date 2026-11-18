@@ -138,7 +138,12 @@ export function AppSidebar() {
     const { auth } = usePage().props;
 
     return (
-        <Sidebar collapsible="icon" variant="inset">
+        <Sidebar
+            collapsible="icon"
+            variant="inset"
+            role="navigation"
+            aria-label="Main menu"
+        >
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>

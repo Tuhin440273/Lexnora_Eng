@@ -26,6 +26,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { dashboard } from '@/routes';
 import type { Paginated } from '@/types';
 
+import { useT } from '@/lib/i18n';
 type Saved = {
     id: string;
     term: string;
@@ -40,6 +41,7 @@ type Saved = {
 };
 
 function AddForm({ onSaved }: { onSaved: () => void }) {
+    const t = useT();
     return (
         <Form
             {...SavedVocabularyController.store.form()}
@@ -50,7 +52,7 @@ function AddForm({ onSaved }: { onSaved: () => void }) {
             {({ errors, processing }) => (
                 <>
                     <div className="grid gap-2">
-                        <Label htmlFor="term">Word or phrase</Label>
+                        <Label htmlFor="term">{t('Word or phrase')}</Label>
                         <Input
                             id="term"
                             name="term"
@@ -62,7 +64,7 @@ function AddForm({ onSaved }: { onSaved: () => void }) {
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="personal_meaning">
-                            Your meaning (optional)
+                            {t('Your meaning (optional)')}
                         </Label>
                         <Input
                             id="personal_meaning"
@@ -71,12 +73,12 @@ function AddForm({ onSaved }: { onSaved: () => void }) {
                         />
                     </div>
                     <div className="grid gap-2">
-                        <Label htmlFor="notes">Notes (optional)</Label>
+                        <Label htmlFor="notes">{t('Notes (optional)')}</Label>
                         <Textarea id="notes" name="notes" rows={2} />
                     </div>
                     <div className="flex justify-end">
                         <Button type="submit" disabled={processing}>
-                            Save word
+                            {t('Save word')}
                         </Button>
                     </div>
                 </>
@@ -86,6 +88,7 @@ function AddForm({ onSaved }: { onSaved: () => void }) {
 }
 
 function EditForm({ item, onSaved }: { item: Saved; onSaved: () => void }) {
+    const t = useT();
     return (
         <Form
             {...SavedVocabularyController.update.form(item.id)}
@@ -96,7 +99,9 @@ function EditForm({ item, onSaved }: { item: Saved; onSaved: () => void }) {
             {({ errors, processing }) => (
                 <>
                     <div className="grid gap-2">
-                        <Label htmlFor="edit-meaning">Your meaning</Label>
+                        <Label htmlFor="edit-meaning">
+                            {t('Your meaning')}
+                        </Label>
                         <Input
                             id="edit-meaning"
                             name="personal_meaning"
@@ -106,7 +111,7 @@ function EditForm({ item, onSaved }: { item: Saved; onSaved: () => void }) {
                         <InputError message={errors.personal_meaning} />
                     </div>
                     <div className="grid gap-2">
-                        <Label htmlFor="edit-notes">Notes</Label>
+                        <Label htmlFor="edit-notes">{t('Notes')}</Label>
                         <Textarea
                             id="edit-notes"
                             name="notes"
@@ -117,7 +122,7 @@ function EditForm({ item, onSaved }: { item: Saved; onSaved: () => void }) {
                     </div>
                     <div className="flex justify-end">
                         <Button type="submit" disabled={processing}>
-                            Save changes
+                            {t('Save changes')}
                         </Button>
                     </div>
                 </>
@@ -135,6 +140,7 @@ export default function VocabularyIndex({
     filters: { search: string; status: string };
     totals: { all: number; learned: number };
 }) {
+    const t = useT();
     const [values, setValues] = useState(filters);
 
     const apply = (next: typeof filters) => {
@@ -150,17 +156,17 @@ export default function VocabularyIndex({
 
     return (
         <>
-            <Head title="Vocabulary notebook" />
+            <Head title={t('Vocabulary notebook')} />
             <div className="mx-auto flex w-full max-w-4xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
-                    title="Vocabulary notebook"
+                    title={t('Vocabulary notebook')}
                     description={`${totals.all} saved, ${totals.learned} learned. Save words from the result screen after each answer.`}
                     actions={
                         <FormDialog
-                            title="Save a word"
+                            title={t('Save a word')}
                             trigger={
                                 <Button>
-                                    <Plus /> Add word
+                                    <Plus /> {t('Add word')}
                                 </Button>
                             }
                         >
@@ -178,12 +184,12 @@ export default function VocabularyIndex({
                     }}
                 >
                     <label htmlFor="vocab-search" className="sr-only">
-                        Search
+                        {t('Search')}
                     </label>
                     <Input
                         id="vocab-search"
                         type="search"
-                        placeholder="Search words and meanings"
+                        placeholder={t('Search words and meanings')}
                         className="min-w-48 flex-1"
                         value={values.search}
                         onChange={(event) =>
@@ -191,7 +197,7 @@ export default function VocabularyIndex({
                         }
                     />
                     <label htmlFor="vocab-status" className="sr-only">
-                        Show
+                        {t('Show')}
                     </label>
                     <NativeSelect
                         id="vocab-status"
@@ -201,27 +207,28 @@ export default function VocabularyIndex({
                             apply({ ...values, status: event.target.value })
                         }
                     >
-                        <option value="">All words</option>
-                        <option value="learning">Still learning</option>
-                        <option value="learned">Learned</option>
+                        <option value="">{t('All words')}</option>
+                        <option value="learning">{t('Still learning')}</option>
+                        <option value="learned">{t('Learned')}</option>
                     </NativeSelect>
                     <Button type="submit" variant="secondary">
-                        Search
+                        {t('Search')}
                     </Button>
                 </form>
 
                 {items.data.length === 0 ? (
                     filters.search || filters.status ? (
-                        <EmptyState icon={SearchX} title="Nothing matches">
-                            Try another search.
+                        <EmptyState icon={SearchX} title={t('Nothing matches')}>
+                            {t('Try another search.')}
                         </EmptyState>
                     ) : (
                         <EmptyState
                             icon={BookMarked}
-                            title="Your notebook is empty"
+                            title={t('Your notebook is empty')}
                         >
-                            Save a word from a result screen, or add one
-                            yourself.
+                            {t(
+                                'Save a word from a result screen, or add one yourself.',
+                            )}
                         </EmptyState>
                     )
                 ) : (
@@ -244,7 +251,7 @@ export default function VocabularyIndex({
                                                 variant="outline"
                                                 className="border-success/30 bg-success/10 text-success"
                                             >
-                                                Learned
+                                                {t('Learned')}
                                             </Badge>
                                         )}
                                         {item.pronunciation && (
@@ -269,11 +276,12 @@ export default function VocabularyIndex({
                                         >
                                             {item.is_learned ? (
                                                 <>
-                                                    <Undo2 /> Not learned
+                                                    <Undo2 /> {t('Not learned')}
                                                 </>
                                             ) : (
                                                 <>
-                                                    <Check /> Mark learned
+                                                    <Check />{' '}
+                                                    {t('Mark learned')}
                                                 </>
                                             )}
                                         </Button>
@@ -297,9 +305,13 @@ export default function VocabularyIndex({
                                             )}
                                         </FormDialog>
                                         <ConfirmDialog
-                                            title={`Remove "${item.term}"?`}
-                                            description="It is removed from your notebook and from your review schedule."
-                                            confirmLabel="Remove"
+                                            title={t('Remove "{term}"?', {
+                                                term: item.term,
+                                            })}
+                                            description={t(
+                                                'It is removed from your notebook and from your review schedule.',
+                                            )}
+                                            confirmLabel={t('Remove')}
                                             onConfirm={() =>
                                                 router.delete(
                                                     SavedVocabularyController.destroy.url(
@@ -312,7 +324,10 @@ export default function VocabularyIndex({
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"
-                                                    aria-label={`Remove ${item.term}`}
+                                                    aria-label={t(
+                                                        'Remove {term}',
+                                                        { term: item.term },
+                                                    )}
                                                 >
                                                     <Trash2 />
                                                 </Button>

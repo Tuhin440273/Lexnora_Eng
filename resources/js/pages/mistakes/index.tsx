@@ -12,6 +12,7 @@ import { formatDate } from '@/lib/learn';
 import { dashboard } from '@/routes';
 import type { DiffToken, Paginated } from '@/types';
 
+import { useT } from '@/lib/i18n';
 type Mistake = {
     id: string;
     expected: string;
@@ -33,26 +34,29 @@ export default function MistakesIndex({
     show: 'open' | 'resolved';
     counts: { open: number; resolved: number };
 }) {
+    const t = useT();
     const tabs = [
         {
             key: 'open',
-            label: `Open (${counts.open})`,
+            label: t('Open ({count})', { count: counts.open }),
             href: MistakeController.index(),
         },
         {
             key: 'resolved',
-            label: `Resolved (${counts.resolved})`,
+            label: t('Resolved ({count})', { count: counts.resolved }),
             href: MistakeController.index({ query: { show: 'resolved' } }),
         },
     ] as const;
 
     return (
         <>
-            <Head title="Mistakes notebook" />
+            <Head title={t('Mistakes notebook')} />
             <div className="mx-auto flex w-full max-w-4xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
-                    title="Mistakes notebook"
-                    description="Every sentence you got wrong is saved here. Practise it again until you get it right."
+                    title={t('Mistakes notebook')}
+                    description={t(
+                        'Every sentence you got wrong is saved here. Practise it again until you get it right.',
+                    )}
                     actions={
                         counts.open > 0 && (
                             <Button
@@ -62,13 +66,16 @@ export default function MistakesIndex({
                                     )
                                 }
                             >
-                                <Play /> Practise open mistakes
+                                <Play /> {t('Practise open mistakes')}
                             </Button>
                         )
                     }
                 />
 
-                <nav aria-label="Mistake views" className="flex gap-1 border-b">
+                <nav
+                    aria-label={t('Mistake views')}
+                    className="flex gap-1 border-b"
+                >
                     {tabs.map((tab) => (
                         <Link
                             key={tab.key}
@@ -88,17 +95,22 @@ export default function MistakesIndex({
 
                 {items.data.length === 0 ? (
                     show === 'open' ? (
-                        <EmptyState icon={CircleCheck} title="No open mistakes">
-                            Nice work. A sentence you get wrong waits here until
-                            you type it right.
+                        <EmptyState
+                            icon={CircleCheck}
+                            title={t('No open mistakes')}
+                        >
+                            {t(
+                                'Nice work. A sentence you get wrong waits here until you type it right.',
+                            )}
                         </EmptyState>
                     ) : (
                         <EmptyState
                             icon={Hourglass}
-                            title="Nothing resolved yet"
+                            title={t('Nothing resolved yet')}
                         >
-                            Practise a mistake again and get it right to see it
-                            here.
+                            {t(
+                                'Practise a mistake again and get it right to see it here.',
+                            )}
                         </EmptyState>
                     )
                 ) : (
@@ -112,21 +124,27 @@ export default function MistakesIndex({
                                 >
                                     <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
                                         <span>
-                                            Missed {item.times_missed} time
-                                            {item.times_missed === 1
-                                                ? ''
-                                                : 's'}{' '}
-                                            · last on{' '}
-                                            {formatDate(item.last_missed_at)}
+                                            {t(
+                                                'Missed {times} · last on {date}',
+                                                {
+                                                    times: t.n(
+                                                        item.times_missed,
+                                                        'time',
+                                                    ),
+                                                    date: formatDate(
+                                                        item.last_missed_at,
+                                                    ),
+                                                },
+                                            )}
                                             {item.accuracy !== null &&
-                                                ` · ${item.accuracy}% match`}
+                                                ` · ${t('{percent}% match', { percent: item.accuracy })}`}
                                         </span>
                                         {item.resolved && (
                                             <Badge
                                                 variant="outline"
                                                 className="border-success/30 bg-success/10 text-success"
                                             >
-                                                <CircleCheck /> Resolved
+                                                <CircleCheck /> {t('Resolved')}
                                             </Badge>
                                         )}
                                     </div>
@@ -134,14 +152,14 @@ export default function MistakesIndex({
                                     {item.typed !== null && (
                                         <div>
                                             <p className="text-xs text-muted-foreground">
-                                                Your last answer
+                                                {t('Your last answer')}
                                             </p>
                                             <DiffView tokens={item.tokens} />
                                         </div>
                                     )}
                                     <div>
                                         <p className="text-xs text-muted-foreground">
-                                            Correct text
+                                            {t('Correct text')}
                                         </p>
                                         <p className="font-medium">
                                             {item.expected}
@@ -167,7 +185,7 @@ export default function MistakesIndex({
                                                 )
                                             }
                                         >
-                                            <Play /> Practise again
+                                            <Play /> {t('Practise again')}
                                         </Button>
                                         {!item.resolved && (
                                             <Button
@@ -185,7 +203,7 @@ export default function MistakesIndex({
                                                     )
                                                 }
                                             >
-                                                Mark as resolved
+                                                {t('Mark as resolved')}
                                             </Button>
                                         )}
                                     </div>

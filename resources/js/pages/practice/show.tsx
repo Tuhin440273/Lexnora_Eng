@@ -26,7 +26,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useLetterSize } from '@/hooks/use-letter-size';
 import { guideWords, matchGuide } from '@/lib/guide';
 import { LETTER_SIZE_CLASSES } from '@/lib/letter-size';
-import { wordsOf } from '@/lib/learn';
+import { describeNextReview, wordsOf } from '@/lib/learn';
 import { cn } from '@/lib/utils';
 import type {
     PracticeItem,
@@ -34,6 +34,7 @@ import type {
     PracticeSessionInfo,
 } from '@/types';
 
+import { useT } from '@/lib/i18n';
 type Props = {
     session: PracticeSessionInfo;
     item: PracticeItem | null;
@@ -60,6 +61,7 @@ function TypingCard({
     defaultSpeed: number;
     autoplay: boolean;
 }) {
+    const t = useT();
     const form = useForm({
         answer: '',
         replay_count: 0,
@@ -171,7 +173,7 @@ function TypingCard({
                 {item.bengali && (
                     <div className="text-center">
                         <p className="text-xs tracking-wide text-muted-foreground uppercase">
-                            Meaning in Bengali
+                            {t('Meaning in Bengali')}
                         </p>
                         <p lang="bn" className="mt-1 text-2xl leading-relaxed">
                             {item.bengali}
@@ -184,7 +186,7 @@ function TypingCard({
                         htmlFor="answer"
                         className="block text-center text-base font-normal text-muted-foreground"
                     >
-                        Type the {label} you hear
+                        {t('Type the {kind} you hear', { kind: t(label) })}
                     </Label>
 
                     {hint.text && (
@@ -192,7 +194,7 @@ function TypingCard({
                             className="mx-auto w-fit rounded-lg border border-dashed bg-muted/40 px-3 py-2 text-center font-mono text-lg tracking-wide"
                             aria-live="polite"
                         >
-                            <span className="sr-only">Hint: </span>
+                            <span className="sr-only">{t('Hint:')} </span>
                             {hint.text}
                         </p>
                     )}
@@ -261,14 +263,16 @@ function TypingCard({
                         className="text-center text-xs text-muted-foreground"
                     >
                         {session.mode !== 'hard' &&
-                            `${item.word_count} ${item.word_count === 1 ? 'word' : 'words'}. `}
+                            `${t.n(item.word_count, 'word')}. `}
                         {showGuide &&
-                            'The faint words are a guide: each one turns clear when you type it correctly.'}
+                            t(
+                                'The faint words are a guide: each one turns clear when you type it correctly.',
+                            )}
                     </p>
                     <p className="hidden text-center text-xs text-muted-foreground/80 sm:block">
-                        Ctrl+Enter checks · Alt+P plays · Alt+R replays
-                        {hint.allowed > 0 && ' · Alt+I hint'}
-                        {hasGuide && ' · Alt+G guide'}
+                        {t('Ctrl+Enter checks · Alt+P plays · Alt+R replays')}
+                        {hint.allowed > 0 && ` · ${t('Alt+I hint')}`}
+                        {hasGuide && ` · ${t('Alt+G guide')}`}
                     </p>
                 </div>
             </div>
@@ -283,9 +287,9 @@ function TypingCard({
                             className="size-10 shrink-0"
                             onClick={() => setGuideOn((on) => !on)}
                             aria-pressed={guideOn}
-                            aria-label="Guide text"
+                            aria-label={t('Guide text')}
                             aria-keyshortcuts="Alt+G"
-                            title="Guide text (Alt+G)"
+                            title={t('Guide text (Alt+G)')}
                         >
                             {guideOn ? <Eye /> : <EyeOff />}
                         </Button>
@@ -301,9 +305,13 @@ function TypingCard({
                             aria-keyshortcuts="Alt+I"
                         >
                             <Lightbulb />
-                            Hint
+                            {t('Hint')}
                             <span className="hidden sm:inline">
-                                ({Math.max(0, hintsLeft)} left)
+                                (
+                                {t('{count} left', {
+                                    count: Math.max(0, hintsLeft),
+                                })}
+                                )
                             </span>
                             <span className="sm:hidden">
                                 {Math.max(0, hintsLeft)}
@@ -318,7 +326,7 @@ function TypingCard({
                             form.processing || form.data.answer.trim() === ''
                         }
                     >
-                        Check answer
+                        {t('Check answer')}
                     </Button>
                 </div>
             </div>
@@ -335,6 +343,7 @@ function ResultCard({
     sessionId: string;
     onNext: () => void;
 }) {
+    const t = useT();
     const nextButton = useRef<HTMLButtonElement>(null);
     const [noteOpen, setNoteOpen] = useState(false);
 
@@ -346,6 +355,7 @@ function ResultCard({
     const [saved, setSaved] = useState<string[]>([]);
     // Every word matched exactly: the comparison would only repeat the text.
     const identical = result.tokens.every((token) => token.type === 'correct');
+    const nextReview = describeNextReview(result.next_review, t);
 
     const saveWord = (term: string) => {
         router.post(
@@ -378,7 +388,7 @@ function ResultCard({
                 {!identical && (
                     <section className="space-y-3 text-center">
                         <h2 className="text-sm text-muted-foreground">
-                            Your answer compared with the sentence
+                            {t('Your answer compared with the sentence')}
                         </h2>
                         <DiffView tokens={result.tokens} className="text-2xl" />
                         <DiffLegend className="justify-center" />
@@ -387,7 +397,7 @@ function ResultCard({
 
                 <section className="space-y-1 text-center">
                     <p className="text-xs tracking-wide text-muted-foreground uppercase">
-                        Correct text
+                        {t('Correct text')}
                     </p>
                     <p className="text-2xl font-medium">{result.expected}</p>
                     {result.bengali && (
@@ -414,7 +424,8 @@ function ResultCard({
                             >
                                 <Trophy className="size-4 text-primary" />
                                 <span>
-                                    New badge: <strong>{badge.name}</strong>
+                                    {t('New badge:')}{' '}
+                                    <strong>{badge.name}</strong>
                                     {badge.xp_reward > 0 &&
                                         ` (+${badge.xp_reward} XP)`}
                                 </span>
@@ -425,10 +436,10 @@ function ResultCard({
 
                 <section
                     className="space-y-3 text-center"
-                    aria-label="Save to your notebooks"
+                    aria-label={t('Save to your notebooks')}
                 >
                     <h2 className="text-sm text-muted-foreground">
-                        Save a word to your vocabulary notebook
+                        {t('Save a word to your vocabulary notebook')}
                     </h2>
                     <ul className="flex flex-wrap justify-center gap-2">
                         {wordsOf(result.expected).map((word) => (
@@ -452,12 +463,12 @@ function ResultCard({
                             variant="ghost"
                             onClick={() => setNoteOpen(true)}
                         >
-                            <NotebookPen /> Add a note
+                            <NotebookPen /> {t('Add a note')}
                         </Button>
                     ) : (
                         <div className="space-y-2 text-left">
                             <Label htmlFor="result-note" className="sr-only">
-                                Note
+                                {t('Note')}
                             </Label>
                             <Textarea
                                 id="result-note"
@@ -466,7 +477,9 @@ function ResultCard({
                                 onChange={(event) =>
                                     setNote(event.target.value)
                                 }
-                                placeholder="Write something to remember about this sentence"
+                                placeholder={t(
+                                    'Write something to remember about this sentence',
+                                )}
                             />
                             <div className="flex justify-center gap-2">
                                 <Button
@@ -475,7 +488,7 @@ function ResultCard({
                                     onClick={saveNote}
                                     disabled={note.trim() === ''}
                                 >
-                                    Save note
+                                    {t('Save note')}
                                 </Button>
                                 <Button
                                     type="button"
@@ -483,7 +496,7 @@ function ResultCard({
                                     variant="ghost"
                                     onClick={() => setNoteOpen(false)}
                                 >
-                                    Cancel
+                                    {t('Cancel')}
                                 </Button>
                             </div>
                         </div>
@@ -491,8 +504,9 @@ function ResultCard({
                 </section>
 
                 <p className="text-center text-xs text-muted-foreground">
-                    The percentage compares your typing with the text. It does
-                    not measure your pronunciation.
+                    {t(
+                        'The percentage compares your typing with the text. It does not measure your pronunciation.',
+                    )}
                 </p>
             </div>
 
@@ -517,10 +531,15 @@ function ResultCard({
                                         : 'text-err',
                                 )}
                             >
-                                {result.is_correct ? 'Correct' : 'Not quite'}
+                                {result.is_correct
+                                    ? t('Correct')
+                                    : t('Not quite')}
                             </p>
                             <p className="text-sm text-muted-foreground">
-                                Text match {result.accuracy}%
+                                {t('Text match {percent}%', {
+                                    percent: result.accuracy,
+                                })}
+                                {nextReview && ` · ${nextReview}`}
                             </p>
                         </div>
                         {result.xp > 0 && <Badge>+{result.xp} XP</Badge>}
@@ -529,12 +548,12 @@ function ResultCard({
                                 <Link
                                     href={PracticeController.summary(sessionId)}
                                 >
-                                    See summary <ArrowRight />
+                                    {t('See summary')} <ArrowRight />
                                 </Link>
                             </Button>
                         ) : (
                             <Button size="lg" onClick={onNext} ref={nextButton}>
-                                Next <ArrowRight />
+                                {t('Next')} <ArrowRight />
                             </Button>
                         )}
                     </div>
@@ -545,6 +564,7 @@ function ResultCard({
 }
 
 function LetterSizeControls() {
+    const t = useT();
     const { size, bigger, smaller } = useLetterSize();
     const change = (action: () => void) => () => {
         action();
@@ -554,7 +574,7 @@ function LetterSizeControls() {
     return (
         <div
             role="group"
-            aria-label="Letter size"
+            aria-label={t('Letter size')}
             className="flex items-center"
         >
             <Button
@@ -563,9 +583,10 @@ function LetterSizeControls() {
                 size="sm"
                 onClick={change(smaller)}
                 disabled={size === 'normal'}
-                aria-label="Smaller letters"
+                title={t('Smaller letters')}
             >
-                A−
+                <span aria-hidden>A−</span>
+                <span className="sr-only">{t('Smaller letters')}</span>
             </Button>
             <Button
                 type="button"
@@ -573,9 +594,10 @@ function LetterSizeControls() {
                 size="sm"
                 onClick={change(bigger)}
                 disabled={size === 'larger'}
-                aria-label="Bigger letters"
+                title={t('Bigger letters')}
             >
-                A+
+                <span aria-hidden>A+</span>
+                <span className="sr-only">{t('Bigger letters')}</span>
             </Button>
         </div>
     );
@@ -591,6 +613,7 @@ export default function PracticeShow({
     autoplay,
     history,
 }: Props) {
+    const t = useT();
     const [dismissedId, setDismissedId] = useState<string | null>(null);
     const visibleResult =
         result && result.attempt_id !== dismissedId ? result : null;
@@ -606,12 +629,15 @@ export default function PracticeShow({
 
     return (
         <>
-            <Head title={`Practice: ${session.title}`} />
+            <Head title={t('Practice: {title}', { title: session.title })} />
             <div className="flex min-h-dvh flex-col bg-background">
                 <header className="mx-auto w-full max-w-2xl px-4 pt-4">
                     <h1 className="sr-only">
-                        Practice: {session.title}, item {session.position} of{' '}
-                        {session.total}
+                        {t('Practice: {title}, item {position} of {total}', {
+                            title: session.title,
+                            position: session.position,
+                            total: session.total,
+                        })}
                     </h1>
                     <div className="flex items-center gap-3">
                         <Button
@@ -622,8 +648,8 @@ export default function PracticeShow({
                         >
                             <Link
                                 href={backHref}
-                                aria-label="Leave practice"
-                                title="Leave practice"
+                                aria-label={t('Leave practice')}
+                                title={t('Leave practice')}
                             >
                                 <X />
                             </Link>
@@ -633,7 +659,7 @@ export default function PracticeShow({
                             aria-valuemin={0}
                             aria-valuemax={100}
                             aria-valuenow={percent}
-                            aria-label="Practice progress"
+                            aria-label={t('Practice progress')}
                             className="h-2.5 flex-1 overflow-hidden rounded-full bg-muted"
                         >
                             <div
@@ -650,13 +676,13 @@ export default function PracticeShow({
                     <p className="mt-2 text-center text-sm text-muted-foreground capitalize">
                         {session.title} ·{' '}
                         {session.kind === 'lesson'
-                            ? `${session.mode} mode`
-                            : session.kind}
+                            ? t('{mode} mode', { mode: t(session.mode) })
+                            : t(session.kind)}
                     </p>
                     {history.length > 0 && (
                         <ul
                             className="mt-2 flex flex-wrap justify-center gap-1"
-                            aria-label="Results so far"
+                            aria-label={t('Results so far')}
                         >
                             {history.map((correct, index) => (
                                 <li
@@ -667,7 +693,9 @@ export default function PracticeShow({
                                     )}
                                 >
                                     <span className="sr-only">
-                                        {correct ? 'Correct' : 'Incorrect'}
+                                        {correct
+                                            ? t('Correct')
+                                            : t('Incorrect')}
                                     </span>
                                 </li>
                             ))}
@@ -675,23 +703,27 @@ export default function PracticeShow({
                     )}
                 </header>
 
-                {visibleResult ? (
-                    <ResultCard
-                        result={visibleResult}
-                        sessionId={session.id}
-                        onNext={() => setDismissedId(visibleResult.attempt_id)}
-                    />
-                ) : item ? (
-                    <TypingCard
-                        key={item.id}
-                        session={session}
-                        item={item}
-                        hint={hint}
-                        speeds={speeds}
-                        defaultSpeed={default_speed}
-                        autoplay={autoplay}
-                    />
-                ) : null}
+                <main className="flex flex-1 flex-col">
+                    {visibleResult ? (
+                        <ResultCard
+                            result={visibleResult}
+                            sessionId={session.id}
+                            onNext={() =>
+                                setDismissedId(visibleResult.attempt_id)
+                            }
+                        />
+                    ) : item ? (
+                        <TypingCard
+                            key={item.id}
+                            session={session}
+                            item={item}
+                            hint={hint}
+                            speeds={speeds}
+                            defaultSpeed={default_speed}
+                            autoplay={autoplay}
+                        />
+                    ) : null}
+                </main>
             </div>
         </>
     );

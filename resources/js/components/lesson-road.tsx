@@ -7,6 +7,7 @@ import { starsFor } from '@/lib/stars';
 import type { LessonStatus } from '@/lib/stars';
 import { cn } from '@/lib/utils';
 
+import { useT } from '@/lib/i18n';
 export type RoadLesson = {
     id: string;
     title: string;
@@ -65,6 +66,7 @@ export function LessonRoad({
     /** The number shown on the first tile, so a course counts on across chapters. */
     firstNumber?: number;
 }) {
+    const t = useT();
     const columns = useIsMobile() ? 2 : 4;
     const rows = chunk(lessons, columns);
 
@@ -143,7 +145,7 @@ export function LessonRoad({
                                                 aria-hidden
                                                 className="absolute -top-9 animate-bob rounded-full bg-primary px-3 py-1 text-xs font-bold tracking-wide text-primary-foreground shadow-md after:absolute after:top-full after:left-1/2 after:size-2 after:-translate-x-1/2 after:-translate-y-1 after:rotate-45 after:bg-primary"
                                             >
-                                                START
+                                                {t('START')}
                                             </span>
                                         )}
                                         <Stars count={stars} />
@@ -151,15 +153,18 @@ export function LessonRoad({
                                             href={CatalogController.showLesson(
                                                 lesson.id,
                                             )}
-                                            aria-label={`${lesson.title}. ${
+                                            aria-label={`${order}. ${lesson.title}. ${
                                                 done
-                                                    ? `Completed, ${stars} of 3 stars`
+                                                    ? t(
+                                                          'Completed, {stars} of 3 stars',
+                                                          { stars },
+                                                      )
                                                     : lesson.status ===
                                                         'in_progress'
-                                                      ? 'In progress'
+                                                      ? t('In progress')
                                                       : isNext
-                                                        ? 'Start here'
-                                                        : 'Not started'
+                                                        ? t('Start here')
+                                                        : t('Not started')
                                             }`}
                                             className={cn(
                                                 'flex size-24 animate-pop items-center justify-center rounded-3xl border-2 bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none',
@@ -192,7 +197,11 @@ export function LessonRoad({
                                             </span>
                                         </p>
                                         <p className="text-xs text-muted-foreground">
-                                            {lesson.sentences_count} sentences ·{' '}
+                                            {t.n(
+                                                lesson.sentences_count,
+                                                'sentence',
+                                            )}{' '}
+                                            ·{' '}
                                             {formatMinutes(
                                                 lesson.estimated_minutes,
                                             )}

@@ -66,16 +66,16 @@ export default function AdminDashboard({ stats }: { stats: Stats }) {
                     }
                 />
 
-                <dl className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+                <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
                     {tiles.map((tile) => {
                         const body = (
                             <>
-                                <dt className="text-sm text-muted-foreground">
+                                <span className="block text-sm text-muted-foreground">
                                     {tile.label}
-                                </dt>
-                                <dd className="mt-1 text-3xl font-semibold tabular-nums">
+                                </span>
+                                <span className="mt-1 block text-3xl font-semibold tabular-nums">
                                     {tile.value}
-                                </dd>
+                                </span>
                                 {tile.hint && (
                                     <p className="mt-1 text-xs text-muted-foreground">
                                         {tile.hint}
@@ -84,24 +84,24 @@ export default function AdminDashboard({ stats }: { stats: Stats }) {
                             </>
                         );
 
-                        return tile.href ? (
-                            <Link
-                                key={tile.label}
-                                href={tile.href}
-                                className="rounded-xl border bg-card p-4 transition-colors hover:border-primary/50"
-                            >
-                                {body}
-                            </Link>
-                        ) : (
-                            <div
-                                key={tile.label}
-                                className="rounded-xl border bg-card p-4"
-                            >
-                                {body}
-                            </div>
+                        return (
+                            <li key={tile.label}>
+                                {tile.href ? (
+                                    <Link
+                                        href={tile.href}
+                                        className="block h-full rounded-xl border bg-card p-4 transition-colors hover:border-primary/50"
+                                    >
+                                        {body}
+                                    </Link>
+                                ) : (
+                                    <div className="h-full rounded-xl border bg-card p-4">
+                                        {body}
+                                    </div>
+                                )}
+                            </li>
                         );
                     })}
-                </dl>
+                </ul>
 
                 <section aria-labelledby="attention" className="space-y-3">
                     <h2 id="attention" className="text-base font-semibold">

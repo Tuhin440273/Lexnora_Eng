@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { NativeSelect } from '@/components/ui/native-select';
 import { formatDuration } from '@/lib/format';
 
+import { useT } from '@/lib/i18n';
 type Props = {
     /** Recorded audio. When missing, `speakText` is read by the browser's own voice. */
     src: string | null;
@@ -34,6 +35,7 @@ export function AudioPlayer({
     onSpeedChange,
     autoPlay = false,
 }: Props) {
+    const t = useT();
     const audioRef = useRef<HTMLAudioElement>(null);
     const [speed, setSpeed] = useState(
         speeds.includes(defaultSpeed) ? defaultSpeed : 1,
@@ -88,7 +90,7 @@ export function AudioPlayer({
             void audio.play().catch(() => {
                 // A browser may refuse to start sound by itself; then the learner presses Play.
                 if (!silent) {
-                    setError('The audio could not be played. Try again.');
+                    setError(t('The audio could not be played. Try again.'));
                 }
 
                 setPlaying(false);
@@ -176,8 +178,9 @@ export function AudioPlayer({
                 className="flex items-center gap-2 rounded-lg border border-warning/40 bg-warning/15 p-3 text-sm"
             >
                 <TriangleAlert className="size-4 shrink-0" />
-                There is no recording for this item and your browser cannot read
-                it aloud.
+                {t(
+                    'There is no recording for this item and your browser cannot read it aloud.',
+                )}
             </p>
         );
     }
@@ -209,7 +212,7 @@ export function AudioPlayer({
                     onClick={() => start(true)}
                     aria-keyshortcuts="Alt+R"
                 >
-                    <RotateCcw /> Replay
+                    <RotateCcw /> {t('Replay')}
                 </Button>
 
                 <div className="flex items-center gap-1.5">
@@ -217,7 +220,7 @@ export function AudioPlayer({
                         htmlFor="playback-speed"
                         className="text-xs text-muted-foreground"
                     >
-                        Speed
+                        {t('Speed')}
                     </label>
                     <NativeSelect
                         id="playback-speed"
@@ -237,17 +240,23 @@ export function AudioPlayer({
                     </NativeSelect>
                 </div>
 
-                <span
-                    className="text-xs text-muted-foreground tabular-nums"
-                    aria-label="Audio length"
-                >
-                    {usingVoice ? '' : formatDuration(duration)}
+                <span className="text-xs text-muted-foreground tabular-nums">
+                    {!usingVoice && (
+                        <>
+                            <span className="sr-only">
+                                {t('Audio length')}:{' '}
+                            </span>
+                            {formatDuration(duration)}
+                        </>
+                    )}
                 </span>
             </div>
 
             {usingVoice && (
                 <p className="text-xs text-muted-foreground">
-                    No recording yet. Your device&apos;s voice reads this aloud.
+                    {t(
+                        "No recording yet. Your device's voice reads this aloud.",
+                    )}
                 </p>
             )}
 
@@ -278,7 +287,7 @@ export function AudioPlayer({
                     onEnded={() => setPlaying(false)}
                     onError={() => {
                         setLoading(false);
-                        setError('The audio file could not be loaded.');
+                        setError(t('The audio file could not be loaded.'));
                     }}
                 />
             )}

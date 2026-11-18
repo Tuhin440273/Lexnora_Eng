@@ -24,4 +24,4 @@ php artisan test
 echo "==> 5/5  Building the frontend (needs internet once, for the fonts)"
 npm run build
 
-echo "Done. Expected: PHPStan 'No errors', 'Tests: 3 skipped, 429 passed', Vitest 24 passed, build finished."
+echo "Done. Expected: PHPStan 'No errors', 'Tests: 3 skipped, 446 passed', Vitest 43 passed, build finished."

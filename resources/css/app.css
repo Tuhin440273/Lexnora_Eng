@@ -111,6 +111,7 @@
 
     --color-err: var(--err);
     --color-star: var(--star);
+    --color-star-ink: var(--star-ink);
     --color-hint: var(--hint);
 
     --color-sidebar: var(--sidebar);
@@ -164,12 +165,13 @@
     --sidebar-accent-foreground: #243170;
     --sidebar-border: #e6dfce;
     --sidebar-ring: #5b6fc7;
-    --success: #1f8a5b;
+    --success: #146a44;
     --success-foreground: oklch(0.985 0 0);
     --warning: #b7791f;
     --warning-foreground: oklch(0.279 0.077 45.635);
     --err: #b3263e;
     --star: #c8932b;
+    --star-ink: #85560a;
     --hint: color-mix(in oklab, var(--foreground) 30%, transparent);
 
     --level-starter: #d9694b;
@@ -220,6 +222,7 @@
     --warning-foreground: oklch(0.279 0.077 45.635);
     --err: #f0808f;
     --star: #e3bb66;
+    --star-ink: #e3bb66;
     --hint: color-mix(in oklab, var(--foreground) 35%, transparent);
 
     --level-starter: #f0957b;

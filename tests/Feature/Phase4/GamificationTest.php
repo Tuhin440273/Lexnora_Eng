@@ -332,7 +332,7 @@ it('saves learning settings', function () {
         'timezone' => 'Asia/Dhaka', 'leaderboard_anonymous' => '1', 'default_mode' => 'hard', 'default_speed' => '0.75', 'autoplay' => '1',
     ])->assertRedirect(route('learning-settings.edit'));
 
-    $profile = $user->profile->fresh();
+    $profile = $user->fresh()->profile;   // read again: the language middleware looked at the profile before it existed
 
     expect($profile->display_name)->toBe('Tuhin')
         ->and($profile->target_cefr_level->value)->toBe('B1')
@@ -344,8 +344,8 @@ it('saves learning settings', function () {
     $this->patch(route('learning-settings.update'), [
         'daily_goal_minutes' => 25, 'daily_goal_sentences' => 40, 'timezone' => 'Asia/Dhaka',
     ]);
-    expect($user->profile->fresh()->leaderboard_anonymous)->toBeFalse()
-        ->and($user->profile->fresh()->preferences['autoplay'])->toBeFalse();   // an unticked box is sent as nothing
+    expect($user->fresh()->profile->leaderboard_anonymous)->toBeFalse()
+        ->and($user->fresh()->profile->preferences['autoplay'])->toBeFalse();   // an unticked box is sent as nothing
 });
 
 it('validates learning settings', function (array $bad, string $field) {

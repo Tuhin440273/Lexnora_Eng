@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { NativeSelect } from '@/components/ui/native-select';
 
+import { useT } from '@/lib/i18n';
 type Props = {
     profile: {
         display_name: string | null;
@@ -28,16 +29,19 @@ type Props = {
 };
 
 export default function LearningSettings({ profile, options }: Props) {
+    const t = useT();
     return (
         <>
-            <Head title="Learning settings" />
-            <h1 className="sr-only">Learning settings</h1>
+            <Head title={t('Learning settings')} />
+            <h1 className="sr-only">{t('Learning settings')}</h1>
 
             <div className="space-y-6">
                 <Heading
                     variant="small"
-                    title="Learning"
-                    description="Your goals, practice defaults and what others see on the leaderboard"
+                    title={t('Learning')}
+                    description={t(
+                        'Your goals, practice defaults and what others see on the leaderboard',
+                    )}
                 />
 
                 <Form
@@ -49,14 +53,16 @@ export default function LearningSettings({ profile, options }: Props) {
                         <>
                             <div className="grid gap-2">
                                 <Label htmlFor="display_name">
-                                    Display name
+                                    {t('Display name')}
                                 </Label>
                                 <Input
                                     id="display_name"
                                     name="display_name"
                                     defaultValue={profile.display_name ?? ''}
                                     maxLength={60}
-                                    placeholder="Shown on the leaderboard (optional)"
+                                    placeholder={t(
+                                        'Shown on the leaderboard (optional)',
+                                    )}
                                 />
                                 <InputError message={errors.display_name} />
                             </div>
@@ -64,7 +70,7 @@ export default function LearningSettings({ profile, options }: Props) {
                             <div className="grid gap-4 sm:grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="daily_goal_minutes">
-                                        Daily goal (minutes)
+                                        {t('Daily goal (minutes)')}
                                     </Label>
                                     <Input
                                         id="daily_goal_minutes"
@@ -83,7 +89,7 @@ export default function LearningSettings({ profile, options }: Props) {
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="daily_goal_sentences">
-                                        Daily goal (sentences)
+                                        {t('Daily goal (sentences)')}
                                     </Label>
                                     <Input
                                         id="daily_goal_sentences"
@@ -105,7 +111,7 @@ export default function LearningSettings({ profile, options }: Props) {
                             <div className="grid gap-4 sm:grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="target_cefr_level">
-                                        Target level
+                                        {t('Target level')}
                                     </Label>
                                     <NativeSelect
                                         id="target_cefr_level"
@@ -114,7 +120,7 @@ export default function LearningSettings({ profile, options }: Props) {
                                             profile.target_cefr_level ?? ''
                                         }
                                     >
-                                        <option value="">Not set</option>
+                                        <option value="">{t('Not set')}</option>
                                         {options.cefr_levels.map((level) => (
                                             <option
                                                 key={level.value}
@@ -129,7 +135,9 @@ export default function LearningSettings({ profile, options }: Props) {
                                     />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="timezone">Time zone</Label>
+                                    <Label htmlFor="timezone">
+                                        {t('Time zone')}
+                                    </Label>
                                     <NativeSelect
                                         id="timezone"
                                         name="timezone"
@@ -142,8 +150,9 @@ export default function LearningSettings({ profile, options }: Props) {
                                         ))}
                                     </NativeSelect>
                                     <p className="text-xs text-muted-foreground">
-                                        Decides when your day, streak and
-                                        check-in start.
+                                        {t(
+                                            'Decides when your day, streak and check-in start.',
+                                        )}
                                     </p>
                                     <InputError message={errors.timezone} />
                                 </div>
@@ -152,7 +161,7 @@ export default function LearningSettings({ profile, options }: Props) {
                             <div className="grid gap-4 sm:grid-cols-2">
                                 <div className="grid gap-2">
                                     <Label htmlFor="default_mode">
-                                        Preferred practice mode
+                                        {t('Preferred practice mode')}
                                     </Label>
                                     <NativeSelect
                                         id="default_mode"
@@ -172,7 +181,7 @@ export default function LearningSettings({ profile, options }: Props) {
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="default_speed">
-                                        Default audio speed
+                                        {t('Default audio speed')}
                                     </Label>
                                     <NativeSelect
                                         id="default_speed"
@@ -205,7 +214,9 @@ export default function LearningSettings({ profile, options }: Props) {
                                     Play the audio by itself when a new item
                                     appears
                                     <span className="block text-xs text-muted-foreground">
-                                        You can always press Play or Replay.
+                                        {t(
+                                            'You can always press Play or Replay.',
+                                        )}
                                     </span>
                                 </span>
                             </label>
@@ -221,17 +232,18 @@ export default function LearningSettings({ profile, options }: Props) {
                                     className="mt-0.5 size-4 accent-primary"
                                 />
                                 <span>
-                                    Show me as &ldquo;Anonymous learner&rdquo;
+                                    {t('Show me as “Anonymous learner”')}
                                     on the leaderboard
                                     <span className="block text-xs text-muted-foreground">
-                                        You always see your own row as
-                                        &ldquo;You&rdquo;.
+                                        {t(
+                                            'You always see your own row as “You”.',
+                                        )}
                                     </span>
                                 </span>
                             </label>
 
                             <Button type="submit" disabled={processing}>
-                                Save settings
+                                {t('Save settings')}
                             </Button>
                         </>
                     )}

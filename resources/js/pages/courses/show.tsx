@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { levelAccent } from '@/lib/levels';
 import { STAR_RULE } from '@/lib/stars';
 
+import { useT } from '@/lib/i18n';
 type Props = {
     course: {
         id: string;
@@ -29,6 +30,7 @@ type Props = {
 };
 
 export default function CourseShow({ course }: Props) {
+    const t = useT();
     const lessons = course.chapters.flatMap((chapter) => chapter.lessons);
     const finished = lessons.filter(
         (lesson) => lesson.status === 'completed',
@@ -46,13 +48,15 @@ export default function CourseShow({ course }: Props) {
                 <header className="animate-rise space-y-4">
                     <div className="flex flex-wrap items-center gap-2">
                         <Badge className="border-transparent bg-level text-level-foreground">
-                            {course.cefr_label}
+                            {t(course.cefr_label)}
                         </Badge>
                         {course.category && (
                             <Badge variant="outline">{course.category}</Badge>
                         )}
                         {!course.is_published && (
-                            <Badge variant="outline">Draft preview</Badge>
+                            <Badge variant="outline">
+                                {t('Draft preview')}
+                            </Badge>
                         )}
                     </div>
                     <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
@@ -66,7 +70,7 @@ export default function CourseShow({ course }: Props) {
                     <div className="flex max-w-sm items-center gap-3">
                         <div
                             role="progressbar"
-                            aria-label="Course progress"
+                            aria-label={t('Course progress')}
                             aria-valuemin={0}
                             aria-valuemax={100}
                             aria-valuenow={percent}
@@ -78,15 +82,20 @@ export default function CourseShow({ course }: Props) {
                             />
                         </div>
                         <span className="text-sm text-muted-foreground tabular-nums">
-                            {finished} of {lessons.length} lessons
+                            {t('{done} of {lessons}', {
+                                done: finished,
+                                lessons: t.n(lessons.length, 'lesson'),
+                            })}
                         </span>
                     </div>
-                    <p className="text-xs text-muted-foreground">{STAR_RULE}</p>
+                    <p className="text-xs text-muted-foreground">
+                        {t(STAR_RULE)}
+                    </p>
                 </header>
 
                 {course.chapters.length === 0 && (
                     <p className="rounded-2xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-                        This course has no lessons yet.
+                        {t('This course has no lessons yet.')}
                     </p>
                 )}
 
@@ -115,7 +124,7 @@ export default function CourseShow({ course }: Props) {
                             )}
                             {chapter.lessons.length === 0 ? (
                                 <p className="mt-4 text-sm text-muted-foreground">
-                                    No lessons in this chapter yet.
+                                    {t('No lessons in this chapter yet.')}
                                 </p>
                             ) : (
                                 <LessonRoad

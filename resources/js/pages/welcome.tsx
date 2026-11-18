@@ -3,10 +3,12 @@ import { BookMarked, CircleAlert, Flame, RotateCw } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { DiffLegend, DiffView } from '@/components/diff-view';
 import { FloatingWords } from '@/components/floating-words';
+import { LanguageSwitch } from '@/components/language-switch';
 import { Button } from '@/components/ui/button';
 import { dashboard, login, register } from '@/routes';
 import type { DiffToken } from '@/types';
 
+import { useT } from '@/lib/i18n';
 const EXAMPLE: DiffToken[] = [
     { type: 'correct', expected: 'I', typed: 'I' },
     { type: 'correct', expected: 'would', typed: 'would' },
@@ -74,17 +76,18 @@ const KEEPS: { icon: LucideIcon; title: string; text: string }[] = [
 const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
 export default function Welcome() {
+    const t = useT();
     const { auth, name } = usePage().props;
     const loggedIn = Boolean(auth.user);
 
     return (
         <>
-            <Head title="Learn English by typing what you hear" />
+            <Head title={t('Learn English by typing what you hear')} />
             <a
                 href="#main"
                 className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2"
             >
-                Skip to the content
+                {t('Skip to the content')}
             </a>
 
             <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
@@ -94,21 +97,22 @@ export default function Welcome() {
                         {name}
                     </span>
                     <nav
-                        aria-label="Account"
+                        aria-label={t('Account')}
                         className="flex items-center gap-2"
                     >
+                        <LanguageSwitch />
                         {loggedIn ? (
                             <Button asChild>
-                                <Link href={dashboard()}>Dashboard</Link>
+                                <Link href={dashboard()}>{t('Dashboard')}</Link>
                             </Button>
                         ) : (
                             <>
                                 <Button variant="ghost" asChild>
-                                    <Link href={login()}>Log in</Link>
+                                    <Link href={login()}>{t('Log in')}</Link>
                                 </Button>
                                 <Button asChild>
                                     <Link href={register()}>
-                                        Create account
+                                        {t('Create account')}
                                     </Link>
                                 </Button>
                             </>
@@ -120,15 +124,16 @@ export default function Welcome() {
                     <section className="mx-auto grid max-w-6xl items-center gap-10 px-5 pt-10 pb-16 lg:grid-cols-2 lg:pt-16">
                         <div className="space-y-6">
                             <h1 className="max-w-xl animate-rise text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
-                                Learn English by typing what you hear.
+                                {t('Learn English by typing what you hear.')}
                             </h1>
                             <p
                                 className="max-w-lg animate-rise text-lg text-muted-foreground"
                                 style={{ animationDelay: '120ms' }}
                             >
-                                Short recordings, one sentence at a time. You
-                                type, and {name} shows you exactly which words
-                                you caught and which ones slipped past.
+                                {t(
+                                    'Short recordings, one sentence at a time. You type, and {name} shows you exactly which words you caught and which ones slipped past.',
+                                    { name },
+                                )}
                             </p>
                             <div className="flex flex-wrap gap-3">
                                 <Button size="lg" asChild>
@@ -138,21 +143,22 @@ export default function Welcome() {
                                         }
                                     >
                                         {loggedIn
-                                            ? 'Continue learning'
-                                            : 'Start for free'}
+                                            ? t('Continue learning')
+                                            : t('Start for free')}
                                     </Link>
                                 </Button>
                                 {!loggedIn && (
                                     <Button size="lg" variant="outline" asChild>
                                         <Link href={login()}>
-                                            I already have an account
+                                            {t('I already have an account')}
                                         </Link>
                                     </Button>
                                 )}
                             </div>
                             <p className="text-sm text-muted-foreground">
-                                From A1 beginner to C2 proficiency. Translations
-                                in Bengali.
+                                {t(
+                                    'From A1 beginner to C2 proficiency. Translations in Bengali.',
+                                )}
                             </p>
                         </div>
 
@@ -165,12 +171,14 @@ export default function Welcome() {
                                 id="example-caption"
                                 className="text-sm font-medium text-muted-foreground"
                             >
-                                What you see after you answer (an example)
+                                {t(
+                                    'What you see after you answer (an example)',
+                                )}
                             </figcaption>
                             <p className="text-sm text-muted-foreground">
-                                You typed:{' '}
+                                {t('You typed:')}{' '}
                                 <span className="font-mono">
-                                    I would like cup of cofee please
+                                    {t('I would like cup of cofee please')}
                                 </span>
                             </p>
                             <DiffView tokens={EXAMPLE} className="text-xl" />
@@ -183,7 +191,7 @@ export default function Welcome() {
                                     আমি এক কাপ কফি চাই, দয়া করে।
                                 </span>
                                 <span className="font-semibold tabular-nums">
-                                    Text match 91%
+                                    {t('Text match 91%')}
                                 </span>
                             </div>
                         </figure>
@@ -198,7 +206,7 @@ export default function Welcome() {
                                 id="how"
                                 className="text-2xl font-bold tracking-tight"
                             >
-                                How one sentence works
+                                {t('How one sentence works')}
                             </h2>
                             <ol className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
                                 {STEPS.map(([title, text], index) => (
@@ -211,10 +219,10 @@ export default function Welcome() {
                                         </span>
                                         <div>
                                             <h3 className="font-semibold">
-                                                {title}
+                                                {t(title)}
                                             </h3>
                                             <p className="text-sm text-muted-foreground">
-                                                {text}
+                                                {t(text)}
                                             </p>
                                         </div>
                                     </li>
@@ -231,7 +239,7 @@ export default function Welcome() {
                             id="modes"
                             className="text-2xl font-bold tracking-tight"
                         >
-                            Three ways to practise
+                            {t('Three ways to practise')}
                         </h2>
                         <ul className="mt-8 grid gap-4 md:grid-cols-3">
                             {MODES.map(([title, text]) => (
@@ -239,16 +247,18 @@ export default function Welcome() {
                                     key={title}
                                     className="rounded-xl border bg-card p-5"
                                 >
-                                    <h3 className="font-semibold">{title}</h3>
+                                    <h3 className="font-semibold">
+                                        {t(title)}
+                                    </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
-                                        {text}
+                                        {t(text)}
                                     </p>
                                 </li>
                             ))}
                         </ul>
 
                         <ul
-                            aria-label="Levels"
+                            aria-label={t('Levels')}
                             className="mt-8 flex flex-wrap items-center gap-2"
                         >
                             {LEVELS.map((level) => (
@@ -270,7 +280,7 @@ export default function Welcome() {
                             id="keep"
                             className="text-2xl font-bold tracking-tight"
                         >
-                            What stays with you
+                            {t('What stays with you')}
                         </h2>
                         <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                             {KEEPS.map((item) => (
@@ -280,10 +290,10 @@ export default function Welcome() {
                                         aria-hidden
                                     />
                                     <h3 className="font-semibold">
-                                        {item.title}
+                                        {t(item.title)}
                                     </h3>
                                     <p className="text-sm text-muted-foreground">
-                                        {item.text}
+                                        {t(item.text)}
                                     </p>
                                 </li>
                             ))}
@@ -294,11 +304,11 @@ export default function Welcome() {
                         <section className="border-t bg-muted/30">
                             <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-12">
                                 <h2 className="text-2xl font-bold tracking-tight">
-                                    Ready for your first sentence?
+                                    {t('Ready for your first sentence?')}
                                 </h2>
                                 <Button size="lg" asChild>
                                     <Link href={register()}>
-                                        Create your account
+                                        {t('Create your account')}
                                     </Link>
                                 </Button>
                             </div>
@@ -307,8 +317,10 @@ export default function Welcome() {
                 </main>
 
                 <footer className="mx-auto max-w-6xl px-5 py-8 text-sm text-muted-foreground">
-                    {name}. The percentage compares your typing with the text.
-                    It does not measure pronunciation.
+                    {t(
+                        '{name}. The percentage compares your typing with the text. It does not measure pronunciation.',
+                        { name },
+                    )}
                 </footer>
             </div>
         </>

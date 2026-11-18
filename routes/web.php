@@ -2,9 +2,12 @@
 
 use App\Modules\Courses\Http\Controllers\AudioStreamController;
 use App\Modules\Courses\Http\Controllers\CourseThumbnailController;
+use App\Modules\Learning\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
+
+Route::post('language', LanguageController::class)->name('language.update');
 
 Route::get('courses/{course}/thumbnail', [CourseThumbnailController::class, 'show'])->name('courses.thumbnail');
 

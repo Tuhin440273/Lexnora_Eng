@@ -11,6 +11,9 @@
 
 return [
 
+    // Interface languages: English and Bangla (see lang/bn.json and resources/js/lib/i18n).
+    'locales' => ['en', 'bn'],
+
     'admin' => [
         'email' => env('ADMIN_EMAIL', 'admin@lexnora.test'),
         // No default on purpose: the seeder skips the admin user when empty.

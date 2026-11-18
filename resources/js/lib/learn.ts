@@ -46,23 +46,24 @@ export const MODE_INFO = {
     hard: 'Full sentences only, no hints.',
 } as const;
 
-/** "tomorrow", "in 3 days": when a sentence comes back for review. */
+/** "tomorrow", "in 3 days": when a sentence comes back for review. `t` translates the wording. */
 export function describeNextReview(
     review: { days: number; mastered: boolean } | null,
+    t: (text: string, vars?: Record<string, string | number>) => string,
 ): string | null {
     if (review === null) {
         return null;
     }
 
     if (review.mastered) {
-        return 'Mastered. This sentence is done with review.';
+        return t('Mastered. This sentence is done with review.');
     }
 
     if (review.days <= 0) {
-        return 'Comes back for review today';
+        return t('Comes back for review today');
     }
 
     return review.days === 1
-        ? 'Comes back for review tomorrow'
-        : `Comes back for review in ${review.days} days`;
+        ? t('Comes back for review tomorrow')
+        : t('Comes back for review in {days} days', { days: review.days });
 }

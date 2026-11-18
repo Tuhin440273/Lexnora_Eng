@@ -17,6 +17,7 @@ import { formatDate } from '@/lib/learn';
 import { dashboard } from '@/routes';
 import type { Paginated } from '@/types';
 
+import { useT } from '@/lib/i18n';
 type Note = {
     id: string;
     title: string | null;
@@ -26,6 +27,7 @@ type Note = {
 };
 
 function NoteForm({ note, onSaved }: { note?: Note; onSaved: () => void }) {
+    const t = useT();
     const formProps = note
         ? NoteController.update.form(note.id)
         : NoteController.store.form();
@@ -40,7 +42,9 @@ function NoteForm({ note, onSaved }: { note?: Note; onSaved: () => void }) {
             {({ errors, processing }) => (
                 <>
                     <div className="grid gap-2">
-                        <Label htmlFor="note-title">Title (optional)</Label>
+                        <Label htmlFor="note-title">
+                            {t('Title (optional)')}
+                        </Label>
                         <Input
                             id="note-title"
                             name="title"
@@ -50,7 +54,7 @@ function NoteForm({ note, onSaved }: { note?: Note; onSaved: () => void }) {
                         <InputError message={errors.title} />
                     </div>
                     <div className="grid gap-2">
-                        <Label htmlFor="note-body">Note</Label>
+                        <Label htmlFor="note-body">{t('Note')}</Label>
                         <Textarea
                             id="note-body"
                             name="body"
@@ -79,6 +83,7 @@ export default function NotesIndex({
     notes: Paginated<Note>;
     search: string;
 }) {
+    const t = useT();
     const [value, setValue] = useState(search);
 
     const submit = (event: FormEvent) => {
@@ -91,17 +96,19 @@ export default function NotesIndex({
 
     return (
         <>
-            <Head title="Notes" />
+            <Head title={t('Notes')} />
             <div className="mx-auto flex w-full max-w-4xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
-                    title="Personal notes"
-                    description="Write down what you want to remember. Notes added from a result screen stay linked to their sentence."
+                    title={t('Personal notes')}
+                    description={t(
+                        'Write down what you want to remember. Notes added from a result screen stay linked to their sentence.',
+                    )}
                     actions={
                         <FormDialog
-                            title="New note"
+                            title={t('New note')}
                             trigger={
                                 <Button>
-                                    <Plus /> New note
+                                    <Plus /> {t('New note')}
                                 </Button>
                             }
                         >
@@ -112,29 +119,33 @@ export default function NotesIndex({
 
                 <form role="search" onSubmit={submit} className="flex gap-3">
                     <label htmlFor="note-search" className="sr-only">
-                        Search notes
+                        {t('Search notes')}
                     </label>
                     <Input
                         id="note-search"
                         type="search"
-                        placeholder="Search notes"
+                        placeholder={t('Search notes')}
                         value={value}
                         onChange={(event) => setValue(event.target.value)}
                     />
                     <Button type="submit" variant="secondary">
-                        Search
+                        {t('Search')}
                     </Button>
                 </form>
 
                 {notes.data.length === 0 ? (
                     search ? (
-                        <EmptyState icon={SearchX} title="No note matches">
-                            Try another word.
+                        <EmptyState icon={SearchX} title={t('No note matches')}>
+                            {t('Try another word.')}
                         </EmptyState>
                     ) : (
-                        <EmptyState icon={NotebookPen} title="No notes yet">
-                            Write down what you want to remember. You can also
-                            add a note right after an answer.
+                        <EmptyState
+                            icon={NotebookPen}
+                            title={t('No notes yet')}
+                        >
+                            {t(
+                                'Write down what you want to remember. You can also add a note right after an answer.',
+                            )}
                         </EmptyState>
                     )
                 ) : (
@@ -154,7 +165,8 @@ export default function NotesIndex({
                                 </p>
                                 {note.sentence && (
                                     <p className="text-xs text-muted-foreground italic">
-                                        About: &ldquo;{note.sentence}&rdquo;
+                                        {t('About:')} &ldquo;{note.sentence}
+                                        &rdquo;
                                     </p>
                                 )}
                                 <div className="mt-auto flex items-center justify-between pt-2">
@@ -163,12 +175,12 @@ export default function NotesIndex({
                                     </span>
                                     <div className="flex">
                                         <FormDialog
-                                            title="Edit note"
+                                            title={t('Edit note')}
                                             trigger={
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"
-                                                    aria-label="Edit note"
+                                                    aria-label={t('Edit note')}
                                                 >
                                                     <Pencil />
                                                 </Button>
@@ -182,8 +194,10 @@ export default function NotesIndex({
                                             )}
                                         </FormDialog>
                                         <ConfirmDialog
-                                            title="Delete this note?"
-                                            description="This cannot be undone."
+                                            title={t('Delete this note?')}
+                                            description={t(
+                                                'This cannot be undone.',
+                                            )}
                                             onConfirm={() =>
                                                 router.delete(
                                                     NoteController.destroy.url(
@@ -196,7 +210,9 @@ export default function NotesIndex({
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"
-                                                    aria-label="Delete note"
+                                                    aria-label={t(
+                                                        'Delete note',
+                                                    )}
                                                 >
                                                     <Trash2 />
                                                 </Button>

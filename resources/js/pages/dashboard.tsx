@@ -17,6 +17,7 @@ import CatalogController from '@/actions/App/Modules/Courses/Http/Controllers/Ca
 import CheckinController from '@/actions/App/Modules/Gamification/Http/Controllers/CheckinController';
 import PracticeController from '@/actions/App/Modules/Dictation/Http/Controllers/PracticeController';
 import ReviewController from '@/actions/App/Modules/Review/Http/Controllers/ReviewController';
+import { Doel } from '@/components/doel';
 import { Button } from '@/components/ui/button';
 import { WeeklyChart } from '@/components/weekly-chart';
 import type { WeekDay } from '@/components/weekly-chart';
@@ -24,6 +25,7 @@ import { formatDate, formatPercent, formatStudyTime } from '@/lib/learn';
 import { cn } from '@/lib/utils';
 import { dashboard } from '@/routes';
 
+import { useT } from '@/lib/i18n';
 type Props = {
     stats: {
         study_seconds: number;
@@ -65,6 +67,7 @@ function GoalRing({
     value: number;
     goal: number;
 }) {
+    const t = useT();
     const percent = Math.min(
         100,
         Math.round((value / Math.max(1, goal)) * 100),
@@ -113,7 +116,7 @@ function GoalRing({
                         {value}
                     </span>
                     <span className="mt-1 text-xs text-muted-foreground">
-                        of {goal}
+                        {t('of {goal}', { goal })}
                     </span>
                 </div>
             </div>
@@ -134,7 +137,7 @@ function Highlight({
     tone: string;
 }) {
     return (
-        <div className="flex items-center gap-3 rounded-2xl border bg-card p-3 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-md sm:gap-4 sm:p-4">
+        <li className="flex items-center gap-3 rounded-2xl border bg-card p-3 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-md sm:gap-4 sm:p-4">
             <span
                 className={cn(
                     'flex size-10 shrink-0 items-center justify-center rounded-xl sm:size-12',
@@ -143,15 +146,15 @@ function Highlight({
             >
                 <Icon className="size-6" aria-hidden />
             </span>
-            <div className="min-w-0">
-                <dt className="text-sm leading-tight text-muted-foreground">
+            <p className="min-w-0">
+                <span className="block text-sm leading-tight text-muted-foreground">
                     {label}
-                </dt>
-                <dd className="stat-figure text-3xl leading-tight font-semibold">
+                </span>
+                <span className="block stat-figure text-3xl leading-tight font-semibold">
                     {value}
-                </dd>
-            </div>
-        </div>
+                </span>
+            </p>
+        </li>
     );
 }
 
@@ -160,7 +163,7 @@ function percentTone(accuracy: number): string {
         return 'bg-success/15 text-success';
     }
 
-    return accuracy >= 60 ? 'bg-star/15 text-star' : 'bg-err/10 text-err';
+    return accuracy >= 60 ? 'bg-star/15 text-star-ink' : 'bg-err/10 text-err';
 }
 
 export default function Dashboard({
@@ -171,6 +174,7 @@ export default function Dashboard({
     continue: resume,
     badges,
 }: Props) {
+    const t = useT();
     const { auth } = usePage().props;
     const firstName = auth.user.name.split(' ')[0];
 
@@ -199,24 +203,31 @@ export default function Dashboard({
 
     return (
         <>
-            <Head title="Dashboard" />
+            <Head title={t('Dashboard')} />
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 md:p-6">
                 <header className="flex animate-rise flex-wrap items-center justify-between gap-3">
                     <div className="min-w-0 space-y-1">
                         <h1 className="text-3xl font-semibold tracking-tight">
-                            Welcome back, {firstName}
+                            {t('Welcome back, {name}', { name: firstName })}
                         </h1>
                         <p className="text-muted-foreground">
                             {stats.streak > 1
-                                ? `${stats.streak} days in a row. Keep it going.`
-                                : 'A little listening and typing every day adds up.'}
+                                ? t('{days} days in a row. Keep it going.', {
+                                      days: stats.streak,
+                                  })
+                                : t(
+                                      'A little listening and typing every day adds up.',
+                                  )}
                         </p>
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
                         {stats.review_due > 0 && (
                             <Button variant="outline" asChild>
                                 <Link href={ReviewController.index()}>
-                                    <RotateCw /> {stats.review_due} to review
+                                    <RotateCw />{' '}
+                                    {t('{count} to review', {
+                                        count: stats.review_due,
+                                    })}
                                 </Link>
                             </Button>
                         )}
@@ -233,15 +244,15 @@ export default function Dashboard({
                         >
                             <Flame />{' '}
                             {today.checked_in
-                                ? 'Checked in today'
-                                : 'Daily check-in'}
+                                ? t('Checked in today')
+                                : t('Daily check-in')}
                         </Button>
                     </div>
                 </header>
 
                 <section
-                    aria-label="Continue learning"
-                    className="animate-rise rounded-3xl border border-primary/20 bg-linear-to-br from-primary/15 via-primary/5 to-transparent p-6 shadow-sm md:p-8"
+                    aria-label={t('Continue learning')}
+                    className="animate-rise rounded-3xl border border-primary/20 bg-linear-to-br from-primary/12 via-star/10 to-transparent p-6 shadow-sm md:p-8"
                     style={{ animationDelay: '80ms' }}
                 >
                     <div className="flex flex-wrap items-center justify-between gap-6">
@@ -249,7 +260,7 @@ export default function Dashboard({
                             <>
                                 <div className="min-w-60 flex-1 space-y-3">
                                     <p className="text-sm font-medium text-primary">
-                                        Continue where you stopped
+                                        {t('Continue where you stopped')}
                                     </p>
                                     <h2 className="text-2xl font-semibold">
                                         {resume.title}
@@ -257,7 +268,7 @@ export default function Dashboard({
                                     <div className="flex max-w-md items-center gap-3">
                                         <div
                                             role="progressbar"
-                                            aria-label="Lesson progress"
+                                            aria-label={t('Lesson progress')}
                                             aria-valuemin={0}
                                             aria-valuemax={100}
                                             aria-valuenow={Math.round(
@@ -275,7 +286,10 @@ export default function Dashboard({
                                             />
                                         </div>
                                         <span className="text-sm text-muted-foreground tabular-nums">
-                                            {resume.done} of {resume.total} done
+                                            {t('{done} of {total} done', {
+                                                done: resume.done,
+                                                total: resume.total,
+                                            })}
                                         </span>
                                     </div>
                                 </div>
@@ -298,23 +312,25 @@ export default function Dashboard({
                             <>
                                 <div className="min-w-60 flex-1 space-y-2">
                                     <p className="text-sm font-medium text-primary">
-                                        Ready when you are
+                                        {t('Ready when you are')}
                                     </p>
                                     <h2 className="text-2xl font-semibold">
-                                        Pick a lesson and start listening
+                                        {t('Pick a lesson and start listening')}
                                     </h2>
                                     <p className="text-muted-foreground">
-                                        Listen, type what you hear, and see how
-                                        close you got.
+                                        {t(
+                                            'Listen, type what you hear, and see how close you got.',
+                                        )}
                                     </p>
                                 </div>
+                                <Doel className="hidden h-24 sm:block" />
                                 <Button
                                     size="lg"
                                     asChild
                                     className="h-12 w-full rounded-full px-8 text-base sm:w-auto"
                                 >
                                     <Link href={CatalogController.index()}>
-                                        <BookOpen /> Browse courses
+                                        <BookOpen /> {t('Browse courses')}
                                     </Link>
                                 </Button>
                             </>
@@ -322,35 +338,35 @@ export default function Dashboard({
                     </div>
                 </section>
 
-                <dl
+                <ul
                     className="grid animate-rise grid-cols-2 gap-3 lg:grid-cols-4"
                     style={{ animationDelay: '160ms' }}
                 >
                     <Highlight
                         icon={Flame}
-                        label="Day streak"
+                        label={t('Day streak')}
                         value={String(stats.streak)}
-                        tone="bg-star/15 text-star"
+                        tone="bg-star/15 text-star-ink"
                     />
                     <Highlight
                         icon={Sparkles}
-                        label="Total XP"
+                        label={t('Total XP')}
                         value={String(stats.xp)}
                         tone="bg-primary/10 text-primary"
                     />
                     <Highlight
                         icon={BookCheck}
-                        label="Words learned"
+                        label={t('Words learned')}
                         value={String(stats.vocabulary_learned)}
                         tone="bg-success/15 text-success"
                     />
                     <Highlight
                         icon={RotateCw}
-                        label="Reviews due"
+                        label={t('Reviews due')}
                         value={String(stats.review_due)}
                         tone="bg-accent text-accent-foreground"
                     />
-                </dl>
+                </ul>
 
                 <div
                     className="grid animate-rise gap-6 lg:grid-cols-3"
@@ -361,7 +377,7 @@ export default function Dashboard({
                         aria-labelledby="week"
                     >
                         <h2 id="week" className="text-lg font-semibold">
-                            Minutes studied this week
+                            {t('Minutes studied this week')}
                         </h2>
                         <WeeklyChart week={week} />
                     </section>
@@ -372,20 +388,22 @@ export default function Dashboard({
                     >
                         <div className="flex items-center justify-between gap-2">
                             <h2 id="goals" className="text-lg font-semibold">
-                                Today&apos;s goals
+                                {t("Today's goals")}
                             </h2>
                             <Button variant="ghost" size="sm" asChild>
-                                <Link href="/settings/learning">Change</Link>
+                                <Link href="/settings/learning">
+                                    {t('Change')}
+                                </Link>
                             </Button>
                         </div>
                         <div className="my-auto grid grid-cols-2 gap-2 py-4">
                             <GoalRing
-                                label="Minutes"
+                                label={t('Minutes')}
                                 value={today.minutes}
                                 goal={today.goal_minutes}
                             />
                             <GoalRing
-                                label="Sentences"
+                                label={t('Sentences')}
                                 value={today.sentences}
                                 goal={today.goal_sentences}
                             />
@@ -400,7 +418,7 @@ export default function Dashboard({
                     <div className="space-y-6 lg:col-span-2">
                         <section className="space-y-3" aria-labelledby="recent">
                             <h2 id="recent" className="text-lg font-semibold">
-                                Recent practice
+                                {t('Recent practice')}
                             </h2>
                             {recent.length === 0 ? (
                                 <p className="rounded-2xl border border-dashed p-6 text-sm text-muted-foreground">
@@ -409,7 +427,7 @@ export default function Dashboard({
                                         href={CatalogController.index()}
                                         className="underline"
                                     >
-                                        Pick a course
+                                        {t('Pick a course')}
                                     </Link>{' '}
                                     and start your first lesson.
                                 </p>
@@ -429,7 +447,7 @@ export default function Dashboard({
                                                     </p>
                                                     <p className="text-sm text-muted-foreground">
                                                         <span className="capitalize">
-                                                            {session.mode}
+                                                            {t(session.mode)}
                                                         </span>{' '}
                                                         ·{' '}
                                                         {formatDate(
@@ -466,12 +484,13 @@ export default function Dashboard({
 
                         <section className="space-y-3" aria-labelledby="badges">
                             <h2 id="badges" className="text-lg font-semibold">
-                                Badges
+                                {t('Badges')}
                             </h2>
                             {badges.length === 0 ? (
                                 <p className="rounded-2xl border border-dashed p-5 text-sm text-muted-foreground">
-                                    Finish a practice session to earn your first
-                                    badge.
+                                    {t(
+                                        'Finish a practice session to earn your first badge.',
+                                    )}
                                 </p>
                             ) : (
                                 <ul className="flex flex-wrap gap-2">
@@ -502,7 +521,7 @@ export default function Dashboard({
                         aria-labelledby="totals"
                     >
                         <h2 id="totals" className="text-lg font-semibold">
-                            Your totals
+                            {t('Your totals')}
                         </h2>
                         <dl className="divide-y">
                             {totals.map((total) => (
@@ -515,7 +534,7 @@ export default function Dashboard({
                                             className="size-4"
                                             aria-hidden
                                         />{' '}
-                                        {total.label}
+                                        {t(total.label)}
                                     </dt>
                                     <dd className="stat-figure text-lg font-semibold">
                                         {total.value}
