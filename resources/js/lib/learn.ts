@@ -45,3 +45,24 @@ export const MODE_INFO = {
     medium: 'Short phrases first, then the full sentence. One hint.',
     hard: 'Full sentences only, no hints.',
 } as const;
+
+/** "tomorrow", "in 3 days": when a sentence comes back for review. */
+export function describeNextReview(
+    review: { days: number; mastered: boolean } | null,
+): string | null {
+    if (review === null) {
+        return null;
+    }
+
+    if (review.mastered) {
+        return 'Mastered. This sentence is done with review.';
+    }
+
+    if (review.days <= 0) {
+        return 'Comes back for review today';
+    }
+
+    return review.days === 1
+        ? 'Comes back for review tomorrow'
+        : `Comes back for review in ${review.days} days`;
+}

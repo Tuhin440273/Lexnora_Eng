@@ -2,7 +2,7 @@
 
 ## 1. Check it on MySQL first
 
-The automated tests run on an in-memory SQLite database. Run them once on MySQL too, in a **separate** test database, before you deploy.
+The automated tests run on an in-memory SQLite database. They have also been run on MySQL 8.0 and passed. Run them once on your own MySQL too, in a **separate** test database, before you deploy.
 
 ```bash
 sudo mysql -e "CREATE DATABASE english_platform_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
@@ -56,7 +56,7 @@ php artisan db:seed --force        # roles, settings, badges and the admin user;
 php artisan optimize
 ```
 
-Optional: `php artisan db:seed --class=ContentPackSeeder --force` adds the five ready-made courses.
+Optional: `php artisan db:seed --class=ContentPackSeeder --force` adds the five ready-made courses, and `php artisan db:seed --class=BangladeshPackSeeder --force` adds two courses about life in Bangladesh.
 
 Make `storage` and `bootstrap/cache` writable by the web server user.
 

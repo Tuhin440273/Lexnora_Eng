@@ -195,7 +195,7 @@ it('completes the session, the lesson and pays the XP once', function () {
         ->and((float) $session->average_accuracy)->toBe(100.0)
         ->and($session->completed_at)->not->toBeNull()
         ->and($session->xp_awarded)->toBe(55)   // 2 x 15 (hard x1.5) + 25 lesson bonus
-        ->and(UserXpTransaction::where('user_id', $user->id)->sum('amount'))->toBe(55);
+        ->and((int) UserXpTransaction::where('user_id', $user->id)->sum('amount'))->toBe(55);
 
     $progress = UserLessonProgress::firstOrFail();
     expect($progress->status)->toBe(ProgressStatus::Completed)
@@ -207,7 +207,7 @@ it('completes the session, the lesson and pays the XP once', function () {
     typeAnswer($user, $again, 'sentence number 1');
     typeAnswer($user, $again, 'sentence number 2');
 
-    expect(UserXpTransaction::where('user_id', $user->id)->sum('amount'))->toBe(55)
+    expect((int) UserXpTransaction::where('user_id', $user->id)->sum('amount'))->toBe(55)
         ->and(UserLessonProgress::firstOrFail()->sessions_count)->toBe(2);
 });
 
@@ -279,7 +279,7 @@ it('ignores anything the client says about correctness, XP or the sentence', fun
         ->and($attempt->sentence_id)->not->toBe($second->id)
         ->and($attempt->user_id)->toBe($user->id)
         ->and((float) $attempt->accuracy)->toBeLessThan(100)
-        ->and(UserXpTransaction::sum('amount'))->toBe(2);   // only the "tried" amount
+        ->and((int) UserXpTransaction::sum('amount'))->toBe(2);   // only the "tried" amount
 });
 
 it('keeps private sessions private', function () {

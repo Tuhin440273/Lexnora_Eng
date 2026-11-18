@@ -52,6 +52,11 @@
 - **Animation:** pages and cards rise in one after the other, tiles pop in, the START bubble bobs, cards lift on hover, and words drift slowly behind the landing and sign-in pages (`components/floating-words.tsx`). Everything stands still when the device asks for less motion.
 - **Course page as a road:** the lessons of each chapter sit on a winding road (left to right, then back right to left), four tiles per row, two on a phone (`components/lesson-road.tsx`). Each tile shows stars, the next lesson is marked START, and numbers count on across chapters. The star rule is printed under the course title: 3 stars from 90%, 2 from 70%, 1 for a completed lesson (`lib/stars.ts`, a display figure worked out from the data the server already sends).
 - **Restyled:** course cards (cover in the level colour), lesson page (three mode cards with a green, gold and red top line), landing page, sign-in pages and the dashboard (animation).
+- **Bangladesh pack:** `BangladeshPackSeeder` (separate from the first pack, so its numbers stay as they are) adds 2 courses (A1 Life in Bangladesh, A2 Getting Around Bangladesh), 8 lessons, 48 sentences with Bengali translations, 23 words and phrases for Easy and Medium mode, and 18 vocabulary entries. Safe to run again. The Bengali was written for this project and is in the review sheet (`lexnora-bengali-review.xlsx`, 193 rows) for a native speaker to read.
+- **Doel and pictures:** the doel (magpie-robin, the national bird of Bangladesh) is drawn in `components/doel.tsx` and appears on the new-learner dashboard card and in the empty-state blocks (`components/empty-state.tsx`: vocabulary, notes, mistakes, review history, course search). Course covers carry a flat picture chosen from the category (`components/cover-art.tsx`, `lib/cover-art.ts`: sunrise, shopping bag, heart, briefcase, map pin, book). All of it is code, so there are no image files to download.
+- **Small fixes:** counts read correctly ("1 lesson", "1 session", `plural()` in `lib/format.ts`), and the learner pages (vocabulary, review, mistakes, notes, progress, leaderboard, courses) sit in the middle with the same width and a gentle rise-in.
+- **Next review on the result bar:** after a full sentence the bar says when it comes back ("Comes back for review tomorrow", "in 3 days", or "Mastered. This sentence is done with review."). Words and phrases are not scheduled, so they say nothing. A wrong answer starts the schedule again at the first step. The server sends `next_review` with the result (`PracticeSessionService`).
+- **MySQL check:** two things differed from SQLite and are now handled in the tests, not in the app: `SUM()` gives text on MySQL (the app already casts it to a number), and MySQL keeps JSON keys in its own order (so the test compares arrays without caring about order).
 - **Bug fixed:** the level colour (`bg-level`, `text-level-foreground`) always showed the primary colour, because Tailwind worked it out once at the root. It is now an `inline` theme value, so `data-level` on a page or card changes it.
 
 ## Phase 13 - practice screen comfort
@@ -66,7 +71,7 @@
 
 ## Tests
 
-`php artisan test`: 429 passed, 3 skipped (Two-factor is not enabled). `vp test`: 24 passed. PHPStan has a baseline (`phpstan-baseline.neon`): old findings are listed there, new code must be clean. `npm run types:check` and `vp check` are clean.
+`php artisan test`: 436 passed, 3 skipped (Two-factor is not enabled). `vp test`: 30 passed. PHPStan has a baseline (`phpstan-baseline.neon`): old findings are listed there, new code must be clean. `npm run types:check` and `vp check` are clean.
 
 ## Not done or not verified
 
@@ -74,7 +79,7 @@
 - Check types in the sandbox only after migrating a database and regenerating Wayfinder, and run Pint with a fresh cache, otherwise results can differ from a real machine.
 - Autoplay, the one-word-per-second reveal and the blur are browser behaviour. They are written and their logic is tested, but they were not watched in a real browser, and Chrome may refuse autoplay until the learner has clicked anywhere on the site once.
 
-- The tests run on SQLite. Run them once on MySQL (see `docs/DEPLOYMENT.md`, step 1).
+- The tests run on SQLite by default. The whole suite was also run on MySQL 8.0.46 in a separate test database (all migrations, the seeders and 439 tests passed), but not on MySQL 8.4 and not with a large amount of data. Run it once on your own MySQL (see `docs/DEPLOYMENT.md`, step 1).
 - Layouts were written mobile-first (tables scroll sideways, forms stack) but were not checked on real phones and tablets.
 - Not built, by design for version 1: AI tutor, voice conversation, pronunciation scoring, YouTube lessons, AI lesson or quiz generation, payments, adaptive learning, native apps.
 - The content pack has no audio. The Bengali translations were written for this project and should be read once by a native speaker before real learners use them.

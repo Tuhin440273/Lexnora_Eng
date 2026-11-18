@@ -1,5 +1,6 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { Play } from 'lucide-react';
+import { History, Play } from 'lucide-react';
+import { EmptyState } from '@/components/empty-state';
 import { useState } from 'react';
 import ReviewController from '@/actions/App/Modules/Review/Http/Controllers/ReviewController';
 import { PageHeader } from '@/components/admin/page-header';
@@ -124,7 +125,7 @@ export default function ReviewIndex({
     return (
         <>
             <Head title="Review center" />
-            <div className="flex max-w-4xl flex-col gap-6 p-4">
+            <div className="mx-auto flex w-full max-w-4xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
                     title="Review center"
                     description="Come back to what you studied. Items return after longer and longer breaks, and start again if you get one wrong."
@@ -219,10 +220,9 @@ export default function ReviewIndex({
                 {tab === 'history' && history && (
                     <>
                         {history.data.length === 0 ? (
-                            <p className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-                                No reviews yet. They appear here after your
-                                first review.
-                            </p>
+                            <EmptyState icon={History} title="No reviews yet">
+                                They appear here after your first review.
+                            </EmptyState>
                         ) : (
                             <div className="rounded-xl border bg-card">
                                 <Table>

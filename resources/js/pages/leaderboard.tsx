@@ -34,7 +34,7 @@ export default function Leaderboard({ metric, period, entries, me }: Props) {
     return (
         <>
             <Head title="Leaderboard" />
-            <div className="flex max-w-3xl flex-col gap-6 p-4">
+            <div className="mx-auto flex w-full max-w-3xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
                     title="Leaderboard"
                     description={`Ranked by ${metric === 'xp' ? 'XP earned' : 'time studied'}. Only first names or chosen display names are shown; you can hide yours in Settings > Learning.`}

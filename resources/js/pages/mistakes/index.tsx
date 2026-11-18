@@ -1,5 +1,6 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { CircleCheck, Play } from 'lucide-react';
+import { CircleCheck, Hourglass, Play } from 'lucide-react';
+import { EmptyState } from '@/components/empty-state';
 import MistakeController from '@/actions/App/Modules/Dictation/Http/Controllers/MistakeController';
 import { PageHeader } from '@/components/admin/page-header';
 import { Pagination } from '@/components/admin/pagination';
@@ -48,7 +49,7 @@ export default function MistakesIndex({
     return (
         <>
             <Head title="Mistakes notebook" />
-            <div className="flex max-w-4xl flex-col gap-6 p-4">
+            <div className="mx-auto flex w-full max-w-4xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
                     title="Mistakes notebook"
                     description="Every sentence you got wrong is saved here. Practise it again until you get it right."
@@ -86,11 +87,20 @@ export default function MistakesIndex({
                 </nav>
 
                 {items.data.length === 0 ? (
-                    <p className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-                        {show === 'open'
-                            ? 'No open mistakes. Nice work.'
-                            : 'Nothing resolved yet.'}
-                    </p>
+                    show === 'open' ? (
+                        <EmptyState icon={CircleCheck} title="No open mistakes">
+                            Nice work. A sentence you get wrong waits here until
+                            you type it right.
+                        </EmptyState>
+                    ) : (
+                        <EmptyState
+                            icon={Hourglass}
+                            title="Nothing resolved yet"
+                        >
+                            Practise a mistake again and get it right to see it
+                            here.
+                        </EmptyState>
+                    )
                 ) : (
                     <>
                         <DiffLegend />

@@ -21,7 +21,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { useCan } from '@/hooks/use-can';
-import { formatMinutes } from '@/lib/format';
+import { formatMinutes, plural } from '@/lib/format';
 import type { Category, Course, Paginated, SelectOption } from '@/types';
 
 type Filters = {
@@ -231,9 +231,15 @@ export default function CoursesIndex({ courses, filters, options }: Props) {
                                             </Badge>
                                         </TableCell>
                                         <TableCell className="text-sm text-muted-foreground">
-                                            {course.chapters_count ?? 0}{' '}
-                                            chapters,{' '}
-                                            {course.lessons_count ?? 0} lessons
+                                            {plural(
+                                                course.chapters_count ?? 0,
+                                                'chapter',
+                                            )}
+                                            ,{' '}
+                                            {plural(
+                                                course.lessons_count ?? 0,
+                                                'lesson',
+                                            )}
                                             <div className="text-xs">
                                                 {formatMinutes(
                                                     course.estimated_minutes,

@@ -1,5 +1,14 @@
 import { Form, Head, router } from '@inertiajs/react';
-import { Check, Pencil, Plus, Trash2, Undo2 } from 'lucide-react';
+import {
+    BookMarked,
+    Check,
+    Pencil,
+    Plus,
+    SearchX,
+    Trash2,
+    Undo2,
+} from 'lucide-react';
+import { EmptyState } from '@/components/empty-state';
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import SavedVocabularyController from '@/actions/App/Modules/Vocabulary/Http/Controllers/SavedVocabularyController';
@@ -142,7 +151,7 @@ export default function VocabularyIndex({
     return (
         <>
             <Head title="Vocabulary notebook" />
-            <div className="flex max-w-4xl flex-col gap-6 p-4">
+            <div className="mx-auto flex w-full max-w-4xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
                     title="Vocabulary notebook"
                     description={`${totals.all} saved, ${totals.learned} learned. Save words from the result screen after each answer.`}
@@ -202,11 +211,19 @@ export default function VocabularyIndex({
                 </form>
 
                 {items.data.length === 0 ? (
-                    <p className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-                        {filters.search || filters.status
-                            ? 'Nothing matches. Try another search.'
-                            : 'Your notebook is empty. Save a word from a result screen or add one here.'}
-                    </p>
+                    filters.search || filters.status ? (
+                        <EmptyState icon={SearchX} title="Nothing matches">
+                            Try another search.
+                        </EmptyState>
+                    ) : (
+                        <EmptyState
+                            icon={BookMarked}
+                            title="Your notebook is empty"
+                        >
+                            Save a word from a result screen, or add one
+                            yourself.
+                        </EmptyState>
+                    )
                 ) : (
                     <ul className="space-y-3">
                         {items.data.map((item) => (

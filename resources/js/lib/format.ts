@@ -40,3 +40,12 @@ export function formatMinutes(minutes: number | undefined): string {
 
     return rest === 0 ? `${hours} h` : `${hours} h ${rest} min`;
 }
+
+/** "1 lesson", "2 lessons". Pass the plural form when it is not just an added s. */
+export function plural(
+    count: number,
+    singular: string,
+    pluralForm = `${singular}s`,
+): string {
+    return `${count} ${count === 1 ? singular : pluralForm}`;
+}

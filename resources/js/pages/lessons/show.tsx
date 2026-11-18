@@ -6,7 +6,7 @@ import { PageHeader } from '@/components/admin/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatDate, formatPercent, MODE_INFO } from '@/lib/learn';
-import { formatMinutes } from '@/lib/format';
+import { formatMinutes, plural } from '@/lib/format';
 import { cn } from '@/lib/utils';
 import { dashboard } from '@/routes';
 
@@ -74,7 +74,7 @@ export default function LessonShow({
                                 <Badge variant="outline">Draft preview</Badge>
                             )}
                             <Badge variant="secondary">
-                                {lesson.sentences_count} sentences
+                                {plural(lesson.sentences_count, 'sentence')}
                             </Badge>
                             <Badge variant="secondary">
                                 {formatMinutes(lesson.estimated_minutes)}

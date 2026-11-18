@@ -14,7 +14,7 @@ import { StatusBadge } from '@/components/admin/status-badge';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useCan } from '@/hooks/use-can';
-import { formatMinutes } from '@/lib/format';
+import { formatMinutes, plural } from '@/lib/format';
 import type { Chapter, Course } from '@/types';
 
 export default function CourseShow({ course }: { course: Course }) {
@@ -93,7 +93,8 @@ export default function CourseShow({ course }: { course: Course }) {
                     <div>
                         <dt className="text-muted-foreground">Content</dt>
                         <dd className="font-medium">
-                            {chapters.length} chapters, {lessonCount} lessons
+                            {plural(chapters.length, 'chapter')},{' '}
+                            {plural(lessonCount, 'lesson')}
                         </dd>
                     </div>
                 </dl>

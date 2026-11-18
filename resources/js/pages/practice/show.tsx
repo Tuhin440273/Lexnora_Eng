@@ -26,7 +26,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useLetterSize } from '@/hooks/use-letter-size';
 import { guideWords, matchGuide } from '@/lib/guide';
 import { LETTER_SIZE_CLASSES } from '@/lib/letter-size';
-import { wordsOf } from '@/lib/learn';
+import { describeNextReview, wordsOf } from '@/lib/learn';
 import { cn } from '@/lib/utils';
 import type {
     PracticeItem,
@@ -346,6 +346,7 @@ function ResultCard({
     const [saved, setSaved] = useState<string[]>([]);
     // Every word matched exactly: the comparison would only repeat the text.
     const identical = result.tokens.every((token) => token.type === 'correct');
+    const nextReview = describeNextReview(result.next_review);
 
     const saveWord = (term: string) => {
         router.post(
@@ -521,6 +522,7 @@ function ResultCard({
                             </p>
                             <p className="text-sm text-muted-foreground">
                                 Text match {result.accuracy}%
+                                {nextReview && ` · ${nextReview}`}
                             </p>
                         </div>
                         {result.xp > 0 && <Badge>+{result.xp} XP</Badge>}

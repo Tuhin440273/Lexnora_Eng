@@ -1,5 +1,6 @@
 import { Form, Head, router } from '@inertiajs/react';
-import { Pencil, Plus, Trash2 } from 'lucide-react';
+import { NotebookPen, Pencil, Plus, SearchX, Trash2 } from 'lucide-react';
+import { EmptyState } from '@/components/empty-state';
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import NoteController from '@/actions/App/Modules/Learning/Http/Controllers/NoteController';
@@ -91,7 +92,7 @@ export default function NotesIndex({
     return (
         <>
             <Head title="Notes" />
-            <div className="flex max-w-4xl flex-col gap-6 p-4">
+            <div className="mx-auto flex w-full max-w-4xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
                     title="Personal notes"
                     description="Write down what you want to remember. Notes added from a result screen stay linked to their sentence."
@@ -126,11 +127,16 @@ export default function NotesIndex({
                 </form>
 
                 {notes.data.length === 0 ? (
-                    <p className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-                        {search
-                            ? 'No note matches your search.'
-                            : 'No notes yet. Create your first one.'}
-                    </p>
+                    search ? (
+                        <EmptyState icon={SearchX} title="No note matches">
+                            Try another word.
+                        </EmptyState>
+                    ) : (
+                        <EmptyState icon={NotebookPen} title="No notes yet">
+                            Write down what you want to remember. You can also
+                            add a note right after an answer.
+                        </EmptyState>
+                    )
                 ) : (
                     <ul className="grid gap-3 md:grid-cols-2">
                         {notes.data.map((note) => (

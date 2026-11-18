@@ -13,6 +13,7 @@ import {
 import MistakeController from '@/actions/App/Modules/Dictation/Http/Controllers/MistakeController';
 import { PageHeader } from '@/components/admin/page-header';
 import { analytics, dashboard } from '@/routes';
+import { plural } from '@/lib/format';
 
 type Day = {
     date: string;
@@ -43,7 +44,7 @@ export default function Analytics({
     return (
         <>
             <Head title="Analytics" />
-            <div className="flex flex-col gap-6 p-4">
+            <div className="mx-auto flex w-full max-w-6xl animate-rise flex-col gap-6 p-4 md:p-6">
                 <PageHeader
                     title="Your progress"
                     description="The last 30 days of practice."
@@ -176,7 +177,7 @@ export default function Analytics({
                                         {mode.mode}
                                     </span>
                                     <span className="text-muted-foreground">
-                                        {mode.sessions} sessions
+                                        {plural(mode.sessions, 'session')}
                                     </span>
                                     <span>
                                         {mode.sessions > 0

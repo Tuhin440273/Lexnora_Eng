@@ -33,6 +33,8 @@ export type PracticeResult = {
     xp: number;
     finished: boolean;
     badges: EarnedBadge[];
+    /** When this sentence comes back for review; null for words and phrases. */
+    next_review: { days: number; mastered: boolean } | null;
 };
 
 export type PracticeItem = {

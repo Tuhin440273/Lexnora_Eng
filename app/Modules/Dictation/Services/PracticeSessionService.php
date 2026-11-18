@@ -13,11 +13,13 @@ use App\Modules\Dictation\Models\PracticeSession;
 use App\Modules\Gamification\Services\BadgeService;
 use App\Modules\Gamification\Services\XpService;
 use App\Modules\Learning\Enums\PracticeMode;
+use App\Modules\Learning\Enums\ReviewStatus;
 use App\Modules\Learning\Enums\SessionStatus;
 use App\Modules\Learning\Models\AppSetting;
 use App\Modules\Learning\Services\LessonProgressService;
 use App\Modules\Review\Models\ReviewSchedule;
 use App\Modules\Review\Services\ReviewScheduleService;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -167,7 +169,7 @@ class PracticeSessionService
             ]);
 
             $this->trackMistake($user, $sentence, $attempt);
-            $this->trackReview($user, $session, $sentence, $attempt);
+            $schedule = $this->trackReview($user, $session, $sentence, $attempt);
 
             $xp = $this->xp->awardForAttempt($user, $attempt, $session);
             $session->increment('xp_awarded', $xp);
@@ -199,6 +201,7 @@ class PracticeSessionService
                 'xp' => $xp + ($finish['lesson_bonus'] ?? 0),
                 'finished' => $finish !== null,
                 'badges' => $finish['badges'] ?? [],
+                'next_review' => $this->describeNextReview($schedule),
             ];
         });
     }
@@ -291,10 +294,14 @@ class PracticeSessionService
         }
     }
 
-    private function trackReview(User $user, PracticeSession $session, Sentence $sentence, PracticeAttempt $attempt): void
+    /**
+     * Updates the review schedule and returns it. Only full sentences are
+     * scheduled, so a word or phrase gives null.
+     */
+    private function trackReview(User $user, PracticeSession $session, Sentence $sentence, PracticeAttempt $attempt): ?ReviewSchedule
     {
         if ($sentence->parent_id !== null) {
-            return; // only full sentences are scheduled, not their words and phrases
+            return null;
         }
 
         if ($session->kind === PracticeSession::KIND_REVIEW) {
@@ -306,11 +313,34 @@ class PracticeSessionService
             if ($schedule) {
                 $this->reviews->recordResult($schedule, $attempt->is_correct, (float) $attempt->accuracy, $attempt);
 
-                return;
+                return $schedule;
             }
         }
 
-        $this->reviews->ensureScheduled($user, $sentence);
+        return $this->reviews->ensureScheduled($user, $sentence);
+    }
+
+    /**
+     * When the learner will meet this sentence again, shown on the result screen.
+     *
+     * @return array{days: int, mastered: bool}|null
+     */
+    private function describeNextReview(?ReviewSchedule $schedule): ?array
+    {
+        if ($schedule === null) {
+            return null;
+        }
+
+        $due = $schedule->getAttribute('due_at');
+
+        if (! $due instanceof CarbonInterface) {
+            return null;
+        }
+
+        return [
+            'days' => max(0, (int) now()->startOfDay()->diffInDays($due->copy()->startOfDay(), false)),
+            'mastered' => $schedule->getAttribute('status') === ReviewStatus::Mastered,
+        ];
     }
 
     /**

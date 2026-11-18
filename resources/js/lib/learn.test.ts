@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { formatMinutes, formatBytes, formatDuration } from './format';
-import { formatPercent, formatStudyTime, wordsOf } from './learn';
+import {
+    describeNextReview,
+    formatPercent,
+    formatStudyTime,
+    wordsOf,
+} from './learn';
 
 describe('formatStudyTime', () => {
     it('uses seconds, minutes and hours', () => {
@@ -52,5 +57,29 @@ describe('admin formatters', () => {
         expect(formatDuration(65000)).toBe('1:05');
         expect(formatMinutes(90)).toBe('1 h 30 min');
         expect(formatMinutes(0)).toBe('-');
+    });
+});
+
+describe('describeNextReview', () => {
+    it('says nothing for words and phrases, which are not scheduled', () => {
+        expect(describeNextReview(null)).toBeNull();
+    });
+
+    it('speaks of today, tomorrow and later days', () => {
+        expect(describeNextReview({ days: 0, mastered: false })).toBe(
+            'Comes back for review today',
+        );
+        expect(describeNextReview({ days: 1, mastered: false })).toBe(
+            'Comes back for review tomorrow',
+        );
+        expect(describeNextReview({ days: 7, mastered: false })).toBe(
+            'Comes back for review in 7 days',
+        );
+    });
+
+    it('says a mastered sentence is done with review', () => {
+        expect(describeNextReview({ days: 7, mastered: true })).toBe(
+            'Mastered. This sentence is done with review.',
+        );
     });
 });

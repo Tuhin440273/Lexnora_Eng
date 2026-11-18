@@ -339,7 +339,7 @@ it('saves learning settings', function () {
         ->and($profile->daily_goal_minutes)->toBe(25)
         ->and($profile->timezone)->toBe('Asia/Dhaka')
         ->and($profile->leaderboard_anonymous)->toBeTrue()
-        ->and($profile->preferences)->toBe(['default_mode' => 'hard', 'default_speed' => 0.75, 'autoplay' => true]);
+        ->and($profile->preferences)->toEqual(['default_mode' => 'hard', 'default_speed' => 0.75, 'autoplay' => true]);   // MySQL keeps JSON keys in its own order
 
     $this->patch(route('learning-settings.update'), [
         'daily_goal_minutes' => 25, 'daily_goal_sentences' => 40, 'timezone' => 'Asia/Dhaka',

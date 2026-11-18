@@ -146,7 +146,11 @@ class SampleContentSeeder extends Seeder
         }
     }
 
-    /** @return list<array<string, mixed>> */
+    /**
+     * The array key is the course's place in the course list.
+     *
+     * @return array<int, array<string, mixed>>
+     */
     protected function courseData(): array
     {
         return [
