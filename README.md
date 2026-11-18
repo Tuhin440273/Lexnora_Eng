@@ -51,12 +51,6 @@ Five courses (A1 to B2) with Bengali translations, words and phrases for Easy an
 php artisan db:seed --class=ContentPackSeeder
 ```
 
-Two more courses, about life in Bangladesh (an A1 and an A2 course with 48 sentences, Bengali translations and 18 vocabulary entries), come in a separate pack:
-
-```bash
-php artisan db:seed --class=BangladeshPackSeeder
-```
-
 They have no recordings yet. Upload audio from a lesson page in Content admin; until then the browser's own voice reads the text aloud.
 
 ## While practising

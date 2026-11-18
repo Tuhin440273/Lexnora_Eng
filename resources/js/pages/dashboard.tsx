@@ -17,7 +17,6 @@ import CatalogController from '@/actions/App/Modules/Courses/Http/Controllers/Ca
 import CheckinController from '@/actions/App/Modules/Gamification/Http/Controllers/CheckinController';
 import PracticeController from '@/actions/App/Modules/Dictation/Http/Controllers/PracticeController';
 import ReviewController from '@/actions/App/Modules/Review/Http/Controllers/ReviewController';
-import { Doel } from '@/components/doel';
 import { Button } from '@/components/ui/button';
 import { WeeklyChart } from '@/components/weekly-chart';
 import type { WeekDay } from '@/components/weekly-chart';
@@ -242,7 +241,7 @@ export default function Dashboard({
 
                 <section
                     aria-label="Continue learning"
-                    className="animate-rise rounded-3xl border border-primary/20 bg-linear-to-br from-primary/12 via-star/10 to-transparent p-6 shadow-sm md:p-8"
+                    className="animate-rise rounded-3xl border border-primary/20 bg-linear-to-br from-primary/15 via-primary/5 to-transparent p-6 shadow-sm md:p-8"
                     style={{ animationDelay: '80ms' }}
                 >
                     <div className="flex flex-wrap items-center justify-between gap-6">
@@ -309,7 +308,6 @@ export default function Dashboard({
                                         close you got.
                                     </p>
                                 </div>
-                                <Doel className="hidden h-24 sm:block" />
                                 <Button
                                     size="lg"
                                     asChild

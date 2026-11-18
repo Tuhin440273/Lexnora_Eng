@@ -3,7 +3,6 @@ import CatalogController from '@/actions/App/Modules/Courses/Http/Controllers/Ca
 import { LessonRoad } from '@/components/lesson-road';
 import type { RoadLesson } from '@/components/lesson-road';
 import { Badge } from '@/components/ui/badge';
-import { plural } from '@/lib/format';
 import { levelAccent } from '@/lib/levels';
 import { STAR_RULE } from '@/lib/stars';
 
@@ -79,7 +78,7 @@ export default function CourseShow({ course }: Props) {
                             />
                         </div>
                         <span className="text-sm text-muted-foreground tabular-nums">
-                            {finished} of {plural(lessons.length, 'lesson')}
+                            {finished} of {lessons.length} lessons
                         </span>
                     </div>
                     <p className="text-xs text-muted-foreground">{STAR_RULE}</p>

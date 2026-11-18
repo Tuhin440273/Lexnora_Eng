@@ -2,7 +2,7 @@ import { Link } from '@inertiajs/react';
 import { Check, Star } from 'lucide-react';
 import CatalogController from '@/actions/App/Modules/Courses/Http/Controllers/CatalogController';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { formatMinutes, plural } from '@/lib/format';
+import { formatMinutes } from '@/lib/format';
 import { starsFor } from '@/lib/stars';
 import type { LessonStatus } from '@/lib/stars';
 import { cn } from '@/lib/utils';
@@ -192,11 +192,7 @@ export function LessonRoad({
                                             </span>
                                         </p>
                                         <p className="text-xs text-muted-foreground">
-                                            {plural(
-                                                lesson.sentences_count,
-                                                'sentence',
-                                            )}{' '}
-                                            ·{' '}
+                                            {lesson.sentences_count} sentences ·{' '}
                                             {formatMinutes(
                                                 lesson.estimated_minutes,
                                             )}
